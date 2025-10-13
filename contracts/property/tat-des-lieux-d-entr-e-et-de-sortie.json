@@ -1,0 +1,22 @@
+{
+  "metadata": {
+    "title": "État des lieux d’entrée et de sortie",
+    "jurisdiction": "FR",
+    "governing_law": "France",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {"key": "bailleur_nom", "label": "Nom du bailleur", "type": "text", "required": true},
+    {"key": "locataire_nom", "label": "Nom du locataire", "type": "text", "required": true},
+    {"key": "adresse", "label": "Adresse du logement", "type": "text", "required": true},
+    {"key": "date_entree", "label": "Date d’entrée", "type": "date", "required": true},
+    {"key": "date_sortie", "label": "Date de sortie", "type": "date", "required": false}
+  ],
+  "clauses": [
+    {"id": "objet", "title": "Objet du document", "body": "Le présent document décrit l’état du logement situé à {{adresse}} lors de l’entrée et de la sortie du locataire {{locataire_nom}}."},
+    {"id": "entree", "title": "État des lieux d’entrée", "body": "Un constat précis des équipements et de l’état du logement a été établi le {{date_entree}} en présence des parties."},
+    {"id": "sortie", "title": "État des lieux de sortie", "body": "Un second constat sera effectué le {{date_sortie}} à la fin de la location."},
+    {"id": "signature", "title": "Signature des parties", "body": "Fait en deux exemplaires, signé par {{bailleur_nom}} et {{locataire_nom}}."}
+  ]
+}
+

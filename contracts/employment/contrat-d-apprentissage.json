@@ -1,0 +1,28 @@
+{
+  "metadata": {
+    "title": "Contrat d'apprentissage",
+    "jurisdiction": "FR",
+    "governing_law": "France",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {"key": "employeur_nom", "label": "Nom ou raison sociale de l'employeur", "type": "text", "required": true},
+    {"key": "apprenti_nom", "label": "Nom et prénom de l'apprenti", "type": "text", "required": true},
+    {"key": "date_naissance", "label": "Date de naissance de l'apprenti", "type": "date", "required": true},
+    {"key": "diplome_prepare", "label": "Diplôme ou titre préparé", "type": "text", "required": true},
+    {"key": "cfa_nom", "label": "Nom du centre de formation d'apprentis (CFA)", "type": "text", "required": true},
+    {"key": "date_debut", "label": "Date de début du contrat", "type": "date", "required": true},
+    {"key": "duree_contrat", "label": "Durée du contrat (en mois)", "type": "number", "required": true}
+  ],
+  "clauses": [
+    {"id": "parties", "title": "Parties", "body": "Le présent contrat d'apprentissage est conclu entre {{employeur_nom}}, ci-après dénommé « l'Employeur », et {{apprenti_nom}}, né(e) le {{date_naissance}}, ci-après dénommé « l'Apprenti »."},
+    {"id": "objet", "title": "Objet du contrat", "body": "L'Employeur s'engage à assurer à l'Apprenti une formation professionnelle complète en vue de l'obtention du diplôme suivant : {{diplome_prepare}}."},
+    {"id": "formation", "title": "Formation", "body": "La formation pratique sera assurée au sein de l'entreprise, en alternance avec les enseignements dispensés par le centre de formation {{cfa_nom}}."},
+    {"id": "duree", "title": "Durée du contrat", "body": "Le contrat débute le {{date_debut}} pour une durée de {{duree_contrat}} mois."},
+    {"id": "remuneration_clause", "title": "Rémunération", "body": "L'Apprenti percevra une rémunération déterminée en pourcentage du SMIC ou du salaire minimum conventionnel, selon son âge et sa progression dans le cycle de formation, conformément aux dispositions légales."},
+    {"id": "maitre_apprentissage", "title": "Maître d'apprentissage", "body": "L'Employeur désignera un maître d'apprentissage chargé de contribuer à l'acquisition par l'Apprenti des compétences nécessaires à l'obtention du diplôme préparé."},
+    {"id": "obligations", "title": "Obligations des parties", "body": "L'Employeur s'engage à permettre à l'Apprenti de suivre les enseignements du CFA. L'Apprenti s'engage à travailler pour l'Employeur et à suivre avec assiduité la formation."},
+    {"id": "loi_applicable", "title": "Loi applicable", "body": "Le présent contrat est régi par les dispositions du Code du travail relatives à l'apprentissage."}
+  ]
+}
+

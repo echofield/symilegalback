@@ -1,0 +1,28 @@
+{
+  "metadata": {
+    "title": "Contrat de travail à durée indéterminée (CDI)",
+    "jurisdiction": "FR",
+    "governing_law": "France",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {"key": "employeur_nom", "label": "Nom ou raison sociale de l'employeur", "type": "text", "required": true},
+    {"key": "employeur_adresse", "label": "Adresse du siège social", "type": "textarea", "required": true},
+    {"key": "salarie_nom", "label": "Nom et prénom du salarié", "type": "text", "required": true},
+    {"key": "salarie_adresse", "label": "Adresse du salarié", "type": "textarea", "required": true},
+    {"key": "poste", "label": "Intitulé du poste", "type": "text", "required": true},
+    {"key": "date_debut", "label": "Date de début du contrat", "type": "date", "required": true},
+    {"key": "remuneration", "label": "Rémunération brute mensuelle (€)", "type": "number", "required": true}
+  ],
+  "clauses": [
+    {"id": "parties", "title": "Parties", "body": "Le présent contrat de travail à durée indéterminée est conclu entre {{employeur_nom}}, dont le siège social est situé {{employeur_adresse}}, ci-après dénommé « l'Employeur », et {{salarie_nom}}, demeurant {{salarie_adresse}}, ci-après dénommé « le Salarié »."},
+    {"id": "objet", "title": "Objet du contrat", "body": "Le Salarié est engagé en qualité de {{poste}}, à compter du {{date_debut}}."},
+    {"id": "duree", "title": "Durée du contrat", "body": "Le présent contrat est conclu pour une durée indéterminée."},
+    {"id": "periode_essai", "title": "Période d'essai", "body": "Le contrat débute par une période d'essai dont la durée et les conditions de renouvellement sont fixées conformément aux dispositions légales et conventionnelles applicables."},
+    {"id": "remuneration_clause", "title": "Rémunération", "body": "Le Salarié percevra une rémunération brute mensuelle de {{remuneration}} euros, versée mensuellement par virement bancaire."},
+    {"id": "duree_travail", "title": "Durée du travail", "body": "La durée du travail est fixée conformément aux dispositions légales et conventionnelles en vigueur."},
+    {"id": "conges", "title": "Congés payés", "body": "Le Salarié bénéficie de congés payés dans les conditions prévues par la loi et la convention collective applicable."},
+    {"id": "loi_applicable", "title": "Loi applicable", "body": "Le présent contrat est soumis au droit français. Tout litige relatif à son interprétation ou son exécution relève de la compétence du Conseil de prud'hommes."}
+  ]
+}
+

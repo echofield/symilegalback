@@ -1,0 +1,23 @@
+{
+  "metadata": {
+    "title": "Reconnaissance de dette",
+    "jurisdiction": "FR",
+    "governing_law": "France",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {"key": "debiteur", "label": "Nom du débiteur", "type": "text", "required": true},
+    {"key": "creancier", "label": "Nom du créancier", "type": "text", "required": true},
+    {"key": "montant", "label": "Montant de la dette (€)", "type": "number", "required": true},
+    {"key": "date_reconnaissance", "label": "Date de signature de la reconnaissance", "type": "date", "required": true},
+    {"key": "date_remboursement", "label": "Date de remboursement prévue", "type": "date", "required": true}
+  ],
+  "clauses": [
+    {"id": "parties", "title": "Parties", "body": "Je soussigné(e) {{debiteur}}, reconnais devoir à {{creancier}} la somme de {{montant}} euros."},
+    {"id": "motif", "title": "Origine de la dette", "body": "Cette somme correspond à un prêt d’argent consenti à titre personnel ou à tout autre engagement financier convenu entre les parties."},
+    {"id": "remboursement", "title": "Remboursement", "body": "Je m’engage à rembourser intégralement cette somme au plus tard le {{date_remboursement}}."},
+    {"id": "interets", "title": "Intérêts éventuels", "body": "Sauf convention contraire, la dette ne porte pas intérêt. Tout intérêt applicable devra être précisé dans une clause annexe."},
+    {"id": "preuve", "title": "Force probante", "body": "La présente reconnaissance de dette est rédigée en autant d’exemplaires que de parties et signée de la main du débiteur, en toutes lettres et chiffres, conformément à l’article 1326 du Code civil."},
+    {"id": "signature", "title": "Signature", "body": "Fait à [ville], le {{date_reconnaissance}}.\n\nSignature du débiteur précédée de la mention manuscrite : « Bon pour reconnaissance de dette de {{montant}} euros »."}
+  ]
+}

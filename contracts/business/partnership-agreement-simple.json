@@ -1,0 +1,113 @@
+{
+  "metadata": {
+    "title": "Partnership Agreement (Simple)",
+    "jurisdiction": "UK",
+    "governing_law": "England & Wales",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {
+      "key": "partner_1_name",
+      "label": "Partner 1 Name",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "partner_2_name",
+      "label": "Partner 2 Name",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "partnership_name",
+      "label": "Partnership Name",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "business_purpose",
+      "label": "Business purpose",
+      "type": "textarea",
+      "required": true
+    },
+    {
+      "key": "start_date",
+      "label": "Start date",
+      "type": "date",
+      "required": true
+    },
+    {
+      "key": "profit_split",
+      "label": "Profit split (e.g., 50/50, 60/40)",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "initial_capital",
+      "label": "Initial capital contribution by each partner",
+      "type": "text",
+      "required": true
+    }
+  ],
+  "clauses": [
+    {
+      "id": "formation",
+      "title": "Partnership Formation",
+      "body": "{{partner_1_name}} and {{partner_2_name}} (the 'Partners') agree to form a partnership called {{partnership_name}} starting {{start_date}}. The partnership's purpose is: {{business_purpose}}. The partnership will continue until terminated as described in this Agreement."
+    },
+    {
+      "id": "capital",
+      "title": "Capital Contributions",
+      "body": "Each Partner will contribute the following initial capital: {{initial_capital}}. Additional capital contributions may be required with unanimous consent. Partners will contribute equally unless otherwise agreed in writing."
+    },
+    {
+      "id": "profits",
+      "title": "Profits & Losses",
+      "body": "Profits and losses will be shared between the Partners according to this split: {{profit_split}}. Distributions will be made quarterly or as agreed by the Partners. Each Partner will pay tax on their share of profits individually."
+    },
+    {
+      "id": "management",
+      "title": "Management & Decisions",
+      "body": "Partners will jointly manage the partnership's business and make decisions together. Major decisions (expenditures over £5,000, new hires, or business direction changes) require unanimous agreement. Day-to-day operational decisions can be made by either Partner."
+    },
+    {
+      "id": "duties",
+      "title": "Partner Duties",
+      "body": "Each Partner will devote appropriate time and effort to the partnership's success. Partners must act in the partnership's best interest and not compete with the partnership or take business opportunities for personal gain."
+    },
+    {
+      "id": "withdrawal",
+      "title": "Withdrawal & Buyout",
+      "body": "A Partner may withdraw by giving 90 days' written notice. The remaining Partner may buy out the withdrawing Partner's share at fair market value, determined by an independent accountant. Payment may be made over 12 months."
+    },
+    {
+      "id": "termination",
+      "title": "Termination",
+      "body": "The partnership may be dissolved by mutual agreement or if required by law. Upon dissolution, assets will be used to pay debts first, then any remaining assets will be distributed to Partners according to their profit share percentages."
+    },
+    {
+      "id": "law",
+      "title": "Governing Law",
+      "body": "This Agreement is governed by the laws of England & Wales. Any disputes will first be addressed through good-faith negotiation, then mediation, before resorting to litigation."
+    },
+    {
+      "id": "signatures",
+      "title": "Signatures",
+      "body": "By signing below, both Partners agree to the terms of this Partnership Agreement.\n\nPartner 1: _________________ Date: _______\n\nPartner 2: _________________ Date: _______"
+    }
+  ],
+  "annotations": [
+    {
+      "clause_id": "management",
+      "tooltip": "Define decision-making thresholds to prevent deadlock situations."
+    },
+    {
+      "clause_id": "withdrawal",
+      "tooltip": "Include a fair buyout mechanism to handle partner departures."
+    },
+    {
+      "clause_id": "duties",
+      "tooltip": "Non-compete provisions protect the partnership's interests."
+    }
+  ]
+}

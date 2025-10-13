@@ -1,0 +1,78 @@
+{
+  "metadata": {
+    "title": "Room Rental / Lodger Agreement",
+    "jurisdiction": "UK",
+    "governing_law": "England & Wales",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {
+      "key": "party_a_name",
+      "label": "Party A (Owner/Client)",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "party_b_name",
+      "label": "Party B (Tenant/Provider)",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "service_or_property",
+      "label": "Property or Service Description",
+      "type": "textarea",
+      "required": true
+    },
+    {
+      "key": "fee",
+      "label": "Fee or Rent",
+      "type": "currency",
+      "required": true
+    },
+    {
+      "key": "term",
+      "label": "Duration",
+      "type": "text",
+      "required": true
+    }
+  ],
+  "clauses": [
+    {
+      "id": "scope",
+      "title": "Room Rental",
+      "body": "The Owner agrees to rent a room in the shared accommodation to the Lodger for residential purposes only. The Lodger shall have access to common areas as specified and agrees to follow house rules regarding quiet hours, guests, and shared facilities."
+    },
+    {
+      "id": "payment",
+      "title": "Rent and Utilities",
+      "body": "The Lodger shall pay £[fee] per month, due on the first day of each month. This amount includes [specify utilities included]. Payment shall be made via [payment method] to the Owner. Late payments may incur a fee of [amount] after [number] days."
+    },
+    {
+      "id": "responsibility",
+      "title": "Responsibilities",
+      "body": "The Owner maintains the property and common areas. The Lodger keeps their room clean and respects common areas. The Lodger shall not make alterations to the room or property without written consent. Both parties agree to maintain reasonable peace and quiet."
+    },
+    {
+      "id": "liability",
+      "title": "Liability and Deposit",
+      "body": "The Lodger has provided a security deposit of £[amount] which shall be returned within [number] days of termination, less any deductions for damages or unpaid rent. The Owner is not liable for the Lodger's personal property. The Lodger should obtain personal contents insurance."
+    },
+    {
+      "id": "termination",
+      "title": "Termination",
+      "body": "This agreement may be terminated by either party giving [number] days written notice. Immediate termination may occur for serious breaches including non-payment, property damage, or illegal activities. The Lodger must vacate the room by the termination date."
+    },
+    {
+      "id": "law",
+      "title": "Governing Law",
+      "body": "This agreement is governed by the laws of England and Wales."
+    }
+  ],
+  "annotations": [
+    {
+      "clause_id": "liability",
+      "tooltip": "Security deposit details and insurance recommendations for tenant's belongings."
+    }
+  ]
+}

@@ -1,0 +1,100 @@
+{
+  "metadata": {
+    "title": "Confidentiality Agreement (Employee)",
+    "jurisdiction": "US",
+    "governing_law": "New York",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {
+      "key": "company_name",
+      "label": "Company Name",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "employee_name",
+      "label": "Employee Name",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "job_title",
+      "label": "Job Title",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "effective_date",
+      "label": "Effective Date",
+      "type": "date",
+      "required": true
+    }
+  ],
+  "clauses": [
+    {
+      "id": "purpose",
+      "title": "Purpose",
+      "body": "This Confidentiality Agreement is entered into between {{company_name}} (the 'Company') and {{employee_name}} (the 'Employee'), effective {{effective_date}}. Due to the Employee's role as {{job_title}}, they will have access to sensitive Company information that must be protected."
+    },
+    {
+      "id": "confidential_info",
+      "title": "Confidential Information",
+      "body": "Confidential Information includes all non-public information about the Company's business, including trade secrets, customer lists, pricing, financial data, product plans, marketing strategies, source code, and business processes. It also includes information marked as confidential or that a reasonable person would understand to be confidential."
+    },
+    {
+      "id": "obligations",
+      "title": "Confidentiality Obligations",
+      "body": "The Employee agrees to keep all Confidential Information strictly private and not disclose it to anyone outside the Company without written authorization. The Employee will use Confidential Information only for performing their job duties. The Employee will take reasonable steps to protect Confidential Information from unauthorized access or disclosure."
+    },
+    {
+      "id": "exclusions",
+      "title": "Exclusions",
+      "body": "This Agreement doesn't apply to information that: (1) is or becomes publicly available through no fault of the Employee, (2) was known to the Employee before employment, (3) is independently developed by the Employee without using Company information, or (4) must be disclosed by law or court order (with advance notice to the Company when possible)."
+    },
+    {
+      "id": "return",
+      "title": "Return of Materials",
+      "body": "Upon termination of employment or upon request, the Employee will immediately return all Company property, documents, and materials containing Confidential Information. This includes physical and electronic copies. The Employee will certify in writing that all materials have been returned."
+    },
+    {
+      "id": "duration",
+      "title": "Duration",
+      "body": "The Employee's confidentiality obligations continue during employment and for 5 years after employment ends, or indefinitely for trade secrets. Some obligations, particularly regarding trade secrets, may continue as long as the information remains confidential and valuable."
+    },
+    {
+      "id": "remedies",
+      "title": "Remedies",
+      "body": "The Employee acknowledges that breach of this Agreement may cause irreparable harm to the Company. The Company may seek injunctive relief and damages for any breach. The Employee will be responsible for the Company's legal costs if the Company prevails in enforcing this Agreement."
+    },
+    {
+      "id": "survival",
+      "title": "Survival",
+      "body": "This Agreement survives the termination of employment. The obligations herein are in addition to, not in place of, any other confidentiality obligations the Employee may have under employment contracts or company policies."
+    },
+    {
+      "id": "law",
+      "title": "Governing Law",
+      "body": "This Agreement is governed by New York law. Any disputes will be resolved in the state or federal courts of New York."
+    },
+    {
+      "id": "signatures",
+      "title": "Signatures",
+      "body": "By signing below, the Employee acknowledges reading, understanding, and agreeing to this Confidentiality Agreement.\n\nEmployee: _________________ Date: _______\n\nCompany Representative: _________________ Date: _______"
+    }
+  ],
+  "annotations": [
+    {
+      "clause_id": "confidential_info",
+      "tooltip": "Broadly define what constitutes confidential information to ensure full protection."
+    },
+    {
+      "clause_id": "duration",
+      "tooltip": "5 years is reasonable for most information; trade secrets can be protected indefinitely."
+    },
+    {
+      "clause_id": "remedies",
+      "tooltip": "Injunctive relief is essential since monetary damages may not adequately compensate for disclosure."
+    }
+  ]
+}

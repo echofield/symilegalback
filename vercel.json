@@ -1,0 +1,17 @@
+{
+  "functions": {
+    "src/pages/api/export.ts": {
+      "runtime": "nodejs20.x",
+      "maxDuration": 60,
+      "memory": 1536
+    },
+    "src/pages/api/**.ts": {
+      "runtime": "nodejs20.x"
+    }
+  },
+  "env": {
+    "AI_PROVIDER": "openai"
+  }
+}
+
+

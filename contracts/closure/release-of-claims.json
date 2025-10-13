@@ -1,0 +1,46 @@
+{
+  "metadata": {
+    "title": "Release of Claims",
+    "jurisdiction": "UK | US",
+    "governing_law": "England & Wales | California",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {
+      "key": "releasor",
+      "label": "Releasor (person releasing)",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "releasee",
+      "label": "Releasee (person released)",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "amount",
+      "label": "Consideration amount",
+      "type": "currency",
+      "required": true
+    }
+  ],
+  "clauses": [
+    {
+      "id": "release",
+      "title": "Release",
+      "body": "{{releasor}} releases {{releasee}} from all claims arising prior to this date."
+    },
+    {
+      "id": "consideration",
+      "title": "Consideration",
+      "body": "This release is given in exchange for payment of {{amount}}."
+    },
+    {
+      "id": "law",
+      "title": "Governing Law",
+      "body": "Subject to {{governing_law}}."
+    }
+  ],
+  "annotations": []
+}

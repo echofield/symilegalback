@@ -1,0 +1,107 @@
+{
+  "metadata": {
+    "title": "Master Services Agreement (MSA)",
+    "jurisdiction": "UK",
+    "governing_law": "England & Wales",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {
+      "key": "provider_name",
+      "label": "Service Provider Name",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "client_name",
+      "label": "Client Name",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "services_description",
+      "label": "Describe the services",
+      "type": "textarea",
+      "required": true
+    },
+    {
+      "key": "start_date",
+      "label": "Start date",
+      "type": "date",
+      "required": true
+    },
+    {
+      "key": "payment_terms",
+      "label": "Payment terms (e.g., net 30)",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "notice_period",
+      "label": "Notice period for termination (days)",
+      "type": "number",
+      "required": true
+    }
+  ],
+  "clauses": [
+    {
+      "id": "definitions",
+      "title": "Definitions",
+      "body": "In this Agreement, 'Services' means {{services_description}}, 'Provider' means {{provider_name}}, and 'Client' means {{client_name}}. This Agreement sets out the framework for all future work orders between the parties."
+    },
+    {
+      "id": "scope",
+      "title": "Scope of Services",
+      "body": "The Provider will deliver the Services described in individual Statements of Work (SOWs) issued under this MSA. Each SOW will specify deliverables, timelines, and fees. The Provider will perform all Services professionally and in accordance with industry standards."
+    },
+    {
+      "id": "fees",
+      "title": "Fees & Payment",
+      "body": "The Client will pay fees as specified in each SOW, according to these payment terms: {{payment_terms}}. All invoices are due within the agreed timeframe. Late payments may incur interest at 3% above the Bank of England base rate."
+    },
+    {
+      "id": "confidentiality",
+      "title": "Confidentiality",
+      "body": "Both parties will keep all confidential information private and use it only for purposes of this Agreement. This obligation continues for 3 years after the Agreement ends. Confidential information doesn't include anything already public or independently developed."
+    },
+    {
+      "id": "ip",
+      "title": "Intellectual Property",
+      "body": "All work created by the Provider specifically for the Client under this Agreement becomes the Client's property once paid in full. The Provider retains ownership of any pre-existing materials, tools, or methodologies used in delivering the Services."
+    },
+    {
+      "id": "liability",
+      "title": "Limitation of Liability",
+      "body": "Neither party is liable for indirect, consequential, or special damages. Each party's total liability is capped at the fees paid in the 12 months before the claim arose. Nothing in this clause limits liability for death, personal injury, or fraud."
+    },
+    {
+      "id": "termination",
+      "title": "Termination",
+      "body": "Either party may terminate this Agreement with {{notice_period}} days' written notice. Either party may terminate immediately if the other materially breaches this Agreement and doesn't fix it within 14 days of being notified. Active SOWs will survive termination unless otherwise agreed."
+    },
+    {
+      "id": "law",
+      "title": "Governing Law",
+      "body": "This Agreement is governed by the laws of England & Wales. Any disputes will be resolved in the courts of England & Wales. Both parties agree to attempt good-faith negotiation before starting legal proceedings."
+    },
+    {
+      "id": "signatures",
+      "title": "Signatures",
+      "body": "By signing below, both parties agree to be bound by this Master Services Agreement from {{start_date}}.\n\nSigned for {{provider_name}}: _________________ Date: _______\n\nSigned for {{client_name}}: _________________ Date: _______"
+    }
+  ],
+  "annotations": [
+    {
+      "clause_id": "scope",
+      "tooltip": "SOWs allow flexibility for different projects under one framework agreement."
+    },
+    {
+      "clause_id": "ip",
+      "tooltip": "Clarify ownership early to avoid disputes over deliverables."
+    },
+    {
+      "clause_id": "liability",
+      "tooltip": "Caps should be reasonable and reflect the contract value."
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "metadata": {
+    "title": "Contract Termination Notice",
+    "jurisdiction": "UK | US",
+    "governing_law": "England & Wales | New York",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {
+      "key": "contract_name",
+      "label": "Contract Name",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "termination_date",
+      "label": "Termination Date",
+      "type": "date",
+      "required": true
+    },
+    {
+      "key": "reason",
+      "label": "Reason (optional)",
+      "type": "textarea",
+      "required": false
+    }
+  ],
+  "clauses": [
+    {
+      "id": "notice",
+      "title": "Notice",
+      "body": "This notice terminates the {{contract_name}} effective {{termination_date}}."
+    },
+    {
+      "id": "reason",
+      "title": "Reason",
+      "body": "Reason provided: {{reason}}."
+    },
+    {
+      "id": "law",
+      "title": "Governing Law",
+      "body": "This notice is subject to {{governing_law}}."
+    }
+  ],
+  "annotations": []
+}

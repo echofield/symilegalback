@@ -1,0 +1,29 @@
+{
+  "metadata": {
+    "title": "Bail de location meublée",
+    "jurisdiction": "FR",
+    "governing_law": "France",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {"key": "bailleur_nom", "label": "Nom du bailleur", "type": "text", "required": true},
+    {"key": "locataire_nom", "label": "Nom du locataire", "type": "text", "required": true},
+    {"key": "adresse_logement", "label": "Adresse du logement loué", "type": "textarea", "required": true},
+    {"key": "loyer", "label": "Loyer mensuel (€)", "type": "number", "required": true},
+    {"key": "charges", "label": "Montant des charges mensuelles (€)", "type": "number", "required": true},
+    {"key": "duree", "label": "Durée du bail (en mois)", "type": "number", "required": true},
+    {"key": "date_entree", "label": "Date d’entrée dans les lieux", "type": "date", "required": true}
+  ],
+  "clauses": [
+    {"id": "parties", "title": "Parties", "body": "Le présent contrat de location meublée est conclu entre {{bailleur_nom}}, ci-après dénommé « le Bailleur », et {{locataire_nom}}, ci-après dénommé « le Locataire »."},
+    {"id": "objet", "title": "Objet du bail", "body": "Le Bailleur loue au Locataire le logement meublé sis {{adresse_logement}}."},
+    {"id": "duree", "title": "Durée du bail", "body": "Le présent bail est conclu pour une durée de {{duree}} mois à compter du {{date_entree}}, renouvelable tacitement."},
+    {"id": "loyer_clause", "title": "Loyer et charges", "body": "Le loyer mensuel est fixé à {{loyer}} euros, auquel s’ajoutent des charges mensuelles de {{charges}} euros."},
+    {"id": "depot_garantie", "title": "Dépôt de garantie", "body": "Un dépôt de garantie équivalent à deux mois de loyer hors charges est versé à la signature du bail."},
+    {"id": "etat_des_lieux", "title": "État des lieux", "body": "Un état des lieux contradictoire est établi à l’entrée et à la sortie du Locataire."},
+    {"id": "meubles", "title": "Inventaire du mobilier", "body": "Un inventaire et un état détaillé du mobilier sont annexés au présent contrat, conformément à la réglementation."},
+    {"id": "resiliation", "title": "Résiliation", "body": "Le Locataire peut résilier le bail à tout moment avec un préavis d’un mois. Le Bailleur ne peut donner congé qu’à l’échéance du bail, sous conditions légales."},
+    {"id": "loi_applicable", "title": "Loi applicable", "body": "Le présent bail est soumis aux dispositions de la loi du 6 juillet 1989 relatives aux locations meublées à usage de résidence principale."}
+  ]
+}
+

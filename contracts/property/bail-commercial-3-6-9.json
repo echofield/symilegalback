@@ -1,0 +1,27 @@
+{
+  "metadata": {
+    "title": "Bail commercial (3-6-9)",
+    "jurisdiction": "FR",
+    "governing_law": "France",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {"key": "bailleur", "label": "Nom du bailleur", "type": "text", "required": true},
+    {"key": "preneur", "label": "Nom du locataire (preneur)", "type": "text", "required": true},
+    {"key": "adresse_locaux", "label": "Adresse des locaux loués", "type": "textarea", "required": true},
+    {"key": "loyer_mensuel", "label": "Montant du loyer mensuel (€)", "type": "number", "required": true},
+    {"key": "duree_bail", "label": "Durée du bail (en années)", "type": "number", "required": true},
+    {"key": "activite", "label": "Activité exercée", "type": "text", "required": true}
+  ],
+  "clauses": [
+    {"id": "parties", "title": "Parties", "body": "Le présent bail commercial est conclu entre {{bailleur}}, ci-après dénommé « le Bailleur », et {{preneur}}, ci-après dénommé « le Preneur »."},
+    {"id": "objet", "title": "Objet", "body": "Le Bailleur donne à bail au Preneur les locaux situés à {{adresse_locaux}}, destinés à l'exercice de l'activité suivante : {{activite}}."},
+    {"id": "duree", "title": "Durée", "body": "Le bail est consenti pour une durée de {{duree_bail}} ans à compter de la date d'entrée en jouissance."},
+    {"id": "loyer", "title": "Loyer", "body": "Le loyer est fixé à {{loyer_mensuel}} euros par mois, payable d'avance le premier jour de chaque mois."},
+    {"id": "charges", "title": "Charges et entretien", "body": "Le Preneur s'engage à supporter les charges locatives et à entretenir les locaux loués en bon état."},
+    {"id": "renouvellement", "title": "Renouvellement", "body": "À l'issue de la période initiale, le bail pourra être renouvelé selon les dispositions légales du Code de commerce."},
+    {"id": "resiliation", "title": "Résiliation", "body": "Le présent bail peut être résilié par le Preneur à l'expiration de chaque période triennale moyennant un préavis de six mois."},
+    {"id": "loi_applicable", "title": "Loi applicable", "body": "Le présent bail est régi par les dispositions du Code de commerce relatives aux baux commerciaux."}
+  ]
+}
+

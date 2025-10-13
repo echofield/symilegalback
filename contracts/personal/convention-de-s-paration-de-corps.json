@@ -1,0 +1,20 @@
+{
+  "metadata": {
+    "title": "Convention de séparation de corps",
+    "jurisdiction": "FR",
+    "governing_law": "France",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {"key": "epoux1_nom", "label": "Nom du premier époux", "type": "text", "required": true},
+    {"key": "epoux2_nom", "label": "Nom du second époux", "type": "text", "required": true},
+    {"key": "date_effet", "label": "Date d’effet de la séparation", "type": "date", "required": true}
+  ],
+  "clauses": [
+    {"id": "objet", "title": "Objet de la convention", "body": "Les époux {{epoux1_nom}} et {{epoux2_nom}} conviennent d’une séparation de corps dans les conditions prévues par le Code civil."},
+    {"id": "residence", "title": "Résidence séparée", "body": "Chacun des époux fixera sa résidence séparément à compter du {{date_effet}}."},
+    {"id": "obligations", "title": "Obligations réciproques", "body": "La séparation de corps ne met pas fin au mariage mais suspend le devoir de cohabitation."},
+    {"id": "liquidation", "title": "Liquidation du régime", "body": "Les époux s’accordent sur la répartition des biens communs conformément à l’accord notarié."}
+  ]
+}
+

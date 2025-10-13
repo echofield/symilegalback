@@ -1,0 +1,23 @@
+{
+  "metadata": {
+    "title": "Promesse synallagmatique de vente immobilière",
+    "jurisdiction": "FR",
+    "governing_law": "France",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {"key": "vendeur_nom", "label": "Nom du vendeur", "type": "text", "required": true},
+    {"key": "acheteur_nom", "label": "Nom de l’acheteur", "type": "text", "required": true},
+    {"key": "adresse_bien", "label": "Adresse du bien", "type": "text", "required": true},
+    {"key": "prix_vente", "label": "Prix de vente (€)", "type": "number", "required": true},
+    {"key": "date_signature", "label": "Date de signature", "type": "date", "required": true}
+  ],
+  "clauses": [
+    {"id": "objet", "title": "Objet de la promesse", "body": "Le présent acte constitue la promesse réciproque de vente du bien immobilier situé à {{adresse_bien}} entre {{vendeur_nom}} et {{acheteur_nom}}."},
+    {"id": "prix", "title": "Prix et modalités de paiement", "body": "Le prix convenu est de {{prix_vente}} €, payable selon les modalités définies chez le notaire."},
+    {"id": "conditions", "title": "Conditions suspensives", "body": "La vente est conclue sous réserve de l’obtention du prêt immobilier et de la purge du droit de préemption."},
+    {"id": "delai", "title": "Délai de réitération", "body": "La signature de l’acte authentique interviendra dans un délai de trois mois à compter du {{date_signature}}."},
+    {"id": "notaire", "title": "Notaire", "body": "Les parties désignent d’un commun accord le notaire chargé de la rédaction de l’acte définitif."}
+  ]
+}
+

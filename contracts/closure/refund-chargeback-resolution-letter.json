@@ -1,0 +1,52 @@
+{
+  "metadata": {
+    "title": "Refund / Chargeback Resolution Letter",
+    "jurisdiction": "UK | US",
+    "governing_law": "England & Wales | New York",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {
+      "key": "buyer_name",
+      "label": "Buyer Name",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "seller_name",
+      "label": "Seller Name",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "product",
+      "label": "Product or Service",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "amount",
+      "label": "Amount Disputed",
+      "type": "currency",
+      "required": true
+    }
+  ],
+  "clauses": [
+    {
+      "id": "background",
+      "title": "Background",
+      "body": "Buyer {{buyer_name}} and Seller {{seller_name}} seek to resolve a refund regarding {{product}}."
+    },
+    {
+      "id": "agreement",
+      "title": "Resolution",
+      "body": "Seller agrees to refund {{amount}} to Buyer within 10 business days."
+    },
+    {
+      "id": "law",
+      "title": "Governing Law",
+      "body": "Governed by {{governing_law}} law."
+    }
+  ],
+  "annotations": []
+}

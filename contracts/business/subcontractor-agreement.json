@@ -1,0 +1,52 @@
+{
+  "metadata": {
+    "title": "Subcontractor Agreement",
+    "jurisdiction": "UK | US",
+    "governing_law": "England & Wales | Texas",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {
+      "key": "contractor",
+      "label": "Primary Contractor",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "subcontractor",
+      "label": "Subcontractor",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "project",
+      "label": "Project Name",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "fee",
+      "label": "Fee",
+      "type": "currency",
+      "required": true
+    }
+  ],
+  "clauses": [
+    {
+      "id": "scope",
+      "title": "Scope",
+      "body": "Subcontractor performs part of {{project}} as defined by the contractor."
+    },
+    {
+      "id": "payment",
+      "title": "Payment",
+      "body": "Contractor pays {{fee}} after deliverables approval."
+    },
+    {
+      "id": "non_solicit",
+      "title": "Non-Solicitation",
+      "body": "Subcontractor will not approach Contractor’s clients directly for 12 months."
+    }
+  ],
+  "annotations": []
+}

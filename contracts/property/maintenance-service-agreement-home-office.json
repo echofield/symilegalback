@@ -1,0 +1,78 @@
+{
+  "metadata": {
+    "title": "Maintenance / Service Agreement (Home/Office)",
+    "jurisdiction": "US",
+    "governing_law": "New York",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {
+      "key": "party_a_name",
+      "label": "Party A (Owner/Client)",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "party_b_name",
+      "label": "Party B (Tenant/Provider)",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "service_or_property",
+      "label": "Property or Service Description",
+      "type": "textarea",
+      "required": true
+    },
+    {
+      "key": "fee",
+      "label": "Fee or Rent",
+      "type": "currency",
+      "required": true
+    },
+    {
+      "key": "term",
+      "label": "Duration",
+      "type": "text",
+      "required": true
+    }
+  ],
+  "clauses": [
+    {
+      "id": "scope",
+      "title": "Maintenance Services",
+      "body": "The Provider agrees to perform maintenance services for the Client at [service_or_property] as described: [detailed description of services]. Services include [specific tasks] performed [frequency]. Emergency services may be available outside normal hours at additional rates."
+    },
+    {
+      "id": "payment",
+      "title": "Service Fees",
+      "body": "The Client shall pay $[fee] per [service period] for the maintenance services, payable [payment terms]. Additional parts/materials are billed at cost plus [percentage]% markup. Invoices are due within [number] days of receipt. Late payments may incur [percentage]% monthly interest."
+    },
+    {
+      "id": "responsibility",
+      "title": "Service Standards",
+      "body": "The Provider shall: perform services in a workmanlike manner; use quality materials; comply with applicable codes; maintain insurance; and clean up after work. The Client shall: provide safe access; secure pets; and make necessary arrangements for Provider to perform work efficiently."
+    },
+    {
+      "id": "liability",
+      "title": "Warranties and Liability",
+      "body": "The Provider warrants workmanship for [number] days and manufacturer warranties apply to parts. The Provider is not liable for pre-existing conditions or damage not caused by negligence. Liability is limited to the service fee amount. The Client should maintain appropriate property insurance."
+    },
+    {
+      "id": "termination",
+      "title": "Term and Termination",
+      "body": "This agreement runs for [term] and automatically renews for successive [period] terms unless either party gives [number] days written notice. Either party may terminate immediately for material breach. The Client pays for services rendered up to termination date."
+    },
+    {
+      "id": "law",
+      "title": "Governing Law",
+      "body": "This agreement is governed by the laws of the State of New York."
+    }
+  ],
+  "annotations": [
+    {
+      "clause_id": "liability",
+      "tooltip": "Workmanship warranty period and limitations of liability for pre-existing conditions."
+    }
+  ]
+}

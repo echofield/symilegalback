@@ -1,0 +1,23 @@
+{
+  "metadata": {
+    "title": "Bail commercial",
+    "jurisdiction": "FR",
+    "governing_law": "France",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {"key": "bailleur_nom", "label": "Nom du bailleur", "type": "text", "required": true},
+    {"key": "preneur_nom", "label": "Nom du preneur (locataire)", "type": "text", "required": true},
+    {"key": "adresse_local", "label": "Adresse du local commercial", "type": "text", "required": true},
+    {"key": "loyer_annuel", "label": "Loyer annuel (€)", "type": "number", "required": true},
+    {"key": "duree_annees", "label": "Durée du bail (années)", "type": "number", "required": true}
+  ],
+  "clauses": [
+    {"id": "objet", "title": "Objet", "body": "Le présent bail a pour objet la location des locaux commerciaux situés à {{adresse_local}} appartenant à {{bailleur_nom}}."},
+    {"id": "duree", "title": "Durée", "body": "Le bail est consenti pour une durée de {{duree_annees}} ans conformément à l’article L145-4 du Code de commerce."},
+    {"id": "loyer", "title": "Loyer", "body": "Le loyer annuel est fixé à {{loyer_annuel}} € payable trimestriellement d’avance."},
+    {"id": "travaux", "title": "Travaux et entretien", "body": "Le preneur prendra à sa charge l’entretien courant et les réparations locatives."},
+    {"id": "renouvellement", "title": "Renouvellement", "body": "Le preneur bénéficie du droit au renouvellement selon les articles L145-1 et suivants du Code de commerce."}
+  ]
+}
+

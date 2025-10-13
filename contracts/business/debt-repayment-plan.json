@@ -1,0 +1,58 @@
+{
+  "metadata": {
+    "title": "Debt Repayment Plan",
+    "jurisdiction": "UK | US",
+    "governing_law": "England & Wales | Delaware",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {
+      "key": "debtor",
+      "label": "Debtor",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "creditor",
+      "label": "Creditor",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "total_debt",
+      "label": "Total Debt",
+      "type": "currency",
+      "required": true
+    },
+    {
+      "key": "installments",
+      "label": "Number of Installments",
+      "type": "number",
+      "required": true
+    },
+    {
+      "key": "installment_amount",
+      "label": "Installment Amount",
+      "type": "currency",
+      "required": true
+    }
+  ],
+  "clauses": [
+    {
+      "id": "acknowledge",
+      "title": "Acknowledgment",
+      "body": "{{debtor}} acknowledges owing {{total_debt}} to {{creditor}}."
+    },
+    {
+      "id": "repayment",
+      "title": "Repayment",
+      "body": "The debt will be paid in {{installments}} installments of {{installment_amount}} each."
+    },
+    {
+      "id": "default",
+      "title": "Default",
+      "body": "Defaulting on a payment may make the remaining balance due immediately."
+    }
+  ],
+  "annotations": []
+}
