@@ -65,6 +65,7 @@ export const ReviewResponseSchema = z.object({
 export const ExportRequestSchema = z.object({
   contract_text: z.string(),
   format: z.enum(['pdf', 'docx']),
+  html: z.string().optional(),
   metadata: z
     .object({
       version: z.string().optional(),

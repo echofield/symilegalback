@@ -16,11 +16,12 @@ function htmlFromText(text: string, header?: string, footer?: string): string {
   </body></html>`;
 }
 
-export async function generatePdfBuffer(text: string, meta?: { header?: string; footer?: string }): Promise<Buffer> {
+export async function generatePdfBuffer(text: string, meta?: { header?: string; footer?: string }, htmlOverride?: string): Promise<Buffer> {
   const browser = await puppeteer.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'] });
   try {
     const page = await browser.newPage();
-    await page.setContent(htmlFromText(text, meta?.header, meta?.footer), { waitUntil: 'load' });
+    const html = htmlOverride || htmlFromText(text, meta?.header, meta?.footer);
+    await page.setContent(html, { waitUntil: 'load' });
     const pdf = await page.pdf({ format: 'A4', printBackground: true, margin: { top: '20mm', bottom: '20mm', left: '16mm', right: '16mm' } });
     return Buffer.from(pdf);
   } finally {

@@ -10,7 +10,7 @@ import fs from 'fs/promises';
 const ResponseSchema = {} as any;
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { contract_text, format, metadata } = req.body as any;
+  const { contract_text, format, metadata, html } = req.body as any;
   const fileBase = `contract_${Date.now()}`;
   const outDir = path.join(process.cwd(), 'public', 'exports');
   await fs.mkdir(outDir, { recursive: true });
@@ -19,7 +19,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const meta = { header, footer };
   let buffer: Buffer;
   if (format === 'pdf') {
-    buffer = await generatePdfBuffer(contract_text, meta);
+    buffer = await generatePdfBuffer(contract_text, meta, html);
   } else {
     buffer = await exportDocx(contract_text, meta);
   }
