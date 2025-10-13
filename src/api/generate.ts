@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { withValidation } from '@/lib/validation/middleware';
+import { withCors } from '@/lib/http/cors';
 import { GenerateRequestSchema, GenerateResponseSchema } from '@/lib/validation/schemas';
 import { AppError } from '@/lib/errors';
 import { logger } from '@/lib/logger';
@@ -40,5 +41,5 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-export default withValidation(GenerateRequestSchema, GenerateResponseSchema, handler);
+export default withCors(withValidation(GenerateRequestSchema, GenerateResponseSchema, handler));
 

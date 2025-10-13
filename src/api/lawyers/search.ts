@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { withValidation } from '@/lib/validation/middleware';
+import { withCors } from '@/lib/http/cors';
 import { z } from 'zod';
 
 const RequestSchema = z.object({ q: z.string().min(1), near: z.string().optional() });
@@ -34,6 +35,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   return res.status(200).json({ results, timestamp: new Date().toISOString() });
 }
 
-export default withValidation(RequestSchema, ResponseSchema, handler);
+export default withCors(withValidation(RequestSchema, ResponseSchema, handler));
 
 

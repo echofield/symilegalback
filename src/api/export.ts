@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { withValidation } from '@/lib/validation/middleware';
+import { withCors } from '@/lib/http/cors';
 import { ExportRequestSchema } from '@/lib/validation/schemas';
 import { generatePdfBuffer } from '@/services/export/pdf';
 import { exportDocx } from '@/services/export/docx';
@@ -34,5 +35,5 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   setTimeout(() => { fs.rm(outPath).catch(() => {}); }, 30_000);
 }
 
-export default withValidation(ExportRequestSchema as any, ResponseSchema, handler);
+export default withCors(withValidation(ExportRequestSchema as any, ResponseSchema, handler));
 

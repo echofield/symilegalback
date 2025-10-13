@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { withValidation } from '@/lib/validation/middleware';
+import { withCors } from '@/lib/http/cors';
 import { ReviewRequestSchema, ReviewResponseSchema } from '@/lib/validation/schemas';
 import { getAIClient } from '@/services/ai/adapter';
 import { rateLimit } from '@/middleware/rateLimit';
@@ -19,5 +20,5 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-export default withValidation(ReviewRequestSchema, ReviewResponseSchema, handler);
+export default withCors(withValidation(ReviewRequestSchema, ReviewResponseSchema, handler));
 
