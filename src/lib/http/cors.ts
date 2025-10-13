@@ -1,11 +1,21 @@
 import type { NextApiHandler, NextApiRequest, NextApiResponse } from 'next';
 
+function normalize(url: string): string {
+	return url.replace(/\/$/, '');
+}
+
 function getAllowedOrigin(req: NextApiRequest): string {
-	const configured = (process.env.CORS_ORIGIN || '').split(',').map((s) => s.trim()).filter(Boolean);
-	const origin = (req.headers.origin as string) || '';
+	const configured = (process.env.CORS_ORIGIN || '')
+		.split(',')
+		.map((s) => normalize(s.trim()))
+		.filter(Boolean);
+	const rawOrigin = (req.headers.origin as string) || '';
+	const origin = normalize(rawOrigin);
 	if (configured.length === 0) return '*';
-	if (origin && configured.includes(origin)) return origin;
-	// fallback to the first configured origin
+	if (origin && configured.includes(origin)) return rawOrigin || origin;
+	// support wildcard
+	if (configured.includes('*')) return '*';
+	// fallback to the first configured origin (normalized)
 	return configured[0];
 }
 
