@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { withValidation } from '@/lib/validation/middleware';
 import { withCors } from '@/lib/http/cors';
 import { z } from 'zod';
+import { logger } from '@/lib/logger';
 
 const RequestSchema = z.object({ q: z.string().min(1), near: z.string().optional() });
 const ResponseSchema = z.object({
@@ -16,6 +17,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { q, near } = req.query as { q: string; near?: string };
 
   const key = process.env.GOOGLE_MAPS_API_KEY;
+  logger.info({ hasKey: Boolean(key) }, 'lawyers:search key presence');
   if (!key) return res.status(200).json({ results: [], timestamp: new Date().toISOString() });
 
   const params = new URLSearchParams({ query: q, key });
@@ -23,6 +25,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const url = `https://maps.googleapis.com/maps/api/place/textsearch/json?${params.toString()}`;
   const r = await fetch(url);
   const json = await r.json();
+  if (json?.status && json.status !== 'OK') {
+    logger.warn({ status: json.status, error_message: json.error_message }, 'lawyers:search places status');
+  }
   const results = (json.results || []).slice(0, 5).map((p: any) => ({
     name: p.name as string,
     address: p.formatted_address as string,

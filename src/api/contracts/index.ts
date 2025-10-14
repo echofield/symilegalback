@@ -1,16 +1,19 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { withValidation } from '@/lib/validation/middleware';
+import { withCors } from '@/lib/http/cors';
 import { z } from 'zod';
 import { loadContractsIndex } from '@/services/templates/loader';
 import fs from 'fs/promises';
 import path from 'path';
 import { ContractsIndexEntrySchema } from '@/lib/validation/schemas';
+import { logger } from '@/lib/logger';
 
 const RequestSchema = z.object({ jurisdiction: z.string().optional() });
 const ResponseSchema = z.object({ index: z.array(ContractsIndexEntrySchema), timestamp: z.string() });
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { jurisdiction } = req.query as { jurisdiction?: string };
+  logger.info({ jurisdiction }, 'contracts:index request');
   let index = await loadContractsIndex();
   if (jurisdiction) {
     // Filter by reading each file metadata.jurisdiction
@@ -30,8 +33,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     }
     index = filtered;
   }
+  logger.info({ count: index.length }, 'contracts:index response');
   return res.status(200).json({ index, timestamp: new Date().toISOString() });
 }
 
-export default withValidation(RequestSchema, ResponseSchema, handler);
+export default withCors(withValidation(RequestSchema, ResponseSchema, handler));
 
