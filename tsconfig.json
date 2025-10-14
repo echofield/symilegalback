@@ -30,6 +30,8 @@
   ],
   "exclude": [
     "node_modules",
-    "frontend/**"
+    "frontend/**",
+    "correction claude/**",
+    "symilegalback-hotfix/**"
   ]
 }

@@ -5,17 +5,16 @@ import { CONTRACTS_DIR, CONTRACTS_INDEX_FILE } from '@/config/constants';
 import { AppError, ErrorCode } from '@/lib/errors';
 import { logger } from '@/lib/logger';
 import { getCacheClient } from '@/services/cache/client';
+import contractsIndex from '../../../contracts/contracts_index.json';
 
 // Loads the contracts index from disk (cached)
 export async function loadContractsIndex(): Promise<ContractIndexEntry[]> {
+  // Static import guarantees bundling in serverless and avoids fs in prod
   const cache = await getCacheClient();
   const cacheKey = 'contracts:index';
   const cached = await cache.get(cacheKey);
   if (cached) return JSON.parse(cached);
-
-  const indexPath = path.join(process.cwd(), CONTRACTS_INDEX_FILE);
-  const data = await fs.readFile(indexPath, 'utf-8');
-  const index = JSON.parse(data) as ContractIndexEntry[];
+  const index = (contractsIndex as unknown) as ContractIndexEntry[];
   await cache.set(cacheKey, JSON.stringify(index), 60);
   return index;
 }

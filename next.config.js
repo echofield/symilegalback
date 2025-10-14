@@ -4,8 +4,7 @@ const nextConfig = {
   experimental: {
     typedRoutes: true,
     outputFileTracingIncludes: {
-      '/api/contracts': ['./contracts/**'],
-      '/api/contracts/[id]': ['./contracts/**']
+      '/api/**': ['./contracts/**']
     }
   }
 };
