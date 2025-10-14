@@ -1,7 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import inner from '@/api/contracts/index';
+import contractsIndex from '../../../../contracts/contracts_index.json';
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  return (inner as any)(req, res);
+export default function handler(_req: NextApiRequest, res: NextApiResponse) {
+  return res.status(200).json({
+    index: contractsIndex as any,
+    timestamp: new Date().toISOString()
+  });
 }
 
