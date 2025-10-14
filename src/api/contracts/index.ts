@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { withValidation } from '@/lib/validation/middleware';
 import { withCors } from '@/lib/http/cors';
 import { z } from 'zod';
-import { loadContractsIndex } from '@/services/templates/loader';
+import { loadContractsIndex, getJurisdictionMap } from '@/services/templates/loader';
 import { ContractsIndexEntrySchema } from '@/lib/validation/schemas';
 import { logger } from '@/lib/logger';
 
@@ -15,8 +15,13 @@ async function handler(req: NextApiRequest, _res: NextApiResponse) {
     console.log('contracts:index start', { jurisdiction });
     logger.info({ jurisdiction }, 'contracts:index request');
     let index = await loadContractsIndex();
-    if (jurisdiction && jurisdiction.toUpperCase() !== 'FR') {
-      index = [];
+    const j = (jurisdiction || '').toUpperCase();
+    if (j === 'FR' || j === 'EN') {
+      const map = await getJurisdictionMap();
+      index = index.filter((e) => map[e.id] === (j as 'FR' | 'EN'));
+    } else if (j && j !== '') {
+      // Reject unknown jurisdiction values for clarity
+      return { index: [], timestamp: new Date().toISOString() };
     }
     const payload = { index, timestamp: new Date().toISOString() };
     logger.info({ count: index.length }, 'contracts:index response');

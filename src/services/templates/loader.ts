@@ -19,6 +19,45 @@ export async function loadContractsIndex(): Promise<ContractIndexEntry[]> {
   return index;
 }
 
+// Builds a language/jurisdiction map (FR|EN) for each template id and caches it
+export async function getJurisdictionMap(): Promise<Record<string, 'FR' | 'EN'>> {
+  const cache = await getCacheClient();
+  const cacheKey = 'contracts:jurisdiction-map';
+  const cached = await cache.get(cacheKey);
+  if (cached) return JSON.parse(cached);
+
+  const index = await loadContractsIndex();
+  const result: Record<string, 'FR' | 'EN'> = {};
+
+  // Heuristic: prefer explicit metadata.jurisdiction; fallback to title accents
+  for (const entry of index) {
+    try {
+      const templatePath = path.join(process.cwd(), entry.path.replace(/^\//, ''));
+      const raw = await fs.readFile(templatePath, 'utf-8');
+      const tpl = JSON.parse(raw) as ContractTemplate;
+      const metaJur = String(tpl?.metadata?.jurisdiction || '').toUpperCase();
+      let lang: 'FR' | 'EN' = 'EN';
+      if (metaJur === 'FR' || metaJur === 'FRANCE' || /FR(\b|$)/.test(metaJur)) {
+        lang = 'FR';
+      } else {
+        // Quick language guess on title
+        const title = String(tpl?.metadata?.title || '');
+        if (/\b(le|la|les|de|du|des|contrat|avenant|bail|clause)\b/i.test(title)) {
+          lang = 'FR';
+        }
+        if (/[àâäéèêëîïôöùûüç]/i.test(title)) lang = 'FR';
+      }
+      result[entry.id] = lang;
+    } catch (err) {
+      // Default to EN on failure to avoid over-filtering
+      result[entry.id] = 'EN';
+    }
+  }
+
+  await cache.set(cacheKey, JSON.stringify(result), 600);
+  return result;
+}
+
 // Loads a contract template by id via the index (cached)
 export async function loadContractTemplate(id: string): Promise<ContractTemplate> {
   const index = await loadContractsIndex();
