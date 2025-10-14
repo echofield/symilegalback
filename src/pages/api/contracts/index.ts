@@ -10,9 +10,10 @@ const ResponseSchema = z.object({ index: z.array(ContractsIndexEntrySchema), tim
 
 async function handler(req: NextApiRequest, _res: NextApiResponse) {
   const { jurisdiction } = req.query as { jurisdiction?: string };
-  let index = contractsIndex as any[];
-  if (jurisdiction && jurisdiction.toUpperCase() !== 'FR') {
-    index = [];
+  let index = (contractsIndex as any[]).map((e) => ({ ...e, locale: e.path.includes('/contracts/') ? (e.path.includes('/employment/') || e.path.includes('/property/') || e.path.includes('/personal/') || e.path.includes('/closure/') || e.path.includes('/business/') ? 'FR' : 'EN') : 'EN' }));
+  if (jurisdiction) {
+    const j = jurisdiction.toUpperCase();
+    index = index.filter((e) => (j === 'FR' ? e.locale === 'FR' : j === 'EN' ? e.locale === 'EN' : true));
   }
   return { index, timestamp: new Date().toISOString() };
 }
