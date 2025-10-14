@@ -16,22 +16,11 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   logger.info({ jurisdiction }, 'contracts:index request');
   let index = await loadContractsIndex();
   if (jurisdiction) {
-    // Filter by reading each file metadata.jurisdiction
-    const root = process.cwd();
-    const filtered: typeof index = [];
-    for (const entry of index) {
-      try {
-        const filePath = path.join(root, entry.path.replace(/^\//, ''));
-        const raw = await fs.readFile(filePath, 'utf-8');
-        const json = JSON.parse(raw);
-        if (json?.metadata?.jurisdiction?.toUpperCase() === jurisdiction.toUpperCase()) {
-          filtered.push(entry);
-        }
-      } catch {
-        // ignore unreadable entries
-      }
+    const j = jurisdiction.toUpperCase();
+    // In production, templates are FR-only; avoid per-file disk reads in serverless
+    if (j !== 'FR') {
+      index = [];
     }
-    index = filtered;
   }
   logger.info({ count: index.length }, 'contracts:index response');
   return res.status(200).json({ index, timestamp: new Date().toISOString() });
