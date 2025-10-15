@@ -94,6 +94,18 @@ export const ContractsIndexEntrySchema = z.object({
   jurisdiction: z.string().optional(),
 });
 
+export const ContractSummarySchema = z.object({
+  id: z.string(),
+  title: z.string(),
+  description: z.string(),
+  category: z.string(),
+  categorySlug: z.string(),
+  jurisdiction: z.string().optional(),
+  lang: z.enum(['fr', 'en']),
+  keywords: z.array(z.string()).optional(),
+  path: z.string().optional(),
+});
+
 export const ContractTemplateSchema = z.object({
   metadata: z.object({
     title: z.string(),
