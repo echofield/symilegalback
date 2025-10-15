@@ -5,6 +5,8 @@ import { withValidation } from '@/lib/validation/middleware';
 import { z } from 'zod';
 import { ContractsIndexEntrySchema } from '@/lib/validation/schemas';
 
+export const runtime = 'nodejs';
+
 const RequestSchema = z.object({ jurisdiction: z.string().optional() });
 const ResponseSchema = z.object({ index: z.array(ContractsIndexEntrySchema), timestamp: z.string() });
 

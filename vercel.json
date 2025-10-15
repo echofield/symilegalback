@@ -1,6 +1,11 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "version": 2,
+  "functions": {
+    "src/pages/api/*.ts": {
+      "maxDuration": 10
+    }
+  },
   "env": {
     "AI_PROVIDER": "openai"
   },
@@ -8,5 +13,3 @@
   "outputDirectory": ".next",
   "framework": "nextjs"
 }
-
-
