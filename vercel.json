@@ -1,10 +1,13 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
   "version": 2,
   "env": {
     "AI_PROVIDER": "openai"
   },
   "functions": {
-    "src/api/export.ts": { "maxDuration": 30, "memory": 1024 }
+    "api/export.ts": {
+      "maxDuration": 10
+    }
   }
 }
 
