@@ -5,10 +5,9 @@
     "AI_PROVIDER": "openai"
   },
   "functions": {
-    "api/export.ts": {
-      "maxDuration": 10
+    "src/pages/api/**/*.ts": {
+      "maxDuration": 30
     }
-  }
+  },
+  "buildCommand": "npm run build"
 }
-
-
