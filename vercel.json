@@ -4,11 +4,9 @@
   "env": {
     "AI_PROVIDER": "openai"
   },
-  "functions": {
-    "src/pages/api/export.ts": {
-      "maxDuration": 10
-    }
-  }
+  "buildCommand": "npm run build",
+  "outputDirectory": ".next",
+  "framework": "nextjs"
 }
 
 
