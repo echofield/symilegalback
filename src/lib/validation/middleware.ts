@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { z } from 'zod';
-import { AppError, ErrorCode } from '@/lib/errors';
+import { AppError, ErrorCode, sendError } from '@/lib/errors';
 
 // Wraps handlers with request/response validation
 export function withValidation(
@@ -29,14 +29,12 @@ export function withValidation(
       }
     } catch (err: any) {
       if (err?.name === 'ZodError') {
-        const error = new AppError('Validation error', 400, ErrorCode.VALIDATION_ERROR);
-        return res.status(error.statusCode).json(error.toJSON());
+        return sendError(res, 400, ErrorCode.VALIDATION_ERROR, 'Validation error', err.errors ?? err);
       }
       if (err instanceof AppError) {
-        return res.status(err.statusCode).json(err.toJSON());
+        return res.status(err.statusCode).json(err.toResponse());
       }
-      const error = new AppError('Unexpected error', 500, ErrorCode.INTERNAL_ERROR);
-      return res.status(error.statusCode).json(error.toJSON());
+      return sendError(res, 500, ErrorCode.INTERNAL_ERROR, 'Unexpected error');
     }
   };
 }

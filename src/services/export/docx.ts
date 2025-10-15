@@ -1,8 +1,25 @@
 import { Document, Packer, Paragraph, HeadingLevel, TextRun, Header, Footer } from 'docx';
 
-export async function exportDocx(text: string, meta?: { header?: string; footer?: string }): Promise<Buffer> {
+interface DocxMetadata {
+  title?: string;
+  header?: string;
+  footer?: string;
+}
+
+export async function exportDocx(text: string, meta?: DocxMetadata): Promise<Buffer> {
   const lines = text.split(/\r?\n/);
   const children: Paragraph[] = [];
+
+  if (meta?.title) {
+    children.push(
+      new Paragraph({
+        text: meta.title,
+        heading: HeadingLevel.TITLE,
+      }),
+    );
+    children.push(new Paragraph(''));
+  }
+
   for (const line of lines) {
     if (!line.trim()) { children.push(new Paragraph('')); continue; }
     const headingMatch = /^(#+)\s*(.*)/.exec(line);
@@ -14,8 +31,12 @@ export async function exportDocx(text: string, meta?: { header?: string; footer?
     }
   }
 
-  const header = meta?.header ? new Header({ children: [new Paragraph({ children: [new TextRun({ text: meta.header, size: 18, color: '666666' })] })] }) : undefined;
-  const footer = meta?.footer ? new Footer({ children: [new Paragraph({ children: [new TextRun({ text: meta.footer, size: 18, color: '666666' })] })] }) : undefined;
+  const header = meta?.header
+    ? new Header({ children: [new Paragraph({ children: [new TextRun({ text: meta.header, size: 18, color: '666666' })] })] })
+    : undefined;
+  const footer = meta?.footer
+    ? new Footer({ children: [new Paragraph({ children: [new TextRun({ text: meta.footer, size: 18, color: '666666' })] })] })
+    : undefined;
 
   const doc = new Document({
     sections: [{

@@ -12,6 +12,9 @@
     "paths": {
       "@/*": [
         "src/*"
+      ],
+      "jspdf": [
+        "src/vendor/jspdf"
       ]
     },
     "esModuleInterop": true,
