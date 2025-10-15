@@ -40,6 +40,14 @@ export function middleware(req: NextRequest) {
     headers.set('Access-Control-Max-Age', '86400');
     return new NextResponse(null, { status: 204, headers });
   }
+  // Ensure all API responses carry ACAO
+  if (req.nextUrl.pathname.startsWith('/api/')) {
+    const allowOrigin = pickAllowedOrigin(req);
+    const res = NextResponse.next();
+    res.headers.set('Access-Control-Allow-Origin', allowOrigin);
+    res.headers.set('Vary', 'Origin');
+    return res;
+  }
   return NextResponse.next();
 }
 
