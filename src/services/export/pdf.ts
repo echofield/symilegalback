@@ -48,7 +48,7 @@ export async function generatePdfBuffer(text: string, meta?: { header?: string; 
   const chunks: Buffer[] = [];
   const doc = new PDFDocument({ size: 'A4', margins: { top: 50, bottom: 50, left: 50, right: 50 } });
   return await new Promise<Buffer>((resolve, reject) => {
-    doc.on('data', (c) => chunks.push(c as Buffer));
+    doc.on('data', (chunk: Buffer) => chunks.push(chunk));
     doc.on('error', reject);
     doc.on('end', () => resolve(Buffer.concat(chunks)));
 
