@@ -4,6 +4,8 @@ import path from 'path';
 import fs from 'fs/promises';
 import { withCors } from '@/lib/http/cors';
 
+export const runtime = 'nodejs';
+
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { id } = req.query as { id: string };
   const entry = (contractsIndex as any[]).find((e) => e.id === id);

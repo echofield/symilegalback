@@ -1,4 +1,5 @@
 import type { NextApiHandler, NextApiRequest, NextApiResponse } from 'next';
+import { env } from '@/config/env';
 
 function normalize(url: string): string {
         return url.replace(/\/$/, '');
@@ -13,10 +14,10 @@ function matchesPattern(origin: string, pattern: string): boolean {
 }
 
 function getAllowedOrigin(req: NextApiRequest): string {
-        const configured = (process.env.CORS_ORIGIN || '')
-		.split(',')
-		.map((s) => normalize(s.trim()))
-		.filter(Boolean);
+        const configured = (env.corsOrigin || '')
+                .split(',')
+                .map((s) => normalize(s.trim()))
+                .filter(Boolean);
 	const rawOrigin = (req.headers.origin as string) || '';
 	const origin = normalize(rawOrigin);
 	if (configured.length === 0) return '*';

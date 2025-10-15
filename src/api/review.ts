@@ -5,6 +5,7 @@ import { ReviewRequestSchema, ReviewResponseSchema } from '@/lib/validation/sche
 import { getAIClient } from '@/services/ai/adapter';
 import { rateLimit } from '@/middleware/rateLimit';
 import { startMonitor, endMonitor, logAIUsage } from '@/lib/monitoring';
+import { env } from '@/config/env';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   await rateLimit(req, res);
@@ -13,7 +14,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     const { contract_text } = req.body;
     const ai = getAIClient();
     const review = await ai.review(contract_text);
-    logAIUsage(requestId, '/api/review', Math.min(contract_text.length / 4, 2000), process.env.AI_PROVIDER || 'local');
+    logAIUsage(requestId, '/api/review', Math.min(contract_text.length / 4, 2000), env.aiProvider);
     return res.status(200).json({ ...review, timestamp: new Date().toISOString() });
   } finally {
     endMonitor(requestId, '/api/review', startTime);

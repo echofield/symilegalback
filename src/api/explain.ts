@@ -5,6 +5,7 @@ import { ExplainRequestSchema, ExplainResponseSchema } from '@/lib/validation/sc
 import { getAIClient } from '@/services/ai/adapter';
 import { rateLimit } from '@/middleware/rateLimit';
 import { startMonitor, endMonitor, logAIUsage } from '@/lib/monitoring';
+import { env } from '@/config/env';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   await rateLimit(req, res);
@@ -13,7 +14,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     const { text } = req.body;
     const ai = getAIClient();
     const explanation = await ai.explain(text);
-    logAIUsage(requestId, '/api/explain', Math.min(text.length / 4, 1000), process.env.AI_PROVIDER || 'local');
+    logAIUsage(requestId, '/api/explain', Math.min(text.length / 4, 1000), env.aiProvider);
     return res.status(200).json({ explanation, timestamp: new Date().toISOString() });
   } finally {
     endMonitor(requestId, '/api/explain', startTime);

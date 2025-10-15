@@ -6,11 +6,33 @@ export const GenerateRequestSchema = z.object({
   lawyer_mode: z.boolean().optional().default(false),
 });
 
+const ContractSectionSchema = z.object({
+  title: z.string(),
+  content: z.string(),
+});
+
+const ContractMetadataSchema = z
+  .object({
+    title: z.string(),
+    date: z.string(),
+    parties: z.record(z.any()),
+    generated_at: z.string(),
+    version: z.string(),
+    language: z.string(),
+  })
+  .catchall(z.any());
+
 export const GenerateResponseSchema = z.object({
+  success: z.literal(true),
+  contract: z.object({
+    formatted_text: z.string(),
+    html: z.string(),
+    sections: z.array(ContractSectionSchema),
+    metadata: ContractMetadataSchema,
+  }),
   contract_id: z.string(),
-  generated_text: z.string(),
-  timestamp: z.string(),
   lawyer_mode: z.boolean(),
+  request_id: z.string().optional(),
 });
 
 export const GetClausesRequestSchema = z.object({
@@ -63,8 +85,8 @@ export const ReviewResponseSchema = z.object({
 });
 
 export const ExportRequestSchema = z.object({
-  contract_text: z.string(),
-  format: z.enum(['pdf', 'docx']),
+  contract_text: z.string().min(1),
+  format: z.enum(['pdf', 'docx']).optional().default('pdf'),
   html: z.string().optional(),
   metadata: z
     .object({
@@ -72,6 +94,7 @@ export const ExportRequestSchema = z.object({
       author: z.string().optional(),
       date: z.string().optional(),
       review_status: z.string().optional(),
+      title: z.string().optional(),
     })
     .optional(),
 });
