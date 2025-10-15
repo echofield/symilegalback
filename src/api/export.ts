@@ -19,7 +19,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   const meta = { header, footer };
   let buffer: Buffer;
   if (format === 'pdf') {
-    buffer = await generatePdfBuffer(contract_text, meta, html);
+    buffer = await generatePdfBuffer(contract_text, meta);
   } else {
     buffer = await exportDocx(contract_text, meta);
   }
