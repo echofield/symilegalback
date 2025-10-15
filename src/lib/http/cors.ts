@@ -12,15 +12,23 @@ function matchesPattern(origin: string, pattern: string): boolean {
         return re.test(origin);
 }
 
+const DEFAULT_ALLOWED_ORIGINS = [
+        'https://symilegal.vercel.app',
+        'https://app.symilegal.com',
+        'http://localhost:5173',
+];
+
 function getAllowedOrigin(req: NextApiRequest): string {
         const configured = (process.env.CORS_ORIGIN || '')
-		.split(',')
-		.map((s) => normalize(s.trim()))
-		.filter(Boolean);
-	const rawOrigin = (req.headers.origin as string) || '';
-	const origin = normalize(rawOrigin);
-	if (configured.length === 0) return '*';
-        if (origin && configured.includes(origin)) return rawOrigin || origin;  
+                .split(',')
+                .map((s) => normalize(s.trim()))
+                .filter(Boolean);
+        if (configured.length === 0) {
+                configured.push(...DEFAULT_ALLOWED_ORIGINS);
+        }
+        const rawOrigin = (req.headers.origin as string) || '';
+        const origin = normalize(rawOrigin);
+        if (origin && configured.includes(origin)) return rawOrigin || origin;
         // support wildcard patterns like https://app-*.vercel.app
         for (const pat of configured) {
                 if (pat.includes('*') && origin && matchesPattern(origin, pat)) {

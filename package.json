@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
+    "build:contracts-data": "node scripts/build-contracts-data.js",
     "validate:contracts": "ts-node scripts/validate-contracts.ts",
     "openapi": "ts-node scripts/generate-openapi.ts",
     "seed": "ts-node scripts/seed-sample-users.ts",

@@ -6,11 +6,11 @@ import { exportDocx } from '@/services/export/docx';
 const ResponseSchema = {} as any;
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
+  if (req.method !== 'POST') return res.status(405).json({ error: true, message: 'Method not allowed' });
   try {
     const { contract_text, format = 'pdf', metadata = {} } = req.body as any;
     if (!contract_text || typeof contract_text !== 'string') {
-      return res.status(400).json({ error: 'Invalid request', message: 'contract_text is required' });
+      return res.status(400).json({ error: true, message: 'contract_text is required' });
     }
     let buffer: Buffer;
     let contentType = 'application/pdf';
@@ -24,16 +24,16 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       contentType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
       ext = 'docx';
     } else {
-      return res.status(400).json({ error: 'Invalid format' });
+      return res.status(400).json({ error: true, message: 'Invalid format' });
     }
 
     res.setHeader('Content-Type', contentType);
     res.setHeader('Content-Disposition', `attachment; filename="contract.${ext}"`);
     res.setHeader('Content-Length', buffer.length.toString());
-    res.send(buffer);
+    res.end(buffer);
   } catch (err: any) {
     console.error('Export error', err);
-    return res.status(500).json({ error: 'Export failed', message: err?.message || 'unknown' });
+    return res.status(500).json({ error: true, message: err?.message || 'Export failed' });
   }
 }
 
