@@ -1,39 +1,41 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { withValidation } from '@/lib/validation/middleware';
 import { withCors } from '@/lib/http/cors';
-import { ExportRequestSchema } from '@/lib/validation/schemas';
 import { generatePdfBuffer } from '@/services/export/pdf';
 import { exportDocx } from '@/services/export/docx';
-import path from 'path';
-import fs from 'fs/promises';
 
 const ResponseSchema = {} as any;
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { contract_text, format, metadata, html } = req.body as any;
-  const fileBase = `contract_${Date.now()}`;
-  const outDir = path.join(process.cwd(), 'public', 'exports');
-  await fs.mkdir(outDir, { recursive: true });
-  const header = `Version: ${metadata?.version || '1.0.0'}${metadata?.author ? ' • Author: ' + metadata.author : ''}`;
-  const footer = `Review: ${metadata?.review_status || 'n/a'} • ${new Date().toISOString()}`;
-  const meta = { header, footer };
-  let buffer: Buffer;
-  if (format === 'pdf') {
-    buffer = await generatePdfBuffer(contract_text, meta);
-  } else {
-    buffer = await exportDocx(contract_text, meta);
+  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
+  try {
+    const { contract_text, format = 'pdf', metadata = {} } = req.body as any;
+    if (!contract_text || typeof contract_text !== 'string') {
+      return res.status(400).json({ error: 'Invalid request', message: 'contract_text is required' });
+    }
+    let buffer: Buffer;
+    let contentType = 'application/pdf';
+    let ext = 'pdf';
+    if (format === 'pdf') {
+      const header = metadata?.version ? `Version: ${metadata.version}` : undefined;
+      const footer = new Date().toISOString().split('T')[0];
+      buffer = await generatePdfBuffer(contract_text, { header, footer });
+    } else if (format === 'docx') {
+      buffer = await exportDocx(contract_text, metadata);
+      contentType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+      ext = 'docx';
+    } else {
+      return res.status(400).json({ error: 'Invalid format' });
+    }
+
+    res.setHeader('Content-Type', contentType);
+    res.setHeader('Content-Disposition', `attachment; filename="contract.${ext}"`);
+    res.setHeader('Content-Length', buffer.length.toString());
+    res.send(buffer);
+  } catch (err: any) {
+    console.error('Export error', err);
+    return res.status(500).json({ error: 'Export failed', message: err?.message || 'unknown' });
   }
-  const filename = `${fileBase}.${format}`;
-  const outPath = path.join(outDir, filename);
-  await fs.writeFile(outPath, buffer);
-
-  // Stream file and then cleanup
-  res.setHeader('Content-Type', format === 'pdf' ? 'application/pdf' : 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
-  res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
-  res.send(buffer);
-
-  setTimeout(() => { fs.rm(outPath).catch(() => {}); }, 30_000);
 }
 
-export default withCors(withValidation(ExportRequestSchema as any, ResponseSchema, handler));
+export default withCors(handler);
 
