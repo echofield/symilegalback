@@ -4,9 +4,10 @@
   "env": {
     "AI_PROVIDER": "openai"
   },
+  "buildCommand": "npm run build",
   "functions": {
-    "api/export.ts": {
-      "maxDuration": 10
+    "src/api/*.ts": {
+      "maxDuration": 30
     }
   }
 }

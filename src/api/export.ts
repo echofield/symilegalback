@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { withCors } from '@/lib/http/cors';
+import { rateLimit } from '@/middleware/rateLimit';
 import { generatePdfBuffer } from '@/services/export/pdf';
 import { exportDocx } from '@/services/export/docx';
 
@@ -7,6 +8,8 @@ const ResponseSchema = {} as any;
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
+  await rateLimit(req, res);
+  if (res.headersSent) return;
   try {
     const { contract_text, format = 'pdf', metadata = {} } = req.body as any;
     if (!contract_text || typeof contract_text !== 'string') {
