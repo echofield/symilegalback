@@ -1,4 +1,4 @@
-import puppeteer from 'puppeteer';
+import PDFDocument from 'pdfkit';
 
 function htmlFromText(text: string, header?: string, footer?: string): string {
   const escaped = text
@@ -44,16 +44,30 @@ function htmlFromText(text: string, header?: string, footer?: string): string {
   </html>`;
 }
 
-export async function generatePdfBuffer(text: string, meta?: { header?: string; footer?: string }, htmlOverride?: string): Promise<Buffer> {
-  const browser = await puppeteer.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'] });
-  try {
-    const page = await browser.newPage();
-    const html = htmlOverride || htmlFromText(text, meta?.header, meta?.footer);
-    await page.setContent(html, { waitUntil: 'networkidle0' });
-    const pdf = await page.pdf({ format: 'A4', printBackground: true, margin: { top: '20mm', bottom: '20mm', left: '16mm', right: '16mm' } });
-    return Buffer.from(pdf);
-  } finally {
-    await browser.close();
-  }
+export async function generatePdfBuffer(text: string, meta?: { header?: string; footer?: string }): Promise<Buffer> {
+  const chunks: Buffer[] = [];
+  const doc = new PDFDocument({ size: 'A4', margins: { top: 50, bottom: 50, left: 50, right: 50 } });
+  return await new Promise<Buffer>((resolve, reject) => {
+    doc.on('data', (c) => chunks.push(c as Buffer));
+    doc.on('error', reject);
+    doc.on('end', () => resolve(Buffer.concat(chunks)));
+
+    if (meta?.header) {
+      doc.fontSize(10).fillColor('#666').text(meta.header, { align: 'center' });
+      doc.moveDown();
+    }
+
+    doc.fillColor('#000').fontSize(18).text('Contrat', { align: 'center' });
+    doc.moveDown();
+
+    doc.fontSize(12).fillColor('#111').text(text.replace(/\r\n/g, '\n'), { align: 'justify' });
+
+    if (meta?.footer) {
+      doc.moveDown();
+      doc.fontSize(10).fillColor('#666').text(meta.footer, { align: 'center' });
+    }
+
+    doc.end();
+  });
 }
 
