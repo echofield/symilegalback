@@ -1,3 +1,5 @@
+import type { NextApiResponse } from 'next';
+
 export enum ErrorCode {
   VALIDATION_ERROR = 'VALIDATION_ERROR',
   AUTHENTICATION_ERROR = 'AUTHENTICATION_ERROR',
@@ -8,51 +10,67 @@ export enum ErrorCode {
   EXPORT_FAILED = 'EXPORT_FAILED',
   TEMPLATE_NOT_FOUND = 'TEMPLATE_NOT_FOUND',
   CLAUSE_NOT_FOUND = 'CLAUSE_NOT_FOUND',
+  METHOD_NOT_ALLOWED = 'METHOD_NOT_ALLOWED',
+  RATE_LIMIT_EXCEEDED = 'RATE_LIMIT_EXCEEDED',
   INTERNAL_ERROR = 'INTERNAL_ERROR',
 }
 
-export class AppError extends Error {
-  public readonly code: ErrorCode;
-  public readonly statusCode: number;
+export interface ApiErrorResponse {
+  error: string;
+  message: string;
+  details?: unknown;
+  timestamp: string;
+}
 
-  constructor(message: string, statusCode: number = 500, code: ErrorCode = ErrorCode.INTERNAL_ERROR) {
+export class AppError extends Error {
+  public readonly code: string;
+  public readonly statusCode: number;
+  public readonly details?: unknown;
+
+  constructor(
+    message: string,
+    statusCode: number = 500,
+    code: ErrorCode | string = ErrorCode.INTERNAL_ERROR,
+    details?: unknown,
+  ) {
     super(message);
     this.name = 'AppError';
     this.code = code;
     this.statusCode = statusCode;
+    this.details = details;
     Error.captureStackTrace(this, AppError);
   }
 
-  toJSON() {
-    return {
-      error: true,
-      message: this.message,
-      code: this.code,
-    };
+  toResponse(): ApiErrorResponse {
+    return createErrorResponse(this.code, this.message, this.details);
   }
 }
 
-export function errorHandler(err: any, _req: any, res: any, _next: any) {
+export function createErrorResponse(code: string, message: string, details?: unknown): ApiErrorResponse {
+  return {
+    error: code,
+    message,
+    details,
+    timestamp: new Date().toISOString(),
+  };
+}
+
+export function sendError(res: NextApiResponse, statusCode: number, code: ErrorCode | string, message: string, details?: unknown) {
+  return res.status(statusCode).json(createErrorResponse(code, message, details));
+}
+
+export function errorHandler(err: unknown, _req: unknown, res: NextApiResponse, _next: unknown) {
   if (err instanceof AppError) {
-    return res.status(err.statusCode).json(err.toJSON());
+    return res.status(err.statusCode).json(err.toResponse());
   }
 
-  if (err?.name === 'ZodError') {
-    return res.status(400).json({
-      error: true,
-      message: 'Validation error',
-      code: ErrorCode.VALIDATION_ERROR,
-      details: err.errors,
-    });
+  if ((err as any)?.name === 'ZodError') {
+    return res.status(400).json(
+      createErrorResponse(ErrorCode.VALIDATION_ERROR, 'Validation error', (err as any)?.errors ?? (err as any)),
+    );
   }
 
-  // Default error
-  // eslint-disable-next-line no-console
   console.error('Unhandled error:', err);
-  return res.status(500).json({
-    error: true,
-    message: 'An unexpected error occurred',
-    code: ErrorCode.INTERNAL_ERROR,
-  });
+  return res.status(500).json(createErrorResponse(ErrorCode.INTERNAL_ERROR, 'An unexpected error occurred'));
 }
 
