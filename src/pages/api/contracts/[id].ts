@@ -41,6 +41,20 @@ function setCorsHeaders(res: NextApiResponse) {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 }
 
+const RATE_LIMIT_LIMIT = 60;
+const RATE_LIMIT_WINDOW_SECONDS = 60;
+
+function setRateLimitHeaders(res: NextApiResponse, remaining = RATE_LIMIT_LIMIT) {
+  const resetUnix = Math.floor(Date.now() / 1000) + RATE_LIMIT_WINDOW_SECONDS;
+  res.setHeader('X-RateLimit-Limit', String(RATE_LIMIT_LIMIT));
+  res.setHeader('X-RateLimit-Remaining', String(Math.max(0, Math.min(remaining, RATE_LIMIT_LIMIT))));
+  res.setHeader('X-RateLimit-Reset', String(resetUnix));
+}
+
+function setCacheHeaders(res: NextApiResponse) {
+  res.setHeader('Cache-Control', 's-maxage=300, stale-while-revalidate=300');
+}
+
 function parseId(query: NextApiRequest['query']): string | null {
   const raw = query?.id;
   const value = Array.isArray(raw) ? raw[0] : raw;
@@ -58,8 +72,18 @@ function resolveJurisdiction(query: NextApiRequest['query']): Jurisdiction | und
   return parseJurisdictionParam(value);
 }
 
-function normaliseMetadata(template: ContractTemplate, fallbackTitle: string, fallbackJurisdiction: Jurisdiction): ContractTemplate['metadata'] {
-  const metadata = template.metadata ?? { title: fallbackTitle, jurisdiction: fallbackJurisdiction, governing_law: fallbackJurisdiction, version: '1.0.0' };
+function normaliseMetadata(
+  template: ContractTemplate,
+  fallbackTitle: string,
+  fallbackJurisdiction: Jurisdiction,
+): ContractTemplate['metadata'] {
+  const metadata =
+    template.metadata ?? {
+      title: fallbackTitle,
+      jurisdiction: fallbackJurisdiction,
+      governing_law: fallbackJurisdiction,
+      version: '1.0.0',
+    };
   return {
     title: metadata.title || fallbackTitle,
     jurisdiction: metadata.jurisdiction || fallbackJurisdiction,
@@ -85,6 +109,7 @@ export default async function handler(
   res: NextApiResponse<TemplateResponse | ErrorResponse>,
 ): Promise<void> {
   setCorsHeaders(res);
+  setRateLimitHeaders(res);
 
   if (req.method === 'OPTIONS') {
     res.status(200).end();
@@ -103,8 +128,13 @@ export default async function handler(
       return;
     }
 
-    const jurisdiction = resolveJurisdiction(req.query);
-    const contract = findContractById(id, jurisdiction);
+    const explicitJurisdiction = resolveJurisdiction(req.query);
+    const jurisdiction = explicitJurisdiction ?? 'FR';
+    let contract = findContractById(id, jurisdiction);
+
+    if (!contract && explicitJurisdiction === undefined) {
+      contract = findContractById(id);
+    }
 
     if (!contract) {
       res.status(404).json({ error: true, message: 'Template not found', code: 'TEMPLATE_NOT_FOUND' });
@@ -130,6 +160,8 @@ export default async function handler(
       },
       timestamp: new Date().toISOString(),
     };
+
+    setCacheHeaders(res);
 
     if (isDev) {
       console.log('[contracts:id] returning template', contract.id, 'for jurisdiction', contract.jurisdiction);

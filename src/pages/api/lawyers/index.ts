@@ -36,6 +36,16 @@ function setCorsHeaders(res: NextApiResponse) {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 }
 
+const RATE_LIMIT_LIMIT = 60;
+const RATE_LIMIT_WINDOW_SECONDS = 60;
+
+function setRateLimitHeaders(res: NextApiResponse, remaining = RATE_LIMIT_LIMIT) {
+  const resetUnix = Math.floor(Date.now() / 1000) + RATE_LIMIT_WINDOW_SECONDS;
+  res.setHeader('X-RateLimit-Limit', String(RATE_LIMIT_LIMIT));
+  res.setHeader('X-RateLimit-Remaining', String(Math.max(0, Math.min(remaining, RATE_LIMIT_LIMIT))));
+  res.setHeader('X-RateLimit-Reset', String(resetUnix));
+}
+
 function parseBody(body: NextApiRequest['body']): Record<string, unknown> | null {
   if (!body) {
     return null;
@@ -133,6 +143,7 @@ export default async function handler(
   res: NextApiResponse<LawyersSuccessResponse | LawyersErrorResponse>,
 ): Promise<void> {
   setCorsHeaders(res);
+  setRateLimitHeaders(res);
 
   if (req.method === 'OPTIONS') {
     res.status(200).end();
