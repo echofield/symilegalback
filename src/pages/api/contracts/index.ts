@@ -1,61 +1,104 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import frContracts from '@/lib/data/contracts-fr.json';
-import enContracts from '@/lib/data/contracts-en.json';
-import { organizeContracts, type ContractSummary } from '@/lib/organizeContracts';
-import { withCors } from '@/lib/http/cors';
-import { withValidation } from '@/lib/validation/middleware';
-import { z } from 'zod';
-import { ContractSummarySchema } from '@/lib/validation/schemas';
 
 export const runtime = 'nodejs';
 
-const RequestSchema = z.object({
-  lang: z.enum(['fr', 'en']).optional(),
-  category: z.string().optional(),
-});
+type IndexEntry = {
+  id: string;
+  title: string;
+  category: string;
+  lang: 'fr' | 'en';
+};
 
-const GroupedContractSchema = z.record(z.array(ContractSummarySchema));
+type ContractsResponse = {
+  contracts: IndexEntry[];
+};
 
-const ResponseSchema = z.object({
-  fr: GroupedContractSchema,
-  en: GroupedContractSchema,
-  flat: z.array(ContractSummarySchema),
-  timestamp: z.string(),
-});
+const isDev = process.env.NODE_ENV !== 'production';
 
-async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { lang, category } = req.query as { lang?: 'fr' | 'en'; category?: string };
-
-  if (req.method !== 'GET') {
-    return res.status(405).json({ error: true, message: 'Method not allowed' });
-  }
-
-  const data = organizeContracts({
-    fr: frContracts as ContractSummary[],
-    en: enContracts as ContractSummary[],
-  });
-
-  if (lang && category) {
-    const filtered = data[lang][category] ?? [];
-    return {
-      fr: lang === 'fr' ? { [category]: filtered } : {},
-      en: lang === 'en' ? { [category]: filtered } : {},
-      flat: filtered,
-      timestamp: new Date().toISOString(),
-    };
-  }
-
-  if (lang) {
-    return {
-      fr: lang === 'fr' ? data.fr : {},
-      en: lang === 'en' ? data.en : {},
-      flat: lang === 'fr' ? data.flat.filter((c) => c.lang === 'fr') : data.flat.filter((c) => c.lang === 'en'),
-      timestamp: new Date().toISOString(),
-    };
-  }
-
-  return { ...data, timestamp: new Date().toISOString() };
+function setCorsHeaders(res: NextApiResponse) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 }
 
-export default withCors(withValidation(RequestSchema, ResponseSchema, handler));
+function normaliseContracts(data: unknown, lang: 'fr' | 'en'): IndexEntry[] {
+  if (!Array.isArray(data)) {
+    return [];
+  }
 
+  return data.flatMap((entry) => {
+    if (!entry || typeof entry !== 'object') {
+      return [] as IndexEntry[];
+    }
+
+    const { id, title, category } = entry as Record<string, unknown>;
+
+    if (typeof id === 'string' && typeof title === 'string' && typeof category === 'string') {
+      return [
+        {
+          id,
+          title,
+          category,
+          lang,
+        },
+      ];
+    }
+
+    return [] as IndexEntry[];
+  });
+}
+
+async function loadContracts(): Promise<IndexEntry[]> {
+  try {
+    const [{ default: frContracts }, { default: enContracts }] = await Promise.all([
+      import('@/lib/data/contracts-fr.json'),
+      import('@/lib/data/contracts-en.json'),
+    ]);
+
+    return [
+      ...normaliseContracts(frContracts, 'fr'),
+      ...normaliseContracts(enContracts, 'en'),
+    ];
+  } catch (error) {
+    if (isDev) {
+      console.error('[contracts] Failed to load contract data', error);
+    }
+    return [];
+  }
+}
+
+function parseLang(query: NextApiRequest['query']): 'fr' | 'en' | undefined {
+  const langParam = query?.lang;
+  const value = Array.isArray(langParam) ? langParam[0] : langParam;
+
+  if (value === 'fr' || value === 'en') {
+    return value;
+  }
+
+  return undefined;
+}
+
+async function handler(req: NextApiRequest, res: NextApiResponse<ContractsResponse | { error: string }>) {
+  setCorsHeaders(res);
+
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+
+  if (req.method !== 'GET') {
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
+
+  const langFilter = parseLang(req.query);
+
+  const contracts = await loadContracts();
+  const filteredContracts = langFilter ? contracts.filter((contract) => contract.lang === langFilter) : contracts;
+
+  if (isDev) {
+    console.log('[contracts] Returning', filteredContracts.length, 'contracts');
+  }
+
+  return res.status(200).json({ contracts: filteredContracts });
+}
+
+export default handler;
