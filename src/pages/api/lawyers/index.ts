@@ -2,17 +2,30 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 
 export const runtime = 'nodejs';
 
+type LawyersRequestBody = {
+  query?: unknown;
+  lat?: unknown;
+  lng?: unknown;
+};
+
 type Lawyer = {
+  id: string;
   name: string;
-  address: string;
+  firm: string;
+  practiceAreas: string[];
   rating: number;
-  lat: number;
-  lng: number;
+  yearsExperience: number;
+  hourlyRate: number;
+  coordinates: {
+    lat: number;
+    lng: number;
+  };
 };
 
 type LawyersSuccessResponse = {
+  error: false;
   lawyers: Lawyer[];
-  timestamp: string;
+  total: number;
 };
 
 type LawyersErrorResponse = {
@@ -24,15 +37,9 @@ const isDev = process.env.NODE_ENV !== 'production';
 
 function setCorsHeaders(res: NextApiResponse) {
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST,OPTIONS');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 }
-
-type LawyersRequestBody = {
-  query?: unknown;
-  lat?: unknown;
-  lng?: unknown;
-};
 
 function parseRequestBody(body: NextApiRequest['body']): LawyersRequestBody | null {
   if (!body) {
@@ -57,45 +64,78 @@ function parseRequestBody(body: NextApiRequest['body']): LawyersRequestBody | nu
   return null;
 }
 
-function validateCoordinates(lat: unknown, lng: unknown): boolean {
-  const hasLat = typeof lat !== 'undefined';
-  const hasLng = typeof lng !== 'undefined';
-
-  if (!hasLat && !hasLng) {
-    return true;
+function parseCoordinate(value: unknown): number | null {
+  if (typeof value === 'number' && Number.isFinite(value)) {
+    return value;
   }
-
-  if (typeof lat === 'number' && typeof lng === 'number') {
-    return Number.isFinite(lat) && Number.isFinite(lng);
+  if (typeof value === 'string') {
+    const parsed = Number.parseFloat(value);
+    if (!Number.isNaN(parsed) && Number.isFinite(parsed)) {
+      return parsed;
+    }
   }
-
-  return false;
+  return null;
 }
 
-function buildMockLawyers(): Lawyer[] {
-  return [
-    {
-      name: 'Cabinet Dupont',
-      address: '10 Rue de Rivoli, Paris',
-      rating: 4.8,
-      lat: 48.8566,
-      lng: 2.3522,
-    },
-    {
-      name: 'Étude Lemoine',
-      address: '5 Boulevard Sébastopol, Paris',
-      rating: 4.7,
-      lat: 48.8625,
-      lng: 2.3494,
-    },
-    {
-      name: 'Cabinet Rousseau',
-      address: '8 Avenue Voltaire, Paris',
-      rating: 4.6,
-      lat: 48.8578,
-      lng: 2.3695,
-    },
-  ];
+const LAW_FIRM_NAMES = [
+  'Cabinet Dupont & Associés',
+  'Étude Lemoine',
+  'Cabinet Rousseau',
+  'Juridica Conseil',
+  'Lex & Partners',
+  'Alliance Avocats',
+  'Cabinet Monet',
+  'Groupe Thémis',
+  'Cabinet Valois',
+  'Justitia Groupe',
+];
+
+const PRACTICE_AREAS = [
+  'Employment Law',
+  'Contract Law',
+  'Corporate Law',
+  'Labour Relations',
+  'Litigation',
+  'Compliance',
+];
+
+function pickPracticeAreas(): string[] {
+  const shuffled = [...PRACTICE_AREAS].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, 3);
+}
+
+function generateMockLawyers(query: string, lat: number, lng: number): Lawyer[] {
+  const total = 5 + Math.floor(Math.random() * 6);
+  const lawyers: Lawyer[] = [];
+
+  for (let index = 0; index < total; index += 1) {
+    const baseName = LAW_FIRM_NAMES[index % LAW_FIRM_NAMES.length];
+    const latOffset = (Math.random() - 0.5) * 0.1;
+    const lngOffset = (Math.random() - 0.5) * 0.1;
+    const rating = Number.parseFloat((4.2 + Math.random() * 0.7).toFixed(1));
+    const yearsExperience = 5 + Math.floor(Math.random() * 21);
+    const hourlyRate = 150 + Math.floor(Math.random() * 151);
+
+    lawyers.push({
+      id: `${index + 1}`,
+      name: `${baseName.split(' ')[0]} ${index + 1}`,
+      firm: baseName,
+      practiceAreas: pickPracticeAreas(),
+      rating,
+      yearsExperience,
+      hourlyRate,
+      coordinates: {
+        lat: Number.parseFloat((lat + latOffset).toFixed(6)),
+        lng: Number.parseFloat((lng + lngOffset).toFixed(6)),
+      },
+    });
+  }
+
+  if (isDev) {
+    console.log('[lawyers] Generated', lawyers.length, 'mock lawyers for query', query);
+  }
+
+  return lawyers;
 }
 
 async function handler(
@@ -114,23 +154,26 @@ async function handler(
     return;
   }
 
-  const parsedBody = parseRequestBody(req.body);
-  const query = parsedBody?.query;
-  const { lat, lng } = parsedBody ?? {};
+  try {
+    const parsedBody = parseRequestBody(req.body);
+    const query = parsedBody?.query;
+    const lat = parseCoordinate(parsedBody?.lat ?? null);
+    const lng = parseCoordinate(parsedBody?.lng ?? null);
 
-  if (typeof query !== 'string' || query.trim().length === 0 || !validateCoordinates(lat, lng)) {
-    res.status(400).json({ error: true, message: 'Validation error' });
-    return;
+    if (typeof query !== 'string' || query.trim().length === 0 || lat === null || lng === null) {
+      res.status(400).json({ error: true, message: 'Validation error' });
+      return;
+    }
+
+    const lawyers = generateMockLawyers(query.trim(), lat, lng);
+
+    res.status(200).json({ error: false, lawyers, total: lawyers.length });
+  } catch (error) {
+    if (isDev) {
+      console.error('[lawyers] Unexpected error', error);
+    }
+    res.status(500).json({ error: true, message: 'Server error' });
   }
-
-  const lawyers = buildMockLawyers();
-  const timestamp = new Date().toISOString();
-
-  if (isDev) {
-    console.log('[lawyers] Returning', lawyers.length, 'mock lawyers for query');
-  }
-
-  res.status(200).json({ lawyers, timestamp });
 }
 
 export default handler;

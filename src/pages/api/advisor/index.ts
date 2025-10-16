@@ -2,16 +2,16 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 
 export const runtime = 'nodejs';
 
-type AdvisorAction = {
-  type: string;
-  args: Record<string, unknown>;
+type AdvisorRequestBody = {
+  question?: unknown;
 };
 
 type AdvisorSuccessResponse = {
-  output: {
-    reply_text: string;
-    action: AdvisorAction;
-  };
+  error: false;
+  answer: string;
+  suggestions: string[];
+  relatedTopics: string[];
+  confidence: number;
 };
 
 type AdvisorErrorResponse = {
@@ -23,13 +23,9 @@ const isDev = process.env.NODE_ENV !== 'production';
 
 function setCorsHeaders(res: NextApiResponse) {
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST,OPTIONS');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 }
-
-type AdvisorRequestBody = {
-  question?: unknown;
-};
 
 function parseRequestBody(body: NextApiRequest['body']): AdvisorRequestBody | null {
   if (!body) {
@@ -54,36 +50,6 @@ function parseRequestBody(body: NextApiRequest['body']): AdvisorRequestBody | nu
   return null;
 }
 
-function buildResponse(question: string): AdvisorSuccessResponse {
-  const normalised = question.toLowerCase();
-
-  if (normalised.includes('cdd') || normalised.includes('licenciement') || normalised.includes('rupture')) {
-    const response: AdvisorSuccessResponse = {
-      output: {
-        reply_text: 'Vous pouvez utiliser le modèle de rupture de contrat de travail (CDD).',
-        action: { type: 'suggest_contract', args: { topic: 'rupture CDD' } },
-      },
-    };
-
-    if (isDev) {
-      console.log('[advisor] Matched rupture keywords for question');
-    }
-
-    return response;
-  }
-
-  if (isDev) {
-    console.log('[advisor] Using fallback response for question');
-  }
-
-  return {
-    output: {
-      reply_text: 'Je ne suis pas certain, mais vous pouvez consulter nos modèles de contrat.',
-      action: { type: 'suggest_contract', args: { topic: 'general' } },
-    },
-  };
-}
-
 async function handler(
   req: NextApiRequest,
   res: NextApiResponse<AdvisorSuccessResponse | AdvisorErrorResponse>,
@@ -100,16 +66,50 @@ async function handler(
     return;
   }
 
-  const parsedBody = parseRequestBody(req.body);
-  const question = parsedBody?.question;
+  try {
+    const parsedBody = parseRequestBody(req.body);
+    const question = parsedBody?.question;
 
-  if (typeof question !== 'string' || question.trim().length === 0) {
-    res.status(400).json({ error: true, message: 'Validation error' });
-    return;
+    if (typeof question !== 'string' || question.trim().length === 0) {
+      res.status(400).json({ error: true, message: 'Invalid question' });
+      return;
+    }
+
+    const trimmedQuestion = question.trim();
+    const lowerQuestion = trimmedQuestion.toLowerCase();
+    const replyFocus = lowerQuestion.includes('licenciement')
+      ? 'licenciement'
+      : lowerQuestion.includes('cdd')
+      ? 'contrats à durée déterminée'
+      : lowerQuestion.includes('rupture')
+      ? 'rupture de contrat'
+      : trimmedQuestion;
+
+    const suggestions = [
+      'Consultez les obligations légales applicables à votre situation.',
+      'Préparez les documents nécessaires avant de lancer vos démarches.',
+      "Planifiez un rendez-vous avec un spécialiste pour valider votre stratégie.",
+    ];
+
+    const response: AdvisorSuccessResponse = {
+      error: false,
+      answer: `Based on your question about ${replyFocus}, voici les prochaines étapes recommandées.`,
+      suggestions,
+      relatedTopics: ['Contract Law', 'Employment Law'],
+      confidence: 0.83,
+    };
+
+    if (isDev) {
+      console.log('[advisor] Responding to question', trimmedQuestion);
+    }
+
+    res.status(200).json(response);
+  } catch (error) {
+    if (isDev) {
+      console.error('[advisor] Unexpected error', error);
+    }
+    res.status(500).json({ error: true, message: 'Server error' });
   }
-
-  const response = buildResponse(question);
-  res.status(200).json(response);
 }
 
 export default handler;
