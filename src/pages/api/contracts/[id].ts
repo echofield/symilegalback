@@ -25,17 +25,6 @@ function setCorsHeaders(res: NextApiResponse) {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 }
 
-function parseId(query: NextApiRequest['query']): string | null {
-  const idParam = query?.id;
-  const value = Array.isArray(idParam) ? idParam[0] : idParam;
-
-  if (typeof value === 'string' && value.trim().length > 0) {
-    return value;
-  }
-
-  return null;
-}
-
 function normaliseTemplates(data: unknown, lang: 'fr' | 'en'): ContractTemplate[] {
   if (!Array.isArray(data)) {
     return [];
@@ -46,8 +35,7 @@ function normaliseTemplates(data: unknown, lang: 'fr' | 'en'): ContractTemplate[
       return [] as ContractTemplate[];
     }
 
-    const record = entry as Record<string, unknown>;
-    const id = record.id;
+    const { id, ...rest } = entry as Record<string, unknown>;
 
     if (typeof id !== 'string' || id.trim().length === 0) {
       return [] as ContractTemplate[];
@@ -55,7 +43,7 @@ function normaliseTemplates(data: unknown, lang: 'fr' | 'en'): ContractTemplate[
 
     return [
       {
-        ...record,
+        ...rest,
         id,
         lang,
       },
@@ -63,26 +51,7 @@ function normaliseTemplates(data: unknown, lang: 'fr' | 'en'): ContractTemplate[
   });
 }
 
-async function loadTemplates(): Promise<ContractTemplate[] | null> {
-  try {
-    const [{ default: frTemplates }, { default: enTemplates }] = await Promise.all([
-      import('@/lib/data/contracts-fr.json'),
-      import('@/lib/data/contracts-en.json'),
-    ]);
-
-    return [
-      ...normaliseTemplates(frTemplates, 'fr'),
-      ...normaliseTemplates(enTemplates, 'en'),
-    ];
-  } catch (error) {
-    if (isDev) {
-      console.error('[contracts:id] Failed to load contract templates', error);
-    }
-    return null;
-  }
-}
-
-async function handler(
+export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<TemplateSuccessResponse | TemplateErrorResponse>,
 ): Promise<void> {
@@ -99,21 +68,25 @@ async function handler(
   }
 
   try {
-    const contractId = parseId(req.query);
+    const idParam = req.query?.id;
+    const contractId = Array.isArray(idParam) ? idParam[0] : idParam;
 
-    if (!contractId) {
+    if (typeof contractId !== 'string' || contractId.trim().length === 0) {
       res.status(400).json({ error: true, message: 'Validation error' });
       return;
     }
 
-    const templates = await loadTemplates();
+    const [{ default: frTemplates }, { default: enTemplates }] = await Promise.all([
+      import('@/lib/data/contracts-fr.json'),
+      import('@/lib/data/contracts-en.json'),
+    ]);
 
-    if (!templates) {
-      res.status(500).json({ error: true, message: 'Server error' });
-      return;
-    }
+    const templates = [
+      ...normaliseTemplates(frTemplates, 'fr'),
+      ...normaliseTemplates(enTemplates, 'en'),
+    ];
 
-    const template = templates.find((entry) => entry.id === contractId);
+    const template = templates.find((entry) => entry.id === contractId.trim());
 
     if (!template) {
       res.status(404).json({ error: true, message: 'Template not found' });
@@ -121,16 +94,15 @@ async function handler(
     }
 
     if (isDev) {
-      console.log('[contracts:id] Returning template', template.id, 'for lang', template.lang);
+      console.log('[contracts:id] Returning template', template.id);
     }
 
     res.status(200).json({ template });
   } catch (error) {
     if (isDev) {
-      console.error('[contracts:id] Unexpected error', error);
+      console.error('[contracts:id] Failed to resolve template', error);
     }
+
     res.status(500).json({ error: true, message: 'Server error' });
   }
 }
-
-export default handler;

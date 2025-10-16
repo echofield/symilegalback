@@ -2,10 +2,6 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 
 export const runtime = 'nodejs';
 
-type AdvisorRequestBody = {
-  question?: unknown;
-};
-
 type AdvisorSuccessResponse = {
   error: false;
   answer: string;
@@ -27,30 +23,30 @@ function setCorsHeaders(res: NextApiResponse) {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 }
 
-function parseRequestBody(body: NextApiRequest['body']): AdvisorRequestBody | null {
+function parseBody(body: NextApiRequest['body']): Record<string, unknown> | null {
   if (!body) {
     return null;
   }
 
   if (typeof body === 'string') {
     try {
-      return JSON.parse(body) as AdvisorRequestBody;
+      return JSON.parse(body) as Record<string, unknown>;
     } catch (error) {
       if (isDev) {
-        console.error('[advisor] Failed to parse JSON body', error);
+        console.error('[advisor] Failed to parse body', error);
       }
       return null;
     }
   }
 
   if (typeof body === 'object') {
-    return body as AdvisorRequestBody;
+    return body as Record<string, unknown>;
   }
 
   return null;
 }
 
-async function handler(
+export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<AdvisorSuccessResponse | AdvisorErrorResponse>,
 ): Promise<void> {
@@ -67,8 +63,8 @@ async function handler(
   }
 
   try {
-    const parsedBody = parseRequestBody(req.body);
-    const question = parsedBody?.question;
+    const parsed = parseBody(req.body);
+    const question = parsed?.question;
 
     if (typeof question !== 'string' || question.trim().length === 0) {
       res.status(400).json({ error: true, message: 'Invalid question' });
@@ -76,25 +72,23 @@ async function handler(
     }
 
     const trimmedQuestion = question.trim();
-    const lowerQuestion = trimmedQuestion.toLowerCase();
-    const replyFocus = lowerQuestion.includes('licenciement')
+    const focus = trimmedQuestion.toLowerCase();
+    const keyword = focus.includes('licenciement')
       ? 'licenciement'
-      : lowerQuestion.includes('cdd')
+      : focus.includes('cdd')
       ? 'contrats à durée déterminée'
-      : lowerQuestion.includes('rupture')
+      : focus.includes('rupture')
       ? 'rupture de contrat'
       : trimmedQuestion;
 
-    const suggestions = [
-      'Consultez les obligations légales applicables à votre situation.',
-      'Préparez les documents nécessaires avant de lancer vos démarches.',
-      "Planifiez un rendez-vous avec un spécialiste pour valider votre stratégie.",
-    ];
-
     const response: AdvisorSuccessResponse = {
       error: false,
-      answer: `Based on your question about ${replyFocus}, voici les prochaines étapes recommandées.`,
-      suggestions,
+      answer: `Based on your question about ${keyword}, voici les prochaines étapes recommandées.`,
+      suggestions: [
+        'Consultez les obligations légales applicables à votre situation.',
+        'Préparez les documents nécessaires avant de lancer vos démarches.',
+        "Planifiez un rendez-vous avec un spécialiste pour valider votre stratégie.",
+      ],
       relatedTopics: ['Contract Law', 'Employment Law'],
       confidence: 0.83,
     };
@@ -108,8 +102,7 @@ async function handler(
     if (isDev) {
       console.error('[advisor] Unexpected error', error);
     }
+
     res.status(500).json({ error: true, message: 'Server error' });
   }
 }
-
-export default handler;

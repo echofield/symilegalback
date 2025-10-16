@@ -2,12 +2,6 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 
 export const runtime = 'nodejs';
 
-type LawyersRequestBody = {
-  query?: unknown;
-  lat?: unknown;
-  lng?: unknown;
-};
-
 type Lawyer = {
   id: string;
   name: string;
@@ -41,24 +35,24 @@ function setCorsHeaders(res: NextApiResponse) {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 }
 
-function parseRequestBody(body: NextApiRequest['body']): LawyersRequestBody | null {
+function parseBody(body: NextApiRequest['body']): Record<string, unknown> | null {
   if (!body) {
     return null;
   }
 
   if (typeof body === 'string') {
     try {
-      return JSON.parse(body) as LawyersRequestBody;
+      return JSON.parse(body) as Record<string, unknown>;
     } catch (error) {
       if (isDev) {
-        console.error('[lawyers] Failed to parse JSON body', error);
+        console.error('[lawyers] Failed to parse body', error);
       }
       return null;
     }
   }
 
   if (typeof body === 'object') {
-    return body as LawyersRequestBody;
+    return body as Record<string, unknown>;
   }
 
   return null;
@@ -68,12 +62,14 @@ function parseCoordinate(value: unknown): number | null {
   if (typeof value === 'number' && Number.isFinite(value)) {
     return value;
   }
+
   if (typeof value === 'string') {
     const parsed = Number.parseFloat(value);
     if (!Number.isNaN(parsed) && Number.isFinite(parsed)) {
       return parsed;
     }
   }
+
   return null;
 }
 
@@ -106,15 +102,16 @@ function pickPracticeAreas(): string[] {
 
 function generateMockLawyers(query: string, lat: number, lng: number): Lawyer[] {
   const total = 5 + Math.floor(Math.random() * 6);
+  const offsetRange = 0.05;
   const lawyers: Lawyer[] = [];
 
   for (let index = 0; index < total; index += 1) {
     const baseName = LAW_FIRM_NAMES[index % LAW_FIRM_NAMES.length];
-    const latOffset = (Math.random() - 0.5) * 0.1;
-    const lngOffset = (Math.random() - 0.5) * 0.1;
+    const latOffset = (Math.random() * 2 - 1) * offsetRange;
+    const lngOffset = (Math.random() * 2 - 1) * offsetRange;
     const rating = Number.parseFloat((4.2 + Math.random() * 0.7).toFixed(1));
     const yearsExperience = 5 + Math.floor(Math.random() * 21);
-    const hourlyRate = 150 + Math.floor(Math.random() * 151);
+    const hourlyRate = 150 + Math.floor(Math.random() * 101);
 
     lawyers.push({
       id: `${index + 1}`,
@@ -138,7 +135,7 @@ function generateMockLawyers(query: string, lat: number, lng: number): Lawyer[] 
   return lawyers;
 }
 
-async function handler(
+export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<LawyersSuccessResponse | LawyersErrorResponse>,
 ): Promise<void> {
@@ -155,10 +152,10 @@ async function handler(
   }
 
   try {
-    const parsedBody = parseRequestBody(req.body);
-    const query = parsedBody?.query;
-    const lat = parseCoordinate(parsedBody?.lat ?? null);
-    const lng = parseCoordinate(parsedBody?.lng ?? null);
+    const parsed = parseBody(req.body);
+    const query = parsed?.query;
+    const lat = parseCoordinate(parsed?.lat ?? null);
+    const lng = parseCoordinate(parsed?.lng ?? null);
 
     if (typeof query !== 'string' || query.trim().length === 0 || lat === null || lng === null) {
       res.status(400).json({ error: true, message: 'Validation error' });
@@ -172,8 +169,7 @@ async function handler(
     if (isDev) {
       console.error('[lawyers] Unexpected error', error);
     }
+
     res.status(500).json({ error: true, message: 'Server error' });
   }
 }
-
-export default handler;
