@@ -1,104 +1,95 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import {
+  getContractsForJurisdiction,
+  parseJurisdictionParam,
+  type Jurisdiction,
+  type NormalizedContractRecord,
+} from '@/lib/contracts/data';
 
 export const runtime = 'nodejs';
 
-type IndexEntry = {
+type ContractsListItem = {
   id: string;
   title: string;
   category: string;
+  path: string;
   lang: 'fr' | 'en';
+  keywords: string[];
 };
 
-type ContractsResponse = {
-  contracts: IndexEntry[];
+type ContractsListResponse = {
+  index: ContractsListItem[];
+  contracts: ContractsListItem[];
+  timestamp: string;
+};
+
+type ErrorResponse = {
+  error: true;
+  message: string;
+  code: string;
 };
 
 const isDev = process.env.NODE_ENV !== 'production';
 
 function setCorsHeaders(res: NextApiResponse) {
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 }
 
-function normaliseContracts(data: unknown, lang: 'fr' | 'en'): IndexEntry[] {
-  if (!Array.isArray(data)) {
-    return [];
-  }
-
-  return data.flatMap((entry) => {
-    if (!entry || typeof entry !== 'object') {
-      return [] as IndexEntry[];
-    }
-
-    const { id, title, category } = entry as Record<string, unknown>;
-
-    if (typeof id === 'string' && typeof title === 'string' && typeof category === 'string') {
-      return [
-        {
-          id,
-          title,
-          category,
-          lang,
-        },
-      ];
-    }
-
-    return [] as IndexEntry[];
-  });
+function normaliseJurisdiction(query: NextApiRequest['query']): Jurisdiction {
+  const raw = query?.jurisdiction;
+  const value = Array.isArray(raw) ? raw[0] : raw;
+  return parseJurisdictionParam(value) ?? 'FR';
 }
 
-async function loadContracts(): Promise<IndexEntry[]> {
-  try {
-    const [{ default: frContracts }, { default: enContracts }] = await Promise.all([
-      import('@/lib/data/contracts-fr.json'),
-      import('@/lib/data/contracts-en.json'),
-    ]);
-
-    return [
-      ...normaliseContracts(frContracts, 'fr'),
-      ...normaliseContracts(enContracts, 'en'),
-    ];
-  } catch (error) {
-    if (isDev) {
-      console.error('[contracts] Failed to load contract data', error);
-    }
-    return [];
-  }
+function toResponseItem(record: NormalizedContractRecord): ContractsListItem {
+  return {
+    id: record.id,
+    title: record.title,
+    category: record.category,
+    path: record.path,
+    lang: record.lang,
+    keywords: record.keywords,
+  };
 }
 
-function parseLang(query: NextApiRequest['query']): 'fr' | 'en' | undefined {
-  const langParam = query?.lang;
-  const value = Array.isArray(langParam) ? langParam[0] : langParam;
-
-  if (value === 'fr' || value === 'en') {
-    return value;
-  }
-
-  return undefined;
-}
-
-async function handler(req: NextApiRequest, res: NextApiResponse<ContractsResponse | { error: string }>) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse<ContractsListResponse | ErrorResponse>,
+): Promise<void> {
   setCorsHeaders(res);
 
   if (req.method === 'OPTIONS') {
-    return res.status(200).end();
+    res.status(200).end();
+    return;
   }
 
   if (req.method !== 'GET') {
-    return res.status(405).json({ error: 'Method not allowed' });
+    res.status(405).json({ error: true, message: 'Method not allowed', code: 'METHOD_NOT_ALLOWED' });
+    return;
   }
 
-  const langFilter = parseLang(req.query);
+  try {
+    const jurisdiction = normaliseJurisdiction(req.query);
+    const contracts = getContractsForJurisdiction(jurisdiction).map(toResponseItem);
 
-  const contracts = await loadContracts();
-  const filteredContracts = langFilter ? contracts.filter((contract) => contract.lang === langFilter) : contracts;
+    if (isDev) {
+      console.log('[contracts] returning', contracts.length, 'contracts for', jurisdiction);
+    }
 
-  if (isDev) {
-    console.log('[contracts] Returning', filteredContracts.length, 'contracts');
+    const payload: ContractsListResponse = {
+      index: contracts,
+      contracts,
+      timestamp: new Date().toISOString(),
+    };
+
+    res.status(200).json(payload);
+  } catch (error) {
+    if (isDev) {
+      console.error('[contracts] failed to build index response', error);
+    }
+
+    res.status(500).json({ error: true, message: 'Unable to load contracts', code: 'CONTRACTS_LOAD_FAILED' });
   }
-
-  return res.status(200).json({ contracts: filteredContracts });
 }
-
-export default handler;

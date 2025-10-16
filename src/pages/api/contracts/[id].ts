@@ -1,16 +1,36 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { findContractById, parseJurisdictionParam, type Jurisdiction } from '@/lib/contracts/data';
+import { loadContractTemplate } from '@/services/templates/loader';
+import type { ContractTemplate } from '@/types/contracts';
 
 export const runtime = 'nodejs';
 
-type RawContract = {
-  id?: string | number;
-  title?: string;
-  [key: string]: unknown;
+type Clause = {
+  id: string;
+  title: string;
+  body: string;
+  text: string;
+};
+
+type TemplateResponse = {
+  template: {
+    id: string;
+    title: string;
+    description?: string;
+    metadata: ContractTemplate['metadata'];
+    inputs: ContractTemplate['inputs'];
+    clauses: Clause[];
+    category: string;
+    lang: 'fr' | 'en';
+    keywords: string[];
+  };
+  timestamp: string;
 };
 
 type ErrorResponse = {
   error: true;
   message: string;
+  code: string;
 };
 
 const isDev = process.env.NODE_ENV !== 'production';
@@ -21,33 +41,48 @@ function setCorsHeaders(res: NextApiResponse) {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 }
 
-function asContractArray(data: unknown): RawContract[] {
-  if (!Array.isArray(data)) {
-    return [];
+function parseId(query: NextApiRequest['query']): string | null {
+  const raw = query?.id;
+  const value = Array.isArray(raw) ? raw[0] : raw;
+  if (typeof value !== 'string') {
+    return null;
   }
 
-  return data.filter((entry): entry is RawContract => Boolean(entry) && typeof entry === 'object');
+  const trimmed = value.trim();
+  return trimmed.length > 0 ? trimmed : null;
 }
 
-async function loadAllContracts(): Promise<RawContract[]> {
-  try {
-    const [{ default: frContracts }, { default: enContracts }] = await Promise.all([
-      import('@/lib/data/contracts-fr.json'),
-      import('@/lib/data/contracts-en.json'),
-    ]);
+function resolveJurisdiction(query: NextApiRequest['query']): Jurisdiction | undefined {
+  const raw = query?.jurisdiction;
+  const value = Array.isArray(raw) ? raw[0] : raw;
+  return parseJurisdictionParam(value);
+}
 
-    return [...asContractArray(frContracts), ...asContractArray(enContracts)];
-  } catch (error) {
-    if (isDev) {
-      console.error('[contracts:id] Failed to load contract data', error);
-    }
-    return [];
-  }
+function normaliseMetadata(template: ContractTemplate, fallbackTitle: string, fallbackJurisdiction: Jurisdiction): ContractTemplate['metadata'] {
+  const metadata = template.metadata ?? { title: fallbackTitle, jurisdiction: fallbackJurisdiction, governing_law: fallbackJurisdiction, version: '1.0.0' };
+  return {
+    title: metadata.title || fallbackTitle,
+    jurisdiction: metadata.jurisdiction || fallbackJurisdiction,
+    governing_law: metadata.governing_law || fallbackJurisdiction,
+    version: metadata.version || '1.0.0',
+  };
+}
+
+function normaliseClauses(template: ContractTemplate): Clause[] {
+  return (template.clauses ?? []).map((clause, index) => {
+    const body = typeof clause.body === 'string' ? clause.body : '';
+    return {
+      id: typeof clause.id === 'string' && clause.id.trim().length > 0 ? clause.id : `clause-${index + 1}`,
+      title: typeof clause.title === 'string' && clause.title.trim().length > 0 ? clause.title : `Clause ${index + 1}`,
+      body,
+      text: body,
+    };
+  });
 }
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<RawContract | ErrorResponse>,
+  res: NextApiResponse<TemplateResponse | ErrorResponse>,
 ): Promise<void> {
   setCorsHeaders(res);
 
@@ -57,57 +92,55 @@ export default async function handler(
   }
 
   if (req.method !== 'GET') {
-    res.status(405).json({ error: true, message: 'Method not allowed' });
+    res.status(405).json({ error: true, message: 'Method not allowed', code: 'METHOD_NOT_ALLOWED' });
     return;
   }
 
   try {
-    const idParam = req.query?.id;
-    const contractId = Array.isArray(idParam) ? idParam[0] : idParam;
-
-    if (typeof contractId !== 'string' || contractId.trim().length === 0) {
-      res.status(400).json({ error: true, message: 'Invalid contract id' });
+    const id = parseId(req.query);
+    if (!id) {
+      res.status(400).json({ error: true, message: 'Invalid contract id', code: 'INVALID_CONTRACT_ID' });
       return;
     }
 
-    const target = contractId.trim();
-    const lowerTarget = target.toLowerCase();
+    const jurisdiction = resolveJurisdiction(req.query);
+    const contract = findContractById(id, jurisdiction);
 
-    const contracts = await loadAllContracts();
-
-    const match = contracts.find((entry) => {
-      const { id, title } = entry;
-
-      if (typeof id === 'string' && id.trim().toLowerCase() === lowerTarget) {
-        return true;
-      }
-
-      if (typeof id === 'number' && id.toString() === target) {
-        return true;
-      }
-
-      if (typeof title === 'string' && title.trim().toLowerCase() === lowerTarget) {
-        return true;
-      }
-
-      return false;
-    });
-
-    if (!match) {
-      res.status(404).json({ error: true, message: 'Template not found' });
+    if (!contract) {
+      res.status(404).json({ error: true, message: 'Template not found', code: 'TEMPLATE_NOT_FOUND' });
       return;
     }
+
+    const template = await loadContractTemplate(contract.id);
+    const metadata = normaliseMetadata(template, contract.title, contract.jurisdiction);
+    const clauses = normaliseClauses(template);
+    const description = contract.description ?? `Modèle ${contract.title}.`;
+
+    const payload: TemplateResponse = {
+      template: {
+        id: contract.id,
+        title: contract.title,
+        description,
+        metadata,
+        inputs: template.inputs ?? [],
+        clauses,
+        category: contract.category,
+        lang: contract.lang,
+        keywords: contract.keywords,
+      },
+      timestamp: new Date().toISOString(),
+    };
 
     if (isDev) {
-      console.log('[contracts:id] Returning template', match.id ?? match.title);
+      console.log('[contracts:id] returning template', contract.id, 'for jurisdiction', contract.jurisdiction);
     }
 
-    res.status(200).json(match);
+    res.status(200).json(payload);
   } catch (error) {
     if (isDev) {
-      console.error('[contracts:id] Unexpected error', error);
+      console.error('[contracts:id] unexpected error', error);
     }
 
-    res.status(500).json({ error: true, message: 'Server error' });
+    res.status(500).json({ error: true, message: 'Server error', code: 'CONTRACT_TEMPLATE_ERROR' });
   }
 }

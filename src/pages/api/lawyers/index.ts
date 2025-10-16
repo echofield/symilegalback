@@ -6,25 +6,26 @@ type Lawyer = {
   id: string;
   name: string;
   firm: string;
+  address: string;
   practiceAreas: string[];
   rating: number;
   yearsExperience: number;
   hourlyRate: number;
-  coordinates: {
-    lat: number;
-    lng: number;
-  };
+  lat: number;
+  lng: number;
+  place_id: string;
 };
 
 type LawyersSuccessResponse = {
-  error: false;
   lawyers: Lawyer[];
   total: number;
+  timestamp: string;
 };
 
 type LawyersErrorResponse = {
   error: true;
   message: string;
+  code: string;
 };
 
 const isDev = process.env.NODE_ENV !== 'production';
@@ -45,7 +46,7 @@ function parseBody(body: NextApiRequest['body']): Record<string, unknown> | null
       return JSON.parse(body) as Record<string, unknown>;
     } catch (error) {
       if (isDev) {
-        console.error('[lawyers] Failed to parse body', error);
+        console.error('[lawyers] failed to parse body', error);
       }
       return null;
     }
@@ -73,7 +74,7 @@ function parseCoordinate(value: unknown): number | null {
   return null;
 }
 
-const LAW_FIRM_NAMES = [
+const FIRMS = [
   'Cabinet Dupont & Associés',
   'Étude Lemoine',
   'Cabinet Rousseau',
@@ -86,7 +87,7 @@ const LAW_FIRM_NAMES = [
   'Justitia Groupe',
 ];
 
-const PRACTICE_AREAS = [
+const PRACTICES = [
   'Employment Law',
   'Contract Law',
   'Corporate Law',
@@ -95,44 +96,36 @@ const PRACTICE_AREAS = [
   'Compliance',
 ];
 
-function pickPracticeAreas(): string[] {
-  const shuffled = [...PRACTICE_AREAS].sort(() => Math.random() - 0.5);
-  return shuffled.slice(0, 3);
+function getPracticeAreas(): string[] {
+  return [...PRACTICES].sort(() => Math.random() - 0.5).slice(0, 3);
 }
 
-function generateMockLawyers(query: string, lat: number, lng: number): Lawyer[] {
-  const total = 5 + Math.floor(Math.random() * 6);
-  const offsetRange = 0.05;
-  const lawyers: Lawyer[] = [];
+function buildMockLawyers(query: string, lat: number, lng: number): Lawyer[] {
+  const count = 5 + Math.floor(Math.random() * 6);
+  const offset = 0.05;
 
-  for (let index = 0; index < total; index += 1) {
-    const baseName = LAW_FIRM_NAMES[index % LAW_FIRM_NAMES.length];
-    const latOffset = (Math.random() * 2 - 1) * offsetRange;
-    const lngOffset = (Math.random() * 2 - 1) * offsetRange;
+  return Array.from({ length: count }).map((_, index) => {
+    const firm = FIRMS[index % FIRMS.length];
+    const latOffset = (Math.random() * 2 - 1) * offset;
+    const lngOffset = (Math.random() * 2 - 1) * offset;
     const rating = Number.parseFloat((4.2 + Math.random() * 0.7).toFixed(1));
     const yearsExperience = 5 + Math.floor(Math.random() * 21);
     const hourlyRate = 150 + Math.floor(Math.random() * 101);
 
-    lawyers.push({
-      id: `${index + 1}`,
-      name: `${baseName.split(' ')[0]} ${index + 1}`,
-      firm: baseName,
-      practiceAreas: pickPracticeAreas(),
+    return {
+      id: `lawyer-${index + 1}`,
+      name: `${firm.split(' ')[0]} ${index + 1}`,
+      firm,
+      address: `${Math.floor(5 + Math.random() * 50)} Rue de la Loi, ${query}`,
+      practiceAreas: getPracticeAreas(),
       rating,
       yearsExperience,
       hourlyRate,
-      coordinates: {
-        lat: Number.parseFloat((lat + latOffset).toFixed(6)),
-        lng: Number.parseFloat((lng + lngOffset).toFixed(6)),
-      },
-    });
-  }
-
-  if (isDev) {
-    console.log('[lawyers] Generated', lawyers.length, 'mock lawyers for query', query);
-  }
-
-  return lawyers;
+      lat: Number.parseFloat((lat + latOffset).toFixed(6)),
+      lng: Number.parseFloat((lng + lngOffset).toFixed(6)),
+      place_id: `mock-place-${index + 1}`,
+    };
+  });
 }
 
 export default async function handler(
@@ -147,7 +140,7 @@ export default async function handler(
   }
 
   if (req.method !== 'POST') {
-    res.status(405).json({ error: true, message: 'Method not allowed' });
+    res.status(405).json({ error: true, message: 'Method not allowed', code: 'METHOD_NOT_ALLOWED' });
     return;
   }
 
@@ -158,18 +151,28 @@ export default async function handler(
     const lng = parseCoordinate(parsed?.lng ?? null);
 
     if (typeof query !== 'string' || query.trim().length === 0 || lat === null || lng === null) {
-      res.status(400).json({ error: true, message: 'Validation error' });
+      res.status(400).json({ error: true, message: 'Validation error', code: 'INVALID_REQUEST' });
       return;
     }
 
-    const lawyers = generateMockLawyers(query.trim(), lat, lng);
+    const lawyers = buildMockLawyers(query.trim(), lat, lng);
 
-    res.status(200).json({ error: false, lawyers, total: lawyers.length });
-  } catch (error) {
     if (isDev) {
-      console.error('[lawyers] Unexpected error', error);
+      console.log('[lawyers] generated', lawyers.length, 'results for query', query);
     }
 
-    res.status(500).json({ error: true, message: 'Server error' });
+    const payload: LawyersSuccessResponse = {
+      lawyers,
+      total: lawyers.length,
+      timestamp: new Date().toISOString(),
+    };
+
+    res.status(200).json(payload);
+  } catch (error) {
+    if (isDev) {
+      console.error('[lawyers] unexpected error', error);
+    }
+
+    res.status(500).json({ error: true, message: 'Server error', code: 'LAWYER_SEARCH_ERROR' });
   }
 }

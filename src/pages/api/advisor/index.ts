@@ -3,16 +3,18 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 export const runtime = 'nodejs';
 
 type AdvisorSuccessResponse = {
-  error: false;
-  answer: string;
-  suggestions: string[];
-  relatedTopics: string[];
-  confidence: number;
+  output: {
+    thought: string;
+    followup_question: string | null;
+    action: { type: string; args: Record<string, unknown> };
+    reply_text: string;
+  };
 };
 
 type AdvisorErrorResponse = {
   error: true;
   message: string;
+  code: string;
 };
 
 const isDev = process.env.NODE_ENV !== 'production';
@@ -33,7 +35,7 @@ function parseBody(body: NextApiRequest['body']): Record<string, unknown> | null
       return JSON.parse(body) as Record<string, unknown>;
     } catch (error) {
       if (isDev) {
-        console.error('[advisor] Failed to parse body', error);
+        console.error('[advisor] failed to parse body', error);
       }
       return null;
     }
@@ -44,6 +46,35 @@ function parseBody(body: NextApiRequest['body']): Record<string, unknown> | null
   }
 
   return null;
+}
+
+function determineTopic(question: string): { topic: string; reply: string } {
+  const lowercase = question.toLowerCase();
+  if (lowercase.includes('cdd') || lowercase.includes('contrat à durée déterminée')) {
+    return {
+      topic: 'rupture CDD',
+      reply: 'Voici les options pour mettre fin à un contrat à durée déterminée. Vous pouvez utiliser notre modèle dédié.',
+    };
+  }
+
+  if (lowercase.includes('licenciement')) {
+    return {
+      topic: 'licenciement',
+      reply: 'Pour un licenciement, assurez-vous de respecter la procédure légale et consultez nos modèles adaptés.',
+    };
+  }
+
+  if (lowercase.includes('rupture') || lowercase.includes('démission')) {
+    return {
+      topic: 'rupture de contrat',
+      reply: 'Pour une rupture de contrat, choisissez le modèle correspondant et préparez les justificatifs nécessaires.',
+    };
+  }
+
+  return {
+    topic: 'general',
+    reply: 'Je vous propose de consulter nos modèles principaux afin de trouver celui qui correspond à votre situation.',
+  };
 }
 
 export default async function handler(
@@ -58,7 +89,7 @@ export default async function handler(
   }
 
   if (req.method !== 'POST') {
-    res.status(405).json({ error: true, message: 'Method not allowed' });
+    res.status(405).json({ error: true, message: 'Method not allowed', code: 'METHOD_NOT_ALLOWED' });
     return;
   }
 
@@ -67,42 +98,32 @@ export default async function handler(
     const question = parsed?.question;
 
     if (typeof question !== 'string' || question.trim().length === 0) {
-      res.status(400).json({ error: true, message: 'Invalid question' });
+      res.status(400).json({ error: true, message: 'Invalid question', code: 'INVALID_QUESTION' });
       return;
     }
 
-    const trimmedQuestion = question.trim();
-    const focus = trimmedQuestion.toLowerCase();
-    const keyword = focus.includes('licenciement')
-      ? 'licenciement'
-      : focus.includes('cdd')
-      ? 'contrats à durée déterminée'
-      : focus.includes('rupture')
-      ? 'rupture de contrat'
-      : trimmedQuestion;
+    const trimmed = question.trim();
+    const { topic, reply } = determineTopic(trimmed);
 
-    const response: AdvisorSuccessResponse = {
-      error: false,
-      answer: `Based on your question about ${keyword}, voici les prochaines étapes recommandées.`,
-      suggestions: [
-        'Consultez les obligations légales applicables à votre situation.',
-        'Préparez les documents nécessaires avant de lancer vos démarches.',
-        "Planifiez un rendez-vous avec un spécialiste pour valider votre stratégie.",
-      ],
-      relatedTopics: ['Contract Law', 'Employment Law'],
-      confidence: 0.83,
+    if (isDev) {
+      console.log('[advisor] responding with topic', topic);
+    }
+
+    const payload: AdvisorSuccessResponse = {
+      output: {
+        thought: `Analyzing user question regarding ${topic}.`,
+        followup_question: null,
+        action: { type: 'suggest_templates', args: { topic } },
+        reply_text: reply,
+      },
     };
 
-    if (isDev) {
-      console.log('[advisor] Responding to question', trimmedQuestion);
-    }
-
-    res.status(200).json(response);
+    res.status(200).json(payload);
   } catch (error) {
     if (isDev) {
-      console.error('[advisor] Unexpected error', error);
+      console.error('[advisor] unexpected error', error);
     }
 
-    res.status(500).json({ error: true, message: 'Server error' });
+    res.status(500).json({ error: true, message: 'Server error', code: 'ADVISOR_ERROR' });
   }
 }

@@ -11,7 +11,10 @@ import { rateLimit } from '@/middleware/rateLimit';
 import { startMonitor, endMonitor, logAIUsage } from '@/lib/monitoring';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
-  await rateLimit(req, res);
+  const allowed = await rateLimit(req, res);
+  if (!allowed) {
+    return;
+  }
   const { requestId, startTime } = startMonitor('/api/generate');
   try {
     const { contract_id, user_inputs, lawyer_mode = false } = req.body;
