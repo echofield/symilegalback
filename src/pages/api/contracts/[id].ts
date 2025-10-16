@@ -69,12 +69,12 @@ function normaliseTemplates(data: unknown, lang: 'fr' | 'en'): ContractTemplate[
 
 async function loadTemplatesForLang(lang: 'fr' | 'en'): Promise<ContractTemplate[] | null> {
   try {
-    const module =
+    const templatesModule =
       lang === 'fr'
         ? await import('@/lib/data/contracts-fr.json')
         : await import('@/lib/data/contracts-en.json');
 
-    return normaliseTemplates(module.default, lang);
+    return normaliseTemplates(templatesModule.default, lang);
   } catch (error) {
     if (isDev) {
       console.error('[contracts:id] Failed to load templates for lang', lang, error);
