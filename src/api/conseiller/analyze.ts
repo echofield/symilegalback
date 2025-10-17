@@ -17,7 +17,7 @@ async function callOpenAIAudit(problem: string) {
   if (!apiKey) throw new Error('OPENAI_API_KEY not set');
 
   const sys = `Tu es un assistant juridique expert. Analyse et retourne UNIQUEMENT du JSON valide.`;
-  const user = `Analyse cette situation:\n\n"""\n${problem}\n"""\n\nRéponds UNIQUEMENT en JSON valide avec ce format exact:\n{\n  "summary": "Résumé en 1-2 phrases de la situation",\n  "category": "catégorie juridique principale",\n  "specialty": "spécialité avocat recommandée",\n  "risks": ["risque 1", "risque 2"],\n  "urgency": "Faible|Moyenne|Élevée - explication courte",\n  "complexity": "Simple|Moyenne|Complexe",\n  "recommendedTemplateId": "id-du-template-le-plus-pertinent ou null"\n}\n\nNE retourne RIEN d'autre que ce JSON.`;
+  const user = `Analyse cette situation:\n\n"""\n${problem}\n"""\n\nRéponds UNIQUEMENT en JSON valide avec ce format exact:\n{\n  "summary": "Résumé en 1-2 phrases de la situation",\n  "category": "catégorie juridique principale",\n  "specialty": "spécialité avocat recommandée",\n  "risks": ["risque 1", "risque 2"],\n  "urgency": "Faible|Moyenne|Élevée - explication courte",\n  "complexity": "Simple|Moyenne|Complexe",\n  "recommendedTemplateId": "id-du-template-le-plus-pertinent ou null",\n  "needsLawyer": true|false,\n  "templateAvailable": true|false\n}\n\nRègles pour needsLawyer=true: enjeux > 5000€, litige/procédure, pénal, ou négociation complexe. NE retourne RIEN d'autre que ce JSON.`;
 
   const r = await fetch('https://api.openai.com/v1/chat/completions', {
     method: 'POST',
@@ -48,6 +48,8 @@ async function callOpenAIAudit(problem: string) {
     urgency: string;
     complexity: string;
     recommendedTemplateId?: string | null;
+    needsLawyer?: boolean;
+    templateAvailable?: boolean;
   };
 }
 
@@ -92,6 +94,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
           recommendedTemplate = {
             id: audit.recommendedTemplateId,
             name: tpl.metadata.title,
+            slug: audit.recommendedTemplateId,
+            available: ['contrat-de-travail-dur-e-ind-termin-e-cdi','freelance-services-agreement','one-way-non-disclosure-agreement','bail-d-habitation-non-meubl','convention-de-rupture-conventionnelle','terms-of-service','promesse-synallagmatique-de-vente-immobili-re','partnership-agreement','contrat-de-prestation-de-services','reconnaissance-de-dette'].includes(audit.recommendedTemplateId),
             reason: `Ce modèle correspond à votre situation (${audit.category})`,
           };
         }
@@ -111,6 +115,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         complexity: audit.complexity,
       },
       recommendedTemplate,
+      needsLawyer: Boolean(audit?.needsLawyer),
       recommendedLawyers,
       timestamp: new Date().toISOString(),
     });
