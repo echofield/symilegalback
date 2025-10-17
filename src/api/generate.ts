@@ -10,6 +10,7 @@ import { buildPrompt } from '@/services/ai/generate';
 import { rateLimit } from '@/middleware/rateLimit';
 import { startMonitor, endMonitor, logAIUsage } from '@/lib/monitoring';
 import { supabaseAdmin, getUserFromRequestAuth } from '@/lib/supabase';
+import type { ContractTemplate } from '@/types/contracts';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   await rateLimit(req, res);
@@ -48,8 +49,15 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     const template = await loadContractTemplate(contract_id);
     const prompt = buildPrompt(template, user_inputs, lawyer_mode);
     const aiClient = getAIClient();
-    const generatedContract = await aiClient.generate(prompt);
+    let generatedContract = await aiClient.generate(prompt);
     logAIUsage(requestId, '/api/generate', Math.min(prompt.length / 4, 4000), process.env.AI_PROVIDER || 'local');
+
+    // Fallback: if provider returned prompt/JSON echoes, render a clean contract from template
+    const looksLikeRaw = /OPENAI_OUTPUT|USER INPUTS \(JSON\)|BASE CLAUSES|\{[\s\S]*\}/.test(generatedContract.slice(0, 800));
+    if (looksLikeRaw) {
+      const content = renderFromTemplate(template, user_inputs);
+      if (content) generatedContract = content;
+    }
 
     const response = {
       contract_id,
@@ -76,6 +84,17 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   } finally {
     endMonitor(requestId, '/api/generate', startTime);
   }
+}
+
+function renderFromTemplate(tpl: ContractTemplate, inputs: Record<string, any>): string {
+  const header = `${tpl.metadata.title}\nGoverning law: ${tpl.metadata.governing_law} • Jurisdiction: ${tpl.metadata.jurisdiction}\n`;
+  const parties = Object.entries(inputs || {})
+    .map(([k, v]) => `${k}: ${String(v ?? '')}`)
+    .join('\n');
+  const body = (tpl.clauses || [])
+    .map((c, i) => `\n${i + 1}. ${c.title}\n${String(c.body || '').replace(/\{\{(.*?)\}\}/g, (_, key) => String((inputs || {})[String(key).trim()] ?? ''))}`)
+    .join('\n');
+  return `${header}\n${parties}\n${body}`;
 }
 
 export default withCors(withValidation(GenerateRequestSchema, GenerateResponseSchema, handler));
