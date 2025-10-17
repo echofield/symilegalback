@@ -16,6 +16,7 @@ const DEFAULT_ALLOWED_ORIGINS = [
         'https://symilegal.vercel.app',
         'https://app.symilegal.com',
         'http://localhost:5173',
+        'https://symifrontlegal.vercel.app',
 ];
 
 function getAllowedOrigin(req: NextApiRequest): string {
