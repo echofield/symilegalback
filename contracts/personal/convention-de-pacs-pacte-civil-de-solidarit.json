@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "title": "Convention de PACS (Pacte civil de solidarité)",
+    "jurisdiction": "FR",
+    "governing_law": "France",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {"key": "partenaire1_nom", "label": "Nom du premier partenaire", "type": "text", "required": true},
+    {"key": "partenaire2_nom", "label": "Nom du second partenaire", "type": "text", "required": true},
+    {"key": "adresse_commune", "label": "Adresse commune", "type": "text", "required": true},
+    {"key": "regime_biens", "label": "Régime choisi (séparation ou indivision)", "type": "select", "required": true}
+  ],
+  "clauses": [
+    {"id": "objet", "title": "Objet de la convention", "body": "Les partenaires {{partenaire1_nom}} et {{partenaire2_nom}} déclarent conclure un pacte civil de solidarité conformément aux dispositions du Code civil."},
+    {"id": "vie_commune", "title": "Vie commune", "body": "Les partenaires s'engagent à une vie commune et à une aide matérielle réciproque, proportionnelle à leurs ressources."},
+    {"id": "regime", "title": "Régime des biens", "body": "Les partenaires choisissent le régime de {{regime_biens}} pour les biens acquis pendant le PACS."},
+    {"id": "resiliation", "title": "Rupture du PACS", "body": "Le PACS pourra être rompu par déclaration conjointe ou unilatérale, selon la procédure prévue par la loi."}
+  ]
+}
+

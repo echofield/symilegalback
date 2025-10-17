@@ -1,0 +1,46 @@
+{
+  "metadata": {
+    "title": "Partnership Agreement",
+    "jurisdiction": "UK | US",
+    "governing_law": "England & Wales | Delaware",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {
+      "key": "partner_a",
+      "label": "Partner A",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "partner_b",
+      "label": "Partner B",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "shares",
+      "label": "Equity Split (e.g., 60/40)",
+      "type": "text",
+      "required": true
+    }
+  ],
+  "clauses": [
+    {
+      "id": "purpose",
+      "title": "Purpose",
+      "body": "Partners form a business partnership for mutual profit."
+    },
+    {
+      "id": "ownership",
+      "title": "Ownership",
+      "body": "Equity split is {{shares}}."
+    },
+    {
+      "id": "management",
+      "title": "Management",
+      "body": "Decisions require majority consent of partners."
+    }
+  ],
+  "annotations": []
+}

@@ -1,0 +1,100 @@
+{
+  "metadata": {
+    "title": "IP & Invention Assignment (Employee)",
+    "jurisdiction": "US",
+    "governing_law": "California",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {
+      "key": "company_name",
+      "label": "Company Name",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "employee_name",
+      "label": "Employee Name",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "job_title",
+      "label": "Job Title",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "effective_date",
+      "label": "Effective Date",
+      "type": "date",
+      "required": true
+    }
+  ],
+  "clauses": [
+    {
+      "id": "assignment",
+      "title": "Assignment of Inventions",
+      "body": "{{employee_name}} (the 'Employee') agrees that all inventions, discoveries, improvements, works of authorship, and intellectual property (collectively 'Inventions') created during employment with {{company_name}} (the 'Company') are the Company's exclusive property. The Employee assigns all rights, title, and interest in such Inventions to the Company."
+    },
+    {
+      "id": "scope",
+      "title": "Scope of Assignment",
+      "body": "This assignment covers Inventions that: (1) relate to the Company's current or anticipated business, (2) result from work performed for the Company, or (3) are developed using Company time, equipment, or resources. This applies whether created alone or with others, during or outside normal working hours."
+    },
+    {
+      "id": "california_exception",
+      "title": "California Labor Code Exception",
+      "body": "Under California Labor Code Section 2870, this Agreement does not apply to Inventions that: (1) are developed entirely on the Employee's own time, (2) without using Company equipment, supplies, or trade secrets, (3) do not relate to the Company's business or research, and (4) do not result from work performed for the Company. The Employee should disclose such inventions to ensure proper classification."
+    },
+    {
+      "id": "prior_inventions",
+      "title": "Prior Inventions",
+      "body": "The Employee has disclosed all prior inventions in Exhibit A (if none, write 'None'). Prior inventions remain the Employee's property but may not be used in Company work without written agreement. The Employee represents that their work for the Company will not violate any obligations to previous employers."
+    },
+    {
+      "id": "disclosure",
+      "title": "Disclosure Obligation",
+      "body": "The Employee will promptly disclose all Inventions to the Company in writing. This allows the Company to determine ownership and take appropriate steps to protect its intellectual property rights. Failure to disclose may result in loss of rights or disciplinary action."
+    },
+    {
+      "id": "assistance",
+      "title": "Assistance with Protection",
+      "body": "The Employee agrees to assist the Company in protecting its intellectual property rights, including signing patent applications, copyright registrations, or other documents. This obligation continues after employment ends. The Company will reimburse reasonable expenses for such assistance."
+    },
+    {
+      "id": "moral_rights",
+      "title": "Waiver of Moral Rights",
+      "body": "To the extent permitted by law, the Employee waives all moral rights in Inventions assigned to the Company. This includes rights of attribution and integrity. The Company may use, modify, or commercialize Inventions without restriction."
+    },
+    {
+      "id": "works_made",
+      "title": "Works Made for Hire",
+      "body": "To the extent any Inventions qualify as 'works made for hire' under copyright law, they are the Company's property from creation. This Agreement serves as confirmation and assignment of any rights that may not automatically belong to the Company."
+    },
+    {
+      "id": "law",
+      "title": "Governing Law",
+      "body": "This Agreement is governed by California law, including California Labor Code Section 2870. Any disputes will be resolved in California courts."
+    },
+    {
+      "id": "signatures",
+      "title": "Signatures",
+      "body": "By signing below, the Employee acknowledges understanding and agreeing to this IP & Invention Assignment Agreement.\n\nEmployee: _________________ Date: _______\n\nCompany Representative: _________________ Date: _______\n\nExhibit A - Prior Inventions: _________________ (or 'None')"
+    }
+  ],
+  "annotations": [
+    {
+      "clause_id": "california_exception",
+      "tooltip": "California law protects certain employee inventions - this clause ensures compliance."
+    },
+    {
+      "clause_id": "prior_inventions",
+      "tooltip": "Documenting prior inventions prevents future ownership disputes."
+    },
+    {
+      "clause_id": "assistance",
+      "tooltip": "Ensure employee cooperation in securing IP rights even after they leave."
+    }
+  ]
+}

@@ -1,0 +1,101 @@
+{
+  "metadata": {
+    "title": "Freelance Services Agreement",
+    "jurisdiction": "UK | US",
+    "governing_law": "England & Wales | California",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {
+      "key": "client_name",
+      "label": "Client Name",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "freelancer_name",
+      "label": "Freelancer Name",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "project_scope",
+      "label": "Describe the work",
+      "type": "textarea",
+      "required": true
+    },
+    {
+      "key": "fee",
+      "label": "Total fee or rate",
+      "type": "currency",
+      "required": true
+    },
+    {
+      "key": "payment_terms",
+      "label": "Payment terms (e.g., 50/50, net 14)",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "start_date",
+      "label": "Start date",
+      "type": "date",
+      "required": true
+    },
+    {
+      "key": "end_date",
+      "label": "End date (optional)",
+      "type": "date",
+      "required": false
+    },
+    {
+      "key": "ip_mode",
+      "label": "IP: license | assignment | work-for-hire",
+      "type": "select",
+      "required": true
+    }
+  ],
+  "clauses": [
+    {
+      "id": "services",
+      "title": "Services",
+      "body": "The Freelancer will perform the following work: {{project_scope}}."
+    },
+    {
+      "id": "fees",
+      "title": "Fees & Payments",
+      "body": "Client will pay {{fee}} according to {{payment_terms}}."
+    },
+    {
+      "id": "ip",
+      "title": "Intellectual Property",
+      "body": "Rights transfer depend on {{ip_mode}}; full rights vest upon full payment."
+    },
+    {
+      "id": "confidentiality",
+      "title": "Confidentiality",
+      "body": "Both parties keep private information secret."
+    },
+    {
+      "id": "liability",
+      "title": "Limitation of Liability",
+      "body": "Neither party shall be liable for indirect damages; cap equals fees paid."
+    },
+    {
+      "id": "termination",
+      "title": "Termination",
+      "body": "Either party may terminate with seven days’ notice for breach."
+    },
+    {
+      "id": "law",
+      "title": "Governing Law",
+      "body": "This Agreement is governed by {{governing_law}}."
+    }
+  ],
+  "annotations": [
+    {
+      "clause_id": "ip",
+      "tooltip": "Choose license if you want to reuse your work; assignment if client must own it."
+    }
+  ]
+}

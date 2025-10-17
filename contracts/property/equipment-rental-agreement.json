@@ -1,0 +1,78 @@
+{
+  "metadata": {
+    "title": "Equipment Rental Agreement",
+    "jurisdiction": "US",
+    "governing_law": "California",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {
+      "key": "party_a_name",
+      "label": "Party A (Owner/Client)",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "party_b_name",
+      "label": "Party B (Tenant/Provider)",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "service_or_property",
+      "label": "Property or Service Description",
+      "type": "textarea",
+      "required": true
+    },
+    {
+      "key": "fee",
+      "label": "Fee or Rent",
+      "type": "currency",
+      "required": true
+    },
+    {
+      "key": "term",
+      "label": "Duration",
+      "type": "text",
+      "required": true
+    }
+  ],
+  "clauses": [
+    {
+      "id": "scope",
+      "title": "Equipment Rental",
+      "body": "The Owner rents to the Renter the equipment described as: [service_or_property] for the period of [term]. The Renter shall use the equipment only for its intended purpose, in a careful manner, and only by trained operators. The equipment remains the Owner's property."
+    },
+    {
+      "id": "payment",
+      "title": "Rental Fees and Deposit",
+      "body": "The rental fee is $[fee] per [day/week/month], payable [in advance/according to schedule]. A security deposit of $[amount] is required and will be refunded within [number] days after equipment return, less any charges for damage, cleaning, or late return."
+    },
+    {
+      "id": "responsibility",
+      "title": "Renter Care and Use",
+      "body": "The Renter shall: maintain the equipment in good condition; use it only for intended purposes; not make alterations; protect it from theft or weather; and return it clean and in working order. The Renter is responsible for routine maintenance and fuel during the rental period."
+    },
+    {
+      "id": "liability",
+      "title": "Damage and Loss",
+      "body": "The Renter is liable for all damage or loss regardless of fault. The Renter shall pay repair costs or replacement value for damaged/lost equipment. The Owner is not liable for consequential damages from equipment failure. The Renter should consider separate insurance for valuable equipment."
+    },
+    {
+      "id": "termination",
+      "title": "Return and Late Fees",
+      "body": "The Renter shall return the equipment by [date/time] in the same condition. Late returns incur charges at [percentage]% of daily rate. The Owner may terminate and repossess equipment for breach of terms. Early termination does not guarantee refund."
+    },
+    {
+      "id": "law",
+      "title": "Governing Law",
+      "body": "This agreement is governed by the laws of the State of California."
+    }
+  ],
+  "annotations": [
+    {
+      "clause_id": "liability",
+      "tooltip": "Clear responsibility for damage regardless of fault and recommendation for rental insurance."
+    }
+  ]
+}

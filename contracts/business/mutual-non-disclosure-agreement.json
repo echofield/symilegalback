@@ -1,0 +1,57 @@
+{
+  "metadata": {
+    "title": "Mutual Non-Disclosure Agreement",
+    "jurisdiction": "UK | US",
+    "governing_law": "England & Wales | Delaware",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {
+      "key": "party_a",
+      "label": "Party A",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "party_b",
+      "label": "Party B",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "purpose",
+      "label": "Purpose of discussion",
+      "type": "textarea",
+      "required": true
+    },
+    {
+      "key": "term_months",
+      "label": "Confidentiality period (months)",
+      "type": "number",
+      "required": true
+    }
+  ],
+  "clauses": [
+    {
+      "id": "definition",
+      "title": "Confidential Information",
+      "body": "Any information disclosed for {{purpose}} that is not public."
+    },
+    {
+      "id": "obligation",
+      "title": "Obligations",
+      "body": "Each party protects the other’s information and uses it only for {{purpose}}."
+    },
+    {
+      "id": "term",
+      "title": "Term",
+      "body": "Obligations remain for {{term_months}} months."
+    },
+    {
+      "id": "law",
+      "title": "Governing Law",
+      "body": "This NDA follows {{governing_law}}."
+    }
+  ],
+  "annotations": []
+}

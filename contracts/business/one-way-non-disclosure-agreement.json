@@ -1,0 +1,46 @@
+{
+  "metadata": {
+    "title": "One-Way Non-Disclosure Agreement",
+    "jurisdiction": "UK | US",
+    "governing_law": "England & Wales | Delaware",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {
+      "key": "discloser",
+      "label": "Disclosing Party",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "recipient",
+      "label": "Receiving Party",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "purpose",
+      "label": "Purpose",
+      "type": "textarea",
+      "required": true
+    }
+  ],
+  "clauses": [
+    {
+      "id": "definition",
+      "title": "Definition",
+      "body": "Confidential Information includes any data shared by {{discloser}} for {{purpose}}."
+    },
+    {
+      "id": "obligation",
+      "title": "Obligations",
+      "body": "{{recipient}} will not disclose or misuse such information."
+    },
+    {
+      "id": "exceptions",
+      "title": "Exceptions",
+      "body": "Information already public or independently developed is not covered."
+    }
+  ],
+  "annotations": []
+}

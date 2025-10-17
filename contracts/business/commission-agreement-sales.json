@@ -1,0 +1,107 @@
+{
+  "metadata": {
+    "title": "Commission Agreement (Sales)",
+    "jurisdiction": "US",
+    "governing_law": "New York",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {
+      "key": "company_name",
+      "label": "Company Name",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "sales_rep_name",
+      "label": "Sales Representative Name",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "territory",
+      "label": "Sales territory (if applicable)",
+      "type": "text",
+      "required": false
+    },
+    {
+      "key": "commission_structure",
+      "label": "Commission structure (e.g., 5% of sales, tiered rates)",
+      "type": "textarea",
+      "required": true
+    },
+    {
+      "key": "start_date",
+      "label": "Start date",
+      "type": "date",
+      "required": true
+    },
+    {
+      "key": "payment_frequency",
+      "label": "Payment frequency (e.g., monthly, quarterly)",
+      "type": "text",
+      "required": true
+    }
+  ],
+  "clauses": [
+    {
+      "id": "appointment",
+      "title": "Appointment",
+      "body": "{{company_name}} (the 'Company') appoints {{sales_rep_name}} (the 'Sales Rep') as an independent sales representative starting {{start_date}}{{#if territory}} for the territory of {{territory}}{{/if}}. The Sales Rep will promote and sell the Company's products or services to potential customers."
+    },
+    {
+      "id": "commission",
+      "title": "Commission Structure",
+      "body": "The Company will pay commissions according to this structure: {{commission_structure}}. Commissions are earned when the customer completes payment and the sale is finalized. Refunds, chargebacks, or cancelled orders will result in commission adjustments."
+    },
+    {
+      "id": "payment",
+      "title": "Payment Terms",
+      "body": "Commissions will be calculated and paid {{payment_frequency}}. The Company will provide detailed statements showing sales, commissions earned, and any adjustments. Payment will be made within 30 days of the payment period ending."
+    },
+    {
+      "id": "responsibilities",
+      "title": "Sales Rep Responsibilities",
+      "body": "The Sales Rep will actively promote the Company's offerings and maintain professional relationships with customers. The Sales Rep is responsible for their own expenses, including travel, phone, and marketing costs, unless otherwise agreed in writing."
+    },
+    {
+      "id": "independent",
+      "title": "Independent Contractor Status",
+      "body": "The Sales Rep is an independent contractor, not an employee. The Sales Rep is responsible for all taxes, insurance, and business expenses. The Sales Rep may represent other companies unless they directly compete with the Company's offerings."
+    },
+    {
+      "id": "confidentiality",
+      "title": "Confidentiality",
+      "body": "The Sales Rep agrees to keep all customer lists, pricing information, and business strategies confidential during and after this Agreement. Customer relationships developed during this Agreement remain the Company's property."
+    },
+    {
+      "id": "termination",
+      "title": "Termination",
+      "body": "Either party may terminate this Agreement with 30 days' written notice. The Company may terminate immediately for breach of terms or unethical sales practices. The Sales Rep will receive commissions for sales finalized before termination, paid according to normal terms."
+    },
+    {
+      "id": "law",
+      "title": "Governing Law",
+      "body": "This Agreement is governed by the laws of New York. Any disputes will be resolved in the state or federal courts of New York."
+    },
+    {
+      "id": "signatures",
+      "title": "Signatures",
+      "body": "By signing below, both parties agree to the terms of this Commission Agreement.\n\nCompany Representative: _________________ Date: _______\n\nSales Representative: _________________ Date: _______"
+    }
+  ],
+  "annotations": [
+    {
+      "clause_id": "commission",
+      "tooltip": "Be specific about when commissions are earned and how they're calculated."
+    },
+    {
+      "clause_id": "confidentiality",
+      "tooltip": "Protect customer relationships and business information."
+    },
+    {
+      "clause_id": "independent",
+      "tooltip": "Clearly establish independent contractor status for tax purposes."
+    }
+  ]
+}

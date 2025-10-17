@@ -1,0 +1,124 @@
+{
+  "metadata": {
+    "title": "Employment Contract (Fixed-Term)",
+    "jurisdiction": "US",
+    "governing_law": "California",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {
+      "key": "company_name",
+      "label": "Company Name",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "employee_name",
+      "label": "Employee Name",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "job_title",
+      "label": "Job Title",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "start_date",
+      "label": "Start Date",
+      "type": "date",
+      "required": true
+    },
+    {
+      "key": "end_date",
+      "label": "Contract End Date",
+      "type": "date",
+      "required": true
+    },
+    {
+      "key": "salary",
+      "label": "Annual Salary",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "work_location",
+      "label": "Work Location",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "hours_per_week",
+      "label": "Hours per Week",
+      "type": "text",
+      "required": true
+    }
+  ],
+  "clauses": [
+    {
+      "id": "employment",
+      "title": "Employment Period",
+      "body": "{{company_name}} (the 'Company') employs {{employee_name}} (the 'Employee') as {{job_title}} for a fixed term beginning {{start_date}} and ending {{end_date}}. Employment may be extended by mutual written agreement before the end date."
+    },
+    {
+      "id": "duties",
+      "title": "Job Duties",
+      "body": "The Employee will perform duties consistent with the {{job_title}} role and any other reasonable tasks assigned by management. The Employee will work {{hours_per_week}} hours per week, primarily at {{work_location}}. The Employee agrees to devote their full professional time and attention to the Company during working hours."
+    },
+    {
+      "id": "compensation",
+      "title": "Compensation & Benefits",
+      "body": "The Employee will receive an annual salary of {{salary}}, paid bi-weekly. The Employee is eligible for benefits including health insurance, retirement plan participation, and paid time off as outlined in the Employee Handbook. The Company may provide performance bonuses at its discretion."
+    },
+    {
+      "id": "confidentiality",
+      "title": "Confidentiality",
+      "body": "The Employee agrees to keep all Company information, trade secrets, and proprietary data confidential during and after employment. The Employee may not disclose confidential information to third parties or use it for personal benefit. This obligation continues indefinitely after employment ends."
+    },
+    {
+      "id": "ip",
+      "title": "Intellectual Property",
+      "body": "All work product, inventions, and intellectual property created by the Employee during employment belongs to the Company. The Employee assigns all rights, title, and interest to the Company. This includes anything created using Company resources or related to Company business."
+    },
+    {
+      "id": "termination",
+      "title": "Termination",
+      "body": "Either party may terminate this contract with 30 days' written notice. The Company may terminate immediately for cause (including misconduct, poor performance, or policy violations). The Employee will return all Company property upon termination and will be paid for time worked through the termination date."
+    },
+    {
+      "id": "post_employment",
+      "title": "Post-Employment Obligations",
+      "body": "The Employee agrees not to solicit Company clients or employees for 12 months after employment ends. The Employee may not compete directly with the Company's business in the same market for 12 months (subject to state law enforceability). These restrictions are reasonable and necessary to protect the Company's interests."
+    },
+    {
+      "id": "at_will",
+      "title": "At-Will Employment",
+      "body": "This is an at-will employment relationship, meaning either party may end the employment at any time for any lawful reason. The fixed-term end date does not guarantee employment until that date. No oral statements modify this at-will relationship."
+    },
+    {
+      "id": "governing_law",
+      "title": "Governing Law",
+      "body": "This contract is governed by California law. Any disputes will be resolved through binding arbitration under AAA rules, or in California courts if arbitration is unavailable."
+    },
+    {
+      "id": "signatures",
+      "title": "Signatures",
+      "body": "By signing below, both parties agree to the terms of this Employment Contract.\n\nEmployee: _________________ Date: _______\n\nCompany Representative: _________________ Date: _______"
+    }
+  ],
+  "annotations": [
+    {
+      "clause_id": "termination",
+      "tooltip": "Fixed-term contracts still allow termination with proper notice or cause."
+    },
+    {
+      "clause_id": "post_employment",
+      "tooltip": "Non-compete enforceability varies by state - California has strict limits."
+    },
+    {
+      "clause_id": "at_will",
+      "tooltip": "Most US employment is at-will even with fixed terms."
+    }
+  ]
+}

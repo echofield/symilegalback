@@ -1,0 +1,67 @@
+{
+  "metadata": {
+    "title": "Master Services Agreement",
+    "jurisdiction": "UK | US",
+    "governing_law": "England & Wales | New York",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {
+      "key": "company_a",
+      "label": "Company A (Name)",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "company_b",
+      "label": "Company B (Name)",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "effective_date",
+      "label": "Effective Date",
+      "type": "date",
+      "required": true
+    },
+    {
+      "key": "payment_terms",
+      "label": "Payment Terms",
+      "type": "text",
+      "required": true
+    }
+  ],
+  "clauses": [
+    {
+      "id": "scope",
+      "title": "Scope of Services",
+      "body": "This MSA governs all projects between {{company_a}} and {{company_b}}."
+    },
+    {
+      "id": "sow",
+      "title": "Statements of Work",
+      "body": "Each project will be defined in a separate Statement of Work signed by both parties."
+    },
+    {
+      "id": "payment",
+      "title": "Fees & Payments",
+      "body": "Invoices follow {{payment_terms}} unless otherwise stated in the SOW."
+    },
+    {
+      "id": "ip",
+      "title": "Intellectual Property",
+      "body": "Ownership and licenses are defined per SOW."
+    },
+    {
+      "id": "liability",
+      "title": "Liability Cap",
+      "body": "Aggregate liability shall not exceed total fees paid under the applicable SOW."
+    },
+    {
+      "id": "law",
+      "title": "Governing Law",
+      "body": "This MSA is governed by {{governing_law}}."
+    }
+  ],
+  "annotations": []
+}

@@ -1,0 +1,64 @@
+{
+  "metadata": {
+    "title": "Content / Music Licensing Agreement",
+    "jurisdiction": "UK | US",
+    "governing_law": "England & Wales | California",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {
+      "key": "licensor",
+      "label": "Licensor",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "licensee",
+      "label": "Licensee",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "work_title",
+      "label": "Title of Work",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "territory",
+      "label": "Territory",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "duration",
+      "label": "License Duration",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "fee",
+      "label": "License Fee",
+      "type": "currency",
+      "required": true
+    }
+  ],
+  "clauses": [
+    {
+      "id": "grant",
+      "title": "Grant of License",
+      "body": "Licensor grants Licensee a non-exclusive right to use {{work_title}} in {{territory}} for {{duration}}."
+    },
+    {
+      "id": "payment",
+      "title": "Fee",
+      "body": "Licensee pays {{fee}} within 14 days of signing."
+    },
+    {
+      "id": "credit",
+      "title": "Credit",
+      "body": "Licensee shall credit Licensor where practicable."
+    }
+  ],
+  "annotations": []
+}

@@ -1,0 +1,124 @@
+{
+  "metadata": {
+    "title": "Internship Agreement",
+    "jurisdiction": "UK",
+    "governing_law": "England & Wales",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {
+      "key": "company_name",
+      "label": "Company Name",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "intern_name",
+      "label": "Intern Name",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "educational_institution",
+      "label": "Educational Institution (if applicable)",
+      "type": "text",
+      "required": false
+    },
+    {
+      "key": "internship_role",
+      "label": "Internship Role/Title",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "start_date",
+      "label": "Start Date",
+      "type": "date",
+      "required": true
+    },
+    {
+      "key": "end_date",
+      "label": "End Date",
+      "type": "date",
+      "required": true
+    },
+    {
+      "key": "compensation",
+      "label": "Compensation (or 'Unpaid' if applicable)",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "hours_per_week",
+      "label": "Expected Hours per Week",
+      "type": "text",
+      "required": true
+    }
+  ],
+  "clauses": [
+    {
+      "id": "internship",
+      "title": "Internship Position",
+      "body": "{{company_name}} (the 'Company') offers {{intern_name}} (the 'Intern') an internship position as {{internship_role}} from {{start_date}} to {{end_date}}. This is a learning opportunity designed to provide practical work experience{{#if educational_institution}} in connection with studies at {{educational_institution}}{{/if}}."
+    },
+    {
+      "id": "duties",
+      "title": "Duties & Learning Objectives",
+      "body": "The Intern will work approximately {{hours_per_week}} hours per week, assisting with projects and tasks related to {{internship_role}}. The Company will provide supervision, training, and mentorship to support the Intern's professional development. The Intern agrees to complete assigned tasks diligently and professionally."
+    },
+    {
+      "id": "compensation",
+      "title": "Compensation",
+      "body": "The Intern will receive {{compensation}} for this internship. {{#if compensation != 'Unpaid'}}Payment will be made monthly in arrears.{{/if}} The Intern may be eligible for reimbursement of reasonable pre-approved expenses with receipts."
+    },
+    {
+      "id": "confidentiality",
+      "title": "Confidentiality",
+      "body": "The Intern agrees to keep all Company information, projects, and business matters confidential during and after the internship. The Intern may not share confidential information with anyone outside the Company without permission. This obligation continues after the internship ends."
+    },
+    {
+      "id": "ip",
+      "title": "Intellectual Property",
+      "body": "Any work product or materials created by the Intern during the internship belongs to the Company. The Intern assigns all rights and ownership to the Company. The Intern may use the experience and general skills gained for educational and career purposes."
+    },
+    {
+      "id": "supervision",
+      "title": "Supervision & Feedback",
+      "body": "The Company will provide appropriate supervision and regular feedback to support the Intern's learning. The Intern should raise any concerns or questions with their supervisor promptly. The Company may provide a reference or letter of completion at the end of the internship."
+    },
+    {
+      "id": "termination",
+      "title": "Termination",
+      "body": "Either party may terminate this internship with 7 days' written notice. The Company may terminate immediately if the Intern breaches this agreement or behaves inappropriately. The Intern will return all Company property and materials upon termination."
+    },
+    {
+      "id": "relationship",
+      "title": "Relationship",
+      "body": "This internship does not create an employment relationship or guarantee future employment. The Intern is not entitled to employee benefits unless explicitly stated. {{#if educational_institution}}This arrangement may fulfill academic requirements as agreed with {{educational_institution}}.{{/if}}"
+    },
+    {
+      "id": "law",
+      "title": "Governing Law",
+      "body": "This Agreement is governed by the laws of England & Wales. Both parties agree to resolve any disputes through good-faith discussion first."
+    },
+    {
+      "id": "signatures",
+      "title": "Signatures",
+      "body": "By signing below, both parties agree to the terms of this Internship Agreement.\n\nIntern: _________________ Date: _______\n\nCompany Representative: _________________ Date: _______"
+    }
+  ],
+  "annotations": [
+    {
+      "clause_id": "compensation",
+      "tooltip": "Ensure compliance with minimum wage laws - unpaid internships have strict requirements."
+    },
+    {
+      "clause_id": "relationship",
+      "tooltip": "Clarify this is not an employment relationship to avoid misunderstandings."
+    },
+    {
+      "clause_id": "ip",
+      "tooltip": "Company should own work product created during the internship."
+    }
+  ]
+}

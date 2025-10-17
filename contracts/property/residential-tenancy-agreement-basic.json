@@ -1,0 +1,78 @@
+{
+  "metadata": {
+    "title": "Residential Tenancy Agreement (Basic)",
+    "jurisdiction": "UK",
+    "governing_law": "England & Wales",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {
+      "key": "party_a_name",
+      "label": "Party A (Owner/Client)",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "party_b_name",
+      "label": "Party B (Tenant/Provider)",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "service_or_property",
+      "label": "Property or Service Description",
+      "type": "textarea",
+      "required": true
+    },
+    {
+      "key": "fee",
+      "label": "Fee or Rent",
+      "type": "currency",
+      "required": true
+    },
+    {
+      "key": "term",
+      "label": "Duration",
+      "type": "text",
+      "required": true
+    }
+  ],
+  "clauses": [
+    {
+      "id": "scope",
+      "title": "Property Let",
+      "body": "The Landlord lets and the Tenant takes the residential property described as: [service_or_property] for the term of [term] beginning on [start_date] and ending on [end_date], unless terminated earlier in accordance with this agreement."
+    },
+    {
+      "id": "payment",
+      "title": "Rent and Charges",
+      "body": "The Tenant shall pay rent of £[fee] per month, payable in advance on the [day] of each month. The Tenant shall also pay for all utilities, council tax, and communication services unless otherwise agreed. A security deposit of £[amount] is held against damages."
+    },
+    {
+      "id": "responsibility",
+      "title": "Tenant Responsibilities",
+      "body": "The Tenant shall: use the property as a private residence only; keep the property clean and in good condition; report repairs needed promptly; not make alterations without consent; not cause nuisance to neighbours; and allow reasonable access for inspections/repairs with notice."
+    },
+    {
+      "id": "liability",
+      "title": "Repairs and Damage",
+      "body": "The Landlord maintains the structure, exterior, and installations for water, gas, electricity. The Tenant is responsible for damage caused by negligence or misuse. The security deposit will be protected in a government-approved scheme and deductions may be made for cleaning, damages, or unpaid rent."
+    },
+    {
+      "id": "termination",
+      "title": "Termination",
+      "body": "After the fixed term, this becomes a periodic tenancy continuable by [period] notice. During the fixed term, early termination may require payment of reletting costs. The Landlord may seek possession for non-payment, breach of terms, or at end of term with proper notice."
+    },
+    {
+      "id": "law",
+      "title": "Governing Law",
+      "body": "This agreement is governed by the laws of England and Wales."
+    }
+  ],
+  "annotations": [
+    {
+      "clause_id": "liability",
+      "tooltip": "Details about deposit protection schemes and responsibility for different types of repairs."
+    }
+  ]
+}

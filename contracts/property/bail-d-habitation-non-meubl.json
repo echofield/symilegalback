@@ -1,0 +1,26 @@
+{
+  "metadata": {
+    "title": "Bail d’habitation non meublé",
+    "jurisdiction": "FR",
+    "governing_law": "France",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {"key": "bailleur", "label": "Nom du bailleur", "type": "text", "required": true},
+    {"key": "locataire", "label": "Nom du locataire", "type": "text", "required": true},
+    {"key": "adresse", "label": "Adresse du logement", "type": "textarea", "required": true},
+    {"key": "loyer_mensuel", "label": "Loyer mensuel (€)", "type": "number", "required": true},
+    {"key": "charges", "label": "Montant des charges (€)", "type": "number", "required": true},
+    {"key": "date_entree", "label": "Date d’entrée dans les lieux", "type": "date", "required": true}
+  ],
+  "clauses": [
+    {"id": "parties", "title": "Parties", "body": "Le présent contrat est conclu entre {{bailleur}} (le Bailleur) et {{locataire}} (le Locataire)."},
+    {"id": "objet", "title": "Objet du contrat", "body": "Le Bailleur loue au Locataire le logement situé {{adresse}} à usage exclusif d’habitation principale."},
+    {"id": "loyer", "title": "Loyer et charges", "body": "Le loyer mensuel est fixé à {{loyer_mensuel}} euros, augmenté de {{charges}} euros de charges récupérables."},
+    {"id": "duree", "title": "Durée du bail", "body": "La durée du bail est de trois ans renouvelables tacitement, sauf congé donné dans les conditions prévues par la loi."},
+    {"id": "etat_lieux", "title": "État des lieux", "body": "Un état des lieux d’entrée et de sortie sera établi contradictoirement entre les parties."},
+    {"id": "depot_garantie", "title": "Dépôt de garantie", "body": "Le Locataire verse à la signature un dépôt de garantie équivalant à un mois de loyer hors charges."},
+    {"id": "loi_applicable", "title": "Loi applicable", "body": "Le présent contrat est régi par la loi du 6 juillet 1989 tendant à améliorer les rapports locatifs."}
+  ]
+}
+

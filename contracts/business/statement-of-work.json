@@ -1,0 +1,62 @@
+{
+  "metadata": {
+    "title": "Statement of Work",
+    "jurisdiction": "UK | US",
+    "governing_law": "England & Wales | California",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {
+      "key": "project_name",
+      "label": "Project Name",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "deliverables",
+      "label": "List main deliverables",
+      "type": "textarea",
+      "required": true
+    },
+    {
+      "key": "timeline",
+      "label": "Key milestones",
+      "type": "textarea",
+      "required": false
+    },
+    {
+      "key": "budget",
+      "label": "Budget",
+      "type": "currency",
+      "required": true
+    }
+  ],
+  "clauses": [
+    {
+      "id": "purpose",
+      "title": "Purpose",
+      "body": "This SOW describes the work under the Master Services Agreement for {{project_name}}."
+    },
+    {
+      "id": "deliverables",
+      "title": "Deliverables",
+      "body": "Deliverables include: {{deliverables}}."
+    },
+    {
+      "id": "timeline",
+      "title": "Timeline",
+      "body": "Milestones: {{timeline}}."
+    },
+    {
+      "id": "budget",
+      "title": "Budget",
+      "body": "Total budget {{budget}}; changes need written consent."
+    }
+  ],
+  "annotations": [
+    {
+      "clause_id": "budget",
+      "tooltip": "Keep aligned with master agreement payment terms."
+    }
+  ]
+}

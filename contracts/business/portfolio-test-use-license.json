@@ -1,0 +1,46 @@
+{
+  "metadata": {
+    "title": "Portfolio / Test-Use License",
+    "jurisdiction": "UK | US",
+    "governing_law": "England & Wales | California",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {
+      "key": "creator",
+      "label": "Creator Name",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "client",
+      "label": "Client Name",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "project_name",
+      "label": "Project Name",
+      "type": "text",
+      "required": true
+    }
+  ],
+  "clauses": [
+    {
+      "id": "license",
+      "title": "Portfolio Use",
+      "body": "Client grants Creator the right to display work from {{project_name}} in portfolio and social media for self-promotion."
+    },
+    {
+      "id": "restrictions",
+      "title": "Restrictions",
+      "body": "Creator shall not disclose confidential details or unreleased material."
+    },
+    {
+      "id": "revocation",
+      "title": "Revocation",
+      "body": "Client may withdraw permission in writing for legitimate reasons."
+    }
+  ],
+  "annotations": []
+}

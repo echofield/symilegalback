@@ -1,0 +1,116 @@
+{
+  "metadata": {
+    "title": "Terms of Service (Basic Website/App)",
+    "jurisdiction": "US",
+    "governing_law": "California",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {
+      "key": "service_name",
+      "label": "Website/App Name",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "company_name",
+      "label": "Company Name",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "service_description",
+      "label": "Brief service description",
+      "type": "textarea",
+      "required": true
+    },
+    {
+      "key": "contact_email",
+      "label": "Contact email",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "effective_date",
+      "label": "Effective date",
+      "type": "date",
+      "required": true
+    }
+  ],
+  "clauses": [
+    {
+      "id": "acceptance",
+      "title": "Acceptance of Terms",
+      "body": "By accessing or using {{service_name}} (the 'Service'), you agree to be bound by these Terms of Service. If you don't agree, please don't use the Service. {{company_name}} ('we', 'us', 'our') operates the Service. These terms are effective from {{effective_date}}."
+    },
+    {
+      "id": "description",
+      "title": "Service Description",
+      "body": "{{service_name}} provides: {{service_description}}. We may modify, suspend, or discontinue any part of the Service at any time without notice. We're not liable for any modification or discontinuation of the Service."
+    },
+    {
+      "id": "accounts",
+      "title": "User Accounts",
+      "body": "You may need to create an account to use certain features. You're responsible for maintaining your account security and all activities under your account. You must provide accurate information and update it as needed. Notify us immediately of any unauthorized access."
+    },
+    {
+      "id": "use",
+      "title": "Acceptable Use",
+      "body": "You agree to use the Service only for lawful purposes. You may not use the Service to harm others, violate laws, infringe rights, transmit malware, or engage in any harmful activity. We reserve the right to suspend or terminate accounts that violate these terms."
+    },
+    {
+      "id": "ip",
+      "title": "Intellectual Property",
+      "body": "We own all rights to the Service, including software, designs, and content. You're granted a limited license to use the Service for personal or internal business use. You may not copy, modify, or reverse engineer any part of the Service without permission."
+    },
+    {
+      "id": "user_content",
+      "title": "User Content",
+      "body": "You retain ownership of content you submit to the Service. By submitting content, you grant us a worldwide, non-exclusive license to use, display, and distribute it as needed to provide the Service. You're responsible for ensuring your content doesn't violate any laws or third-party rights."
+    },
+    {
+      "id": "disclaimers",
+      "title": "Disclaimers & Limitations",
+      "body": "The Service is provided 'as is' without warranties of any kind. We don't guarantee the Service will be error-free, secure, or uninterrupted. Our liability for any claim is limited to $100 or the amount you paid us in the past 12 months, whichever is greater. We're not liable for indirect or consequential damages."
+    },
+    {
+      "id": "termination",
+      "title": "Termination",
+      "body": "We may suspend or terminate your access to the Service at any time for violations or at our discretion. You may stop using the Service at any time. Provisions that should survive termination (like disclaimers, limitations, and IP rights) will continue to apply."
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy",
+      "body": "Your use of the Service is also subject to our Privacy Policy. We collect and use data as described in that policy. By using the Service, you consent to our data practices as outlined in the Privacy Policy."
+    },
+    {
+      "id": "changes",
+      "title": "Changes to Terms",
+      "body": "We may update these Terms at any time. Material changes will be notified through the Service or by email. Continued use of the Service after changes means you accept the new terms. Check this page regularly for updates."
+    },
+    {
+      "id": "law",
+      "title": "Governing Law & Disputes",
+      "body": "These Terms are governed by California law without regard to conflict of law principles. Any disputes will be resolved in the state or federal courts of California. You agree to submit to the jurisdiction of those courts."
+    },
+    {
+      "id": "contact",
+      "title": "Contact Information",
+      "body": "If you have questions about these Terms, contact us at {{contact_email}}. We'll respond to inquiries as promptly as possible."
+    }
+  ],
+  "annotations": [
+    {
+      "clause_id": "use",
+      "tooltip": "Clear acceptable use policies protect your service from abuse."
+    },
+    {
+      "clause_id": "disclaimers",
+      "tooltip": "Limitations of liability are essential for protecting your business."
+    },
+    {
+      "clause_id": "user_content",
+      "tooltip": "Ensure you have rights to use content posted by users on your platform."
+    }
+  ]
+}

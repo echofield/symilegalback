@@ -1,0 +1,78 @@
+{
+  "metadata": {
+    "title": "Cleaning Services Agreement",
+    "jurisdiction": "US",
+    "governing_law": "California",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {
+      "key": "party_a_name",
+      "label": "Party A (Owner/Client)",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "party_b_name",
+      "label": "Party B (Tenant/Provider)",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "service_or_property",
+      "label": "Property or Service Description",
+      "type": "textarea",
+      "required": true
+    },
+    {
+      "key": "fee",
+      "label": "Fee or Rent",
+      "type": "currency",
+      "required": true
+    },
+    {
+      "key": "term",
+      "label": "Duration",
+      "type": "text",
+      "required": true
+    }
+  ],
+  "clauses": [
+    {
+      "id": "scope",
+      "title": "Cleaning Services",
+      "body": "The Cleaner agrees to provide cleaning services at [service_or_property] as follows: [detailed cleaning tasks]. Services will be performed [frequency] on [days/times]. The Client may request additional cleaning or one-time deep cleaning at additional rates agreed in writing."
+    },
+    {
+      "id": "payment",
+      "title": "Compensation",
+      "body": "The Client shall pay $[fee] per [cleaning session/month] for the services, payable [payment terms]. Additional charges may apply for extra tasks, excessive cleaning requirements, or last-minute schedule changes. Payment is due within [number] days of invoice."
+    },
+    {
+      "id": "responsibility",
+      "title": "Service Provision",
+      "body": "The Cleaner shall: bring standard cleaning supplies and equipment; perform services to reasonable standards; maintain insurance; and respect client property. The Client shall: provide safe working conditions; secure pets; and notify of special requirements or hazards in advance."
+    },
+    {
+      "id": "liability",
+      "title": "Damage and Insurance",
+      "body": "The Cleaner carries liability insurance and will repair or replace items damaged by their negligence. The Cleaner is not liable for pre-existing damage or wear. The Client should secure valuables and inform of fragile items. Claims must be reported within [number] days of service."
+    },
+    {
+      "id": "termination",
+      "title": "Termination",
+      "body": "This agreement continues until terminated by either party with [number] days written notice. Either party may terminate immediately for material breach including non-payment, property damage, or safety concerns. The Client pays for services rendered before termination."
+    },
+    {
+      "id": "law",
+      "title": "Governing Law",
+      "body": "This agreement is governed by the laws of the State of California."
+    }
+  ],
+  "annotations": [
+    {
+      "clause_id": "liability",
+      "tooltip": "Procedure for reporting damaged items and insurance coverage details."
+    }
+  ]
+}

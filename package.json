@@ -1,0 +1,41 @@
+{
+  "name": "contract-generator-backend-v2",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "build:contracts-data": "node scripts/build-contracts-data.js",
+    "validate:contracts": "ts-node scripts/validate-contracts.ts",
+    "openapi": "ts-node scripts/generate-openapi.ts",
+    "seed": "ts-node scripts/seed-sample-users.ts",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.75.0",
+    "@upstash/redis": "1.33.0",
+    "docx": "8.5.0",
+    "dotenv": "^17.2.3",
+    "ioredis": "5.4.1",
+    "next": "14.2.5",
+    "pino": "9.5.0",
+    "pino-pretty": "11.2.2",
+    "pdfkit": "0.15.0",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "zod": "3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "20.11.30",
+    "@types/react": "18.2.48",
+    "@types/react-dom": "18.2.18",
+    "@typescript-eslint/eslint-plugin": "^8.46.0",
+    "@typescript-eslint/parser": "^8.46.0",
+    "eslint": "8.57.0",
+    "eslint-config-next": "^15.5.4",
+    "ts-node": "10.9.2",
+    "typescript": "5.5.4"
+  }
+}

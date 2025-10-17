@@ -1,0 +1,82 @@
+[
+  {
+    "name": "Cabinet Dupont & Associés",
+    "address": "12 Rue de Rivoli, 75004 Paris, France",
+    "rating": 4.8,
+    "lat": 48.8566,
+    "lng": 2.3522,
+    "specialties": ["baux", "real-estate", "property", "lease"],
+    "languages": ["fr"],
+    "phone": "+33 1 42 00 00 01"
+  },
+  {
+    "name": "LexImmo Conseil",
+    "address": "25 Avenue Thiers, 06000 Nice, France",
+    "rating": 4.6,
+    "lat": 43.7031,
+    "lng": 7.2661,
+    "specialties": ["baux", "property", "construction"],
+    "languages": ["fr", "en"],
+    "phone": "+33 4 93 00 15 20"
+  },
+  {
+    "name": "Montparnasse Employment Law Group",
+    "address": "118 Boulevard du Montparnasse, 75014 Paris, France",
+    "rating": 4.7,
+    "lat": 48.8414,
+    "lng": 2.3239,
+    "specialties": ["travail", "employment", "hr", "discrimination"],
+    "languages": ["fr", "en"],
+    "phone": "+33 1 53 45 67 89"
+  },
+  {
+    "name": "Aurora Corporate Law",
+    "address": "200 Queen St W, Toronto, ON, Canada",
+    "rating": 4.9,
+    "lat": 43.6525,
+    "lng": -79.3839,
+    "specialties": ["business", "commerce", "startups", "m&a"],
+    "languages": ["en"],
+    "phone": "+1 416-555-0198"
+  },
+  {
+    "name": "LegalEase Startup Attorneys",
+    "address": "500 Howard St, San Francisco, CA 94105, USA",
+    "rating": 4.5,
+    "lat": 37.7897,
+    "lng": -122.396,
+    "specialties": ["business", "contracts", "saas", "venture"],
+    "languages": ["en"],
+    "phone": "+1 415-555-0123"
+  },
+  {
+    "name": "Camden Employment Chambers",
+    "address": "45 High Holborn, London WC1V 6EA, United Kingdom",
+    "rating": 4.4,
+    "lat": 51.5176,
+    "lng": -0.1175,
+    "specialties": ["employment", "labour", "hr", "union"],
+    "languages": ["en"],
+    "phone": "+44 20 7123 4567"
+  },
+  {
+    "name": "Côte Basque Médiation",
+    "address": "7 Place Louis XIV, 64500 Saint-Jean-de-Luz, France",
+    "rating": 4.6,
+    "lat": 43.3889,
+    "lng": -1.6636,
+    "specialties": ["cloture", "settlement", "litigation"],
+    "languages": ["fr"],
+    "phone": "+33 5 59 26 45 10"
+  },
+  {
+    "name": "Harborview Family Law",
+    "address": "88 Market St, Sydney NSW 2000, Australia",
+    "rating": 4.7,
+    "lat": -33.8688,
+    "lng": 151.2093,
+    "specialties": ["personal", "family", "estate"],
+    "languages": ["en"],
+    "phone": "+61 2 9017 1234"
+  }
+]

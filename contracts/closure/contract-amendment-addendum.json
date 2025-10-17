@@ -1,0 +1,46 @@
+{
+  "metadata": {
+    "title": "Contract Amendment / Addendum",
+    "jurisdiction": "UK | US",
+    "governing_law": "England & Wales | California",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {
+      "key": "original_contract",
+      "label": "Original Contract Title",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "date",
+      "label": "Original Contract Date",
+      "type": "date",
+      "required": true
+    },
+    {
+      "key": "changes",
+      "label": "Describe changes or additions",
+      "type": "textarea",
+      "required": true
+    }
+  ],
+  "clauses": [
+    {
+      "id": "reference",
+      "title": "Reference",
+      "body": "This Addendum amends the {{original_contract}} dated {{date}}."
+    },
+    {
+      "id": "amendment",
+      "title": "Amendments",
+      "body": "Parties agree to the following changes: {{changes}}."
+    },
+    {
+      "id": "continuation",
+      "title": "Effect",
+      "body": "All other terms remain unchanged and in full force."
+    }
+  ],
+  "annotations": []
+}

@@ -1,0 +1,105 @@
+{
+  "metadata": {
+    "title": "Employment Offer Letter",
+    "jurisdiction": "UK",
+    "governing_law": "England & Wales",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {
+      "key": "company_name",
+      "label": "Company Name",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "candidate_name",
+      "label": "Candidate Name",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "job_title",
+      "label": "Job Title",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "start_date",
+      "label": "Start Date",
+      "type": "date",
+      "required": true
+    },
+    {
+      "key": "salary",
+      "label": "Annual Salary",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "department",
+      "label": "Department/Team",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "reporting_to",
+      "label": "Reports To",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "offer_expires",
+      "label": "Offer Expiry Date",
+      "type": "date",
+      "required": true
+    }
+  ],
+  "clauses": [
+    {
+      "id": "greeting",
+      "title": "Offer of Employment",
+      "body": "Dear {{candidate_name}},\n\nWe're delighted to offer you the position of {{job_title}} at {{company_name}}. We were impressed by your skills and experience, and we're excited about you joining our {{department}} team."
+    },
+    {
+      "id": "role",
+      "title": "Position Details",
+      "body": "You'll be working as {{job_title}}, reporting to {{reporting_to}}. Your start date will be {{start_date}}. During your first few weeks, we'll provide a comprehensive onboarding program to help you settle in and meet the team."
+    },
+    {
+      "id": "compensation",
+      "title": "Compensation & Benefits",
+      "body": "Your annual salary will be {{salary}}, paid monthly in arrears. You'll be eligible for our standard benefits package, including pension contributions, health insurance, and 25 days of annual leave plus bank holidays. Full details will be provided in your employment contract."
+    },
+    {
+      "id": "conditions",
+      "title": "Conditions of Offer",
+      "body": "This offer is conditional on satisfactory references, proof of your right to work in the UK, and completion of any necessary background checks. We'll guide you through these steps once you accept the offer."
+    },
+    {
+      "id": "next_steps",
+      "title": "Next Steps",
+      "body": "Please confirm your acceptance of this offer by signing and returning this letter by {{offer_expires}}. Once we receive your acceptance, we'll send you the full employment contract and onboarding information. If you have any questions, please don't hesitate to reach out."
+    },
+    {
+      "id": "closing",
+      "title": "Closing",
+      "body": "We're looking forward to welcoming you to the team and working together to achieve great things.\n\nWarm regards,\n\n[Hiring Manager Name]\n[Title]\n{{company_name}}"
+    },
+    {
+      "id": "acceptance",
+      "title": "Acceptance",
+      "body": "I, {{candidate_name}}, accept the offer of employment as outlined above.\n\nSignature: _________________ Date: _______"
+    }
+  ],
+  "annotations": [
+    {
+      "clause_id": "conditions",
+      "tooltip": "Always make offers conditional on standard pre-employment checks."
+    },
+    {
+      "clause_id": "next_steps",
+      "tooltip": "Set a clear deadline for acceptance to manage hiring timelines."
+    }
+  ]
+}

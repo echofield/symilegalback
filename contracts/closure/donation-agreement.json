@@ -1,0 +1,52 @@
+{
+  "metadata": {
+    "title": "Donation Agreement",
+    "jurisdiction": "UK | US",
+    "governing_law": "England & Wales | California",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {
+      "key": "donor",
+      "label": "Donor",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "recipient",
+      "label": "Recipient",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "amount",
+      "label": "Donation Amount",
+      "type": "currency",
+      "required": true
+    },
+    {
+      "key": "purpose",
+      "label": "Purpose (optional)",
+      "type": "textarea",
+      "required": false
+    }
+  ],
+  "clauses": [
+    {
+      "id": "gift",
+      "title": "Gift",
+      "body": "{{donor}} donates {{amount}} to {{recipient}} for {{purpose}}."
+    },
+    {
+      "id": "irrevocable",
+      "title": "Irrevocability",
+      "body": "Donation is voluntary and non-refundable."
+    },
+    {
+      "id": "acknowledge",
+      "title": "Acknowledgment",
+      "body": "Recipient acknowledges and thanks Donor for the contribution."
+    }
+  ],
+  "annotations": []
+}

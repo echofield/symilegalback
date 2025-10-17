@@ -1,0 +1,113 @@
+{
+  "metadata": {
+    "title": "Loan Agreement (Between Friends)",
+    "jurisdiction": "US",
+    "governing_law": "California",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {
+      "key": "lender_name",
+      "label": "Lender Name",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "borrower_name",
+      "label": "Borrower Name",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "loan_amount",
+      "label": "Loan Amount",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "loan_date",
+      "label": "Loan Date",
+      "type": "date",
+      "required": true
+    },
+    {
+      "key": "repayment_date",
+      "label": "Repayment Date (or schedule)",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "interest_rate",
+      "label": "Interest Rate (or 'Interest-free')",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "repayment_method",
+      "label": "Repayment Method (e.g., lump sum, monthly installments)",
+      "type": "text",
+      "required": true
+    }
+  ],
+  "clauses": [
+    {
+      "id": "loan",
+      "title": "Loan Agreement",
+      "body": "This Loan Agreement is made on {{loan_date}} between {{lender_name}} (the 'Lender') and {{borrower_name}} (the 'Borrower'). The Lender agrees to loan the Borrower {{loan_amount}} (the 'Loan Amount'), and the Borrower agrees to repay it according to the terms below."
+    },
+    {
+      "id": "amount",
+      "title": "Loan Amount & Disbursement",
+      "body": "The Lender will provide {{loan_amount}} to the Borrower on or around {{loan_date}}. The Borrower acknowledges receipt of this amount by signing this Agreement. The loan will be transferred via [cash/bank transfer/check/other method]."
+    },
+    {
+      "id": "interest",
+      "title": "Interest",
+      "body": "{{#if interest_rate == 'Interest-free'}}This is an interest-free loan. The Borrower will repay only the principal amount of {{loan_amount}}.{{else}}This loan carries an interest rate of {{interest_rate}} per year, calculated on the outstanding balance. Interest will be added to the repayment amount as specified below.{{/if}}"
+    },
+    {
+      "id": "repayment",
+      "title": "Repayment Terms",
+      "body": "The Borrower will repay the loan {{repayment_method}} by {{repayment_date}}. Payments should be made to the Lender via [bank transfer/cash/check]. The Borrower may repay early without penalty. All payments will be applied first to interest (if any), then to principal."
+    },
+    {
+      "id": "default",
+      "title": "Default",
+      "body": "If the Borrower fails to make a payment when due, they will have 14 days to cure the default. If the default is not cured, the entire remaining balance becomes immediately due. The Lender may pursue legal remedies to collect the debt, and the Borrower will be responsible for collection costs."
+    },
+    {
+      "id": "personal",
+      "title": "Personal Nature of Loan",
+      "body": "This is a personal loan between friends and is made in good faith. While this is a legal agreement, both parties intend to maintain their friendship and resolve any issues amicably. Open communication about any repayment difficulties is encouraged."
+    },
+    {
+      "id": "changes",
+      "title": "Changes to Terms",
+      "body": "Any changes to this Agreement must be made in writing and signed by both parties. Oral modifications are not valid. If circumstances change, the parties agree to discuss modifications in good faith."
+    },
+    {
+      "id": "law",
+      "title": "Governing Law",
+      "body": "This Agreement is governed by California law. Both parties agree to attempt to resolve disputes through friendly discussion before pursuing legal action."
+    },
+    {
+      "id": "signatures",
+      "title": "Signatures",
+      "body": "By signing below, both parties acknowledge understanding and agreeing to these loan terms.\n\nLender: _________________ Date: _______\n\nBorrower: _________________ Date: _______\n\nBorrower acknowledges receipt of {{loan_amount}}: _______"
+    }
+  ],
+  "annotations": [
+    {
+      "clause_id": "interest",
+      "tooltip": "Even loans between friends benefit from clear interest terms (or explicit interest-free status)."
+    },
+    {
+      "clause_id": "repayment",
+      "tooltip": "Specific repayment terms prevent misunderstandings and preserve the friendship."
+    },
+    {
+      "clause_id": "personal",
+      "tooltip": "Acknowledge the personal relationship while maintaining legal clarity."
+    }
+  ]
+}

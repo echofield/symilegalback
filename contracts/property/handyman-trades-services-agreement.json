@@ -1,0 +1,78 @@
+{
+  "metadata": {
+    "title": "Handyman / Trades Services Agreement",
+    "jurisdiction": "UK",
+    "governing_law": "England & Wales",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {
+      "key": "party_a_name",
+      "label": "Party A (Owner/Client)",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "party_b_name",
+      "label": "Party B (Tenant/Provider)",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "service_or_property",
+      "label": "Property or Service Description",
+      "type": "textarea",
+      "required": true
+    },
+    {
+      "key": "fee",
+      "label": "Fee or Rent",
+      "type": "currency",
+      "required": true
+    },
+    {
+      "key": "term",
+      "label": "Duration",
+      "type": "text",
+      "required": true
+    }
+  ],
+  "clauses": [
+    {
+      "id": "scope",
+      "title": "Work Description",
+      "body": "The Contractor agrees to perform the following handyman/trade services for the Client: [service_or_property]. This includes [specific tasks] at [location]. The work will be performed during normal business hours unless otherwise agreed. Additional work requires written change orders."
+    },
+    {
+      "id": "payment",
+      "title": "Payment Terms",
+      "body": "The Client shall pay £[fee] for the services as follows: [payment schedule—e.g., deposit, progress payments, final payment]. Materials are [included/billed separately]. Payment is due within [number] days of invoice. Late payments may incur interest at [percentage]% per month."
+    },
+    {
+      "id": "responsibility",
+      "title": "Work Standards",
+      "body": "The Contractor shall: perform work in a professional manner; obtain necessary permits; comply with building regulations; maintain insurance; and clean up work areas. The Client shall: provide access; make necessary arrangements; and pay for permits if required."
+    },
+    {
+      "id": "liability",
+      "title": "Warranties and Damage",
+      "body": "The Contractor warrants workmanship for [number] months from completion. The Contractor is liable for damage caused by their negligence but not for pre-existing conditions or concealed defects discovered during work. The Contractor carries public liability insurance of £[amount]."
+    },
+    {
+      "id": "termination",
+      "title": "Completion and Disputes",
+      "body": "This agreement terminates upon completion and acceptance of work. Either party may terminate for material breach with [number] days to cure. Disputes shall be referred to mediation before legal action. The Client pays for work completed at termination."
+    },
+    {
+      "id": "law",
+      "title": "Governing Law",
+      "body": "This agreement is governed by the laws of England and Wales."
+    }
+  ],
+  "annotations": [
+    {
+      "clause_id": "liability",
+      "tooltip": "Workmanship warranty period and insurance coverage amounts for tradespeople."
+    }
+  ]
+}
