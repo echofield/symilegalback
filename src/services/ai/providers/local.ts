@@ -2,7 +2,7 @@ import type { AIAdapter } from '@/types/ai';
 import { loadContractTemplate } from '@/services/templates/loader';
 import { parseTemplateIdFromPrompt } from '@/services/ai/util';
 
-function renderContractFromPrompt(prompt: string): string {
+async function renderContractFromPrompt(prompt: string): Promise<string> {
   // Try to pull the contract id and a JSON inputs block out of the prompt
   const id = parseTemplateIdFromPrompt(prompt);
   let inputs: Record<string, any> = {};
@@ -16,7 +16,7 @@ function renderContractFromPrompt(prompt: string): string {
   }
 
   try {
-    const tmpl = loadContractTemplate.sync?.(id);
+    const tmpl = await loadContractTemplate(id);
     if (!tmpl) return `CONTRACT\n\n${prompt.slice(0, 800)}`;
 
     const header = `${tmpl.metadata.title}\nGoverning law: ${tmpl.metadata.governing_law} • Jurisdiction: ${tmpl.metadata.jurisdiction}\n`;
@@ -37,7 +37,7 @@ function renderContractFromPrompt(prompt: string): string {
 export class LocalAdapter implements AIAdapter {
   async generate(prompt: string, _options?: { temperature?: number; maxTokens?: number }): Promise<string> {
     // Produce a readable contract when no external AI provider is configured
-    return renderContractFromPrompt(prompt);
+    return await renderContractFromPrompt(prompt);
   }
 
   async review(text: string): Promise<any> {
