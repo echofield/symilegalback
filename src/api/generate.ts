@@ -29,7 +29,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         .maybeSingle();
       const plan = (profile?.plan as 'free' | 'pro' | 'cabinet' | 'entreprise' | undefined) || 'free';
       if (plan !== 'cabinet' && plan !== 'entreprise') {
-        const limit = plan === 'pro' ? 20 : 2;
+        const limit = plan === 'pro' ? 20 : 10; // temporarily allow 10 for free plan
         const { data: row } = await supabaseAdmin
           .from('contracts_generated')
           .select('count')

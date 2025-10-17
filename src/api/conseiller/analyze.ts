@@ -17,7 +17,20 @@ async function callOpenAIAudit(problem: string) {
   if (!apiKey) throw new Error('OPENAI_API_KEY not set');
 
   const sys = `Tu es un assistant juridique expert. Analyse et retourne UNIQUEMENT du JSON valide.`;
-  const user = `Analyse cette situation:\n\n"""\n${problem}\n"""\n\nRéponds UNIQUEMENT en JSON valide avec ce format exact:\n{\n  "summary": "Résumé en 1-2 phrases de la situation",\n  "category": "catégorie juridique principale",\n  "specialty": "spécialité avocat recommandée",\n  "risks": ["risque 1", "risque 2"],\n  "urgency": "Faible|Moyenne|Élevée - explication courte",\n  "complexity": "Simple|Moyenne|Complexe",\n  "recommendedTemplateId": "id-du-template-le-plus-pertinent ou null",\n  "needsLawyer": true|false,\n  "templateAvailable": true|false\n}\n\nRègles pour needsLawyer=true: enjeux > 5000€, litige/procédure, pénal, ou négociation complexe. NE retourne RIEN d'autre que ce JSON.`;
+  const user = `Analyse cette situation:\n\n"""\n${problem}\n"""\n\nRéponds UNIQUEMENT en JSON valide avec ce format exact (pas d'explications en dehors du JSON):\n{\n  "summary": "Résumé en 1-2 phrases de la situation",
+  "category": "catégorie juridique principale",
+  "specialty": "spécialité avocat recommandée",
+  "risks": ["risque 1", "risque 2"],
+  "points": ["point juridique 1", "point 2"],
+  "actions": ["action 1", "action 2"],
+  "urgency": "Faible|Moyenne|Élevée - explication courte",
+  "complexity": "Simple|Moyenne|Complexe",
+  "recommendedTemplateId": "id-du-template-le-plus-pertinent ou null",
+  "templateAvailable": true|false,
+  "needsLawyer": true|false,
+  "lawyerSpecialty": "spécialité avocat si needsLawyer=true sinon null",
+  "followupQuestions": ["question complémentaire si description incomplète"]
+}\n\nRègles pour needsLawyer=true: enjeux > 5000€, litige/procédure, pénal, ou négociation complexe.`;
 
   const r = await fetch('https://api.openai.com/v1/chat/completions', {
     method: 'POST',
@@ -45,18 +58,22 @@ async function callOpenAIAudit(problem: string) {
     category: string;
     specialty: string;
     risks: string[];
+    points?: string[];
+    actions?: string[];
     urgency: string;
     complexity: string;
     recommendedTemplateId?: string | null;
     needsLawyer?: boolean;
     templateAvailable?: boolean;
+    lawyerSpecialty?: string | null;
+    followupQuestions?: string[];
   };
 }
 
 async function callPerplexityLawyers(city: string, specialty: string) {
   const apiKey = process.env.PERPLEXITY_API_KEY;
   if (!apiKey) return [] as any[];
-  const prompt = `Trouve les 5 meilleurs avocats spécialisés en "${specialty}" à ${city}, France.\n\nRetourne UNIQUEMENT un JSON valide:\n{\n  "lawyers": [\n    {\n      "name": "Maître Prénom Nom",\n      "firm": "Nom du cabinet",\n      "specialty": "Spécialité exacte",\n      "city": "Ville",\n      "phone": "Téléphone si disponible",\n      "rating": 4.5\n    }\n  ]\n}\n\nNE retourne RIEN d'autre.`;
+  const prompt = `Trouve 5 avocats spécialisés en "${specialty}" à ${city}, France. Retourne UNIQUEMENT ce JSON:\n{\n  "lawyers": [\n    { "name": "", "firm": "", "specialty": "", "city": "", "phone": "", "email": "", "address": "", "rating": 0 }\n  ]\n}`;
   const r = await fetch('https://api.perplexity.ai/chat/completions', {
     method: 'POST',
     headers: {
@@ -111,11 +128,15 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       audit: {
         summary: audit.summary,
         risks: audit.risks,
+        points: audit.points || [],
+        actions: audit.actions || [],
         urgency: audit.urgency,
         complexity: audit.complexity,
       },
       recommendedTemplate,
       needsLawyer: Boolean(audit?.needsLawyer),
+      lawyerSpecialty: audit?.lawyerSpecialty || audit?.specialty || null,
+      followupQuestions: Array.isArray(audit?.followupQuestions) ? audit.followupQuestions : [],
       recommendedLawyers,
       timestamp: new Date().toISOString(),
     });
