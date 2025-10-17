@@ -60,7 +60,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     await supabaseAdmin
       .from('contracts_generated')
       .upsert({ user_id: userId, month_key: monthKey, count: 1 }, { onConflict: 'user_id,month_key' });
-    await supabaseAdmin.rpc('increment_generation_count', { p_user_id: userId, p_month_key: monthKey }).catch(() => {});
+    try {
+      await supabaseAdmin.rpc('increment_generation_count', { p_user_id: userId, p_month_key: monthKey });
+    } catch {}
     return res.status(200).json(response);
   } catch (error) {
     logger.error({ err: error }, 'Error generating contract');
