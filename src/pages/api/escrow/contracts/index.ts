@@ -19,9 +19,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       orderBy: { createdAt: 'desc' },
     });
 
-    const contracts = items.map((c) => {
+    const contracts = items.map((c: { id: string; title: string; totalAmount: number; currency: string; status: string; createdAt: Date; milestones: { status: string; amount: number }[] }) => {
       const milestonesCount = c.milestones.length;
-      const paidCount = c.milestones.filter((m) => m.status === 'PAID').length;
+      const paidCount = c.milestones.filter((m: { status: string }) => m.status === 'PAID').length;
       return {
         id: c.id,
         title: c.title,
