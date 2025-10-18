@@ -1,5 +1,4 @@
 import { prisma } from '@/lib/prisma';
-import { MilestoneStatus } from '@prisma/client';
 
 export default async function handler(req: any, res: any) {
   try {
@@ -15,13 +14,13 @@ export default async function handler(req: any, res: any) {
     const threshold = new Date(Date.now() - hours * 3600 * 1000);
 
     const toApprove = await prisma.milestone.findMany({
-      where: { status: MilestoneStatus.SUBMITTED, submittedAt: { lte: threshold } },
+      where: { status: 'SUBMITTED', submittedAt: { lte: threshold } },
       select: { id: true },
     });
 
     let count = 0;
     for (const ms of toApprove) {
-      await prisma.milestone.update({ where: { id: ms.id }, data: { status: MilestoneStatus.PAID, approvedAt: new Date() } });
+      await prisma.milestone.update({ where: { id: ms.id }, data: { status: 'PAID', approvedAt: new Date() } });
       count += 1;
     }
 
