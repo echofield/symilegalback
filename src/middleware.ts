@@ -11,11 +11,21 @@ function matchesPattern(origin: string, pattern: string): boolean {
   return re.test(origin);
 }
 
+const DEFAULT_ALLOWED_ORIGINS = [
+  'https://symilegal.vercel.app',
+  'https://app.symilegal.com',
+  'http://localhost:5173',
+  'https://symifrontlegal.vercel.app',
+  'https://symifrontlegalfinal.vercel.app',
+  'https://symifrontlegal*.vercel.app',
+];
+
 function pickAllowedOrigin(req: NextRequest): string {
-  const configured = (process.env.CORS_ORIGIN || '')
+  const envList = (process.env.CORS_ORIGIN || '')
     .split(',')
     .map((s) => normalize(s.trim()))
     .filter(Boolean);
+  const configured = Array.from(new Set([...envList, ...DEFAULT_ALLOWED_ORIGINS.map(normalize)]));
   const rawOrigin = req.headers.get('origin') || '';
   const origin = normalize(rawOrigin);
   if (configured.length === 0) return '*';
