@@ -1,46 +1,40 @@
 {
   "metadata": {
-    "title": "One-Way Non-Disclosure Agreement",
-    "jurisdiction": "UK | US",
-    "governing_law": "England & Wales | Delaware",
-    "version": "1.0.0"
+    "title": "Accord de confidentialité (NDA unilatéral)",
+    "category": "entreprise",
+    "jurisdiction": "FR",
+    "governing_law": "France",
+    "version": "2.0.0",
+    "requires_notary": false,
+    "official_registration": false,
+    "legal_articles": ["Code civil, articles 1101 et s.; Code de commerce L. 151-1 et s."],
+    "last_updated": "2025-10-18",
+    "complexity": "intermediate",
+    "estimated_time": "10-15 minutes"
   },
   "inputs": [
-    {
-      "key": "discloser",
-      "label": "Disclosing Party",
-      "type": "text",
-      "required": true
-    },
-    {
-      "key": "recipient",
-      "label": "Receiving Party",
-      "type": "text",
-      "required": true
-    },
-    {
-      "key": "purpose",
-      "label": "Purpose",
-      "type": "textarea",
-      "required": true
-    }
+    {"key": "discloser", "label": "Partie divulgatrice", "type": "text", "required": true},
+    {"key": "recipient", "label": "Partie réceptrice", "type": "text", "required": true},
+    {"key": "purpose", "label": "Objet / finalité des échanges", "type": "textarea", "required": true},
+    {"key": "duree_confidentialite", "label": "Durée de confidentialité (années)", "type": "number", "required": true},
+    {"key": "juridiction", "label": "Juridiction compétente", "type": "text", "required": true},
+    {"key": "lieu_signature", "label": "Lieu de signature", "type": "text", "required": true},
+    {"key": "date_signature", "label": "Date de signature", "type": "date", "required": true}
   ],
   "clauses": [
-    {
-      "id": "definition",
-      "title": "Definition",
-      "body": "Confidential Information includes any data shared by {{discloser}} for {{purpose}}."
-    },
-    {
-      "id": "obligation",
-      "title": "Obligations",
-      "body": "{{recipient}} will not disclose or misuse such information."
-    },
-    {
-      "id": "exceptions",
-      "title": "Exceptions",
-      "body": "Information already public or independently developed is not covered."
-    }
+    {"id": "identification_parties", "title": "Article 1 - Identification des parties", "body": "Entre: {{discloser}} (la \"Partie divulgatrice\") et {{recipient}} (la \"Partie réceptrice\")."},
+    {"id": "objet", "title": "Article 2 - Objet", "body": "Le présent accord a pour objet d'encadrer la communication d'Informations confidentielles dans le cadre de: {{purpose}}."},
+    {"id": "definitions", "title": "Article 3 - Définitions", "body": "\"Informations confidentielles\" s'entend de toute information non publique communiquée par la Partie divulgatrice, sous quelque forme que ce soit (écrite, orale, visuelle, électronique), identifiée comme telle ou dont la nature implique la confidentialité."},
+    {"id": "obligations", "title": "Article 4 - Obligations de confidentialité", "body": "La Partie réceptrice s'engage à: (i) ne pas divulguer les Informations confidentielles à des tiers; (ii) ne les utiliser qu'aux fins du présent accord; (iii) les protéger avec un niveau de sécurité au moins équivalent à celui qu'elle applique à ses propres informations sensibles."},
+    {"id": "exceptions", "title": "Article 5 - Exceptions", "body": "Ne sont pas couvertes: (a) informations tombées dans le domaine public sans faute; (b) informations détenues antérieurement; (c) obtenues légitimement d'un tiers non tenu au secret; (d) développées indépendamment."},
+    {"id": "duree", "title": "Article 6 - Durée de l'obligation", "body": "Les obligations de confidentialité s'appliquent pendant {{duree_confidentialite}} ans à compter de la signature, nonobstant la fin des discussions entre les parties."},
+    {"id": "propriete", "title": "Article 7 - Propriété intellectuelle", "body": "Les Informations confidentielles et tous droits de propriété intellectuelle y afférents demeurent la propriété exclusive de la Partie divulgatrice; aucun droit n'est concédé par le présent accord."},
+    {"id": "non_sollicitation", "title": "Article 8 - Non-sollicitation", "body": "Pendant la durée des échanges et 12 mois après, la Partie réceptrice s'interdit de débaucher ou de solliciter l'embauche des salariés connus à raison des échanges, sauf accord écrit préalable."},
+    {"id": "violation", "title": "Article 9 - Violation et mesures", "body": "Toute violation substantielle pourra donner lieu, sans préjudice de dommages-intérêts, à toute mesure conservatoire utile, y compris injonction."},
+    {"id": "restitution", "title": "Article 10 - Restitution des documents", "body": "À première demande, la Partie réceptrice restituera ou détruira toutes les copies des Informations confidentielles et en attestera par écrit."},
+    {"id": "modification", "title": "Article 11 - Modifications", "body": "Toute modification du présent accord devra faire l'objet d'un écrit signé des parties."},
+    {"id": "loi_applicable", "title": "Article 12 - Loi applicable et juridiction", "body": "Le présent accord est régi par le droit français; tout litige sera porté devant les tribunaux compétents de {{juridiction}}."},
+    {"id": "signatures", "title": "Article 13 - Signatures", "body": "Fait à {{lieu_signature}}, le {{date_signature}}.\n\n**Partie divulgatrice**\n{{discloser}}\n\n_____________________\n\n**Partie réceptrice**\n{{recipient}}\n\n_____________________"}
   ],
   "annotations": []
 }
