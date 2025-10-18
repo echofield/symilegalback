@@ -26,6 +26,10 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     const now = new Date();
     const monthKey = `${now.getFullYear()}-${now.getMonth() + 1}`;
     if (userId) {
+      // Optional bypass of monthly limits for ops
+      if (process.env.DISABLE_MONTHLY_LIMIT === 'true') {
+        // skip counters and checks
+      } else {
       const { data: profile } = await supabaseAdmin
         .from('users')
         .select('plan')
@@ -44,6 +48,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         if (current >= limit) {
           return res.status(403).json({ error: true, message: 'Monthly limit reached', code: 'LIMIT_REACHED' });
         }
+      }
       }
     }
 
@@ -70,7 +75,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       lawyer_mode,
     };
     // Record generation for authenticated users only
-    if (userId) {
+    if (userId && process.env.DISABLE_MONTHLY_LIMIT !== 'true') {
       await supabaseAdmin
         .from('contracts_generated')
         .upsert({ user_id: userId, month_key: monthKey, count: 1 }, { onConflict: 'user_id,month_key' });

@@ -3,9 +3,14 @@ import { Redis } from '@upstash/redis';
 
 // Sliding window rate limiter: 5 req/min per IP
 export async function rateLimit(req: NextApiRequest, res: NextApiResponse) {
+  // Optional bypass via env for ops/admin
+  if (process.env.DISABLE_RATE_LIMIT === 'true') {
+    return;
+  }
+  const configuredLimit = Number(process.env.RATE_LIMIT_PER_MINUTE || 5);
   const ip = (req.headers['x-forwarded-for'] as string)?.split(',')[0]?.trim() || req.socket.remoteAddress || 'unknown';
   const windowMs = 60 * 1000;
-  const limit = 5;
+  const limit = Number.isFinite(configuredLimit) && configuredLimit > 0 ? configuredLimit : 5;
   const now = Date.now();
   const windowStart = now - windowMs;
 
