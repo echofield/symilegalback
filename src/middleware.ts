@@ -12,10 +12,6 @@ function matchesPattern(origin: string, pattern: string): boolean {
 }
 
 function pickAllowedOrigin(req: NextRequest): string {
-  const configured = (process.env.CORS_ORIGIN || '')
-    .split(',')
-    .map((s) => normalize(s.trim()))
-    .filter(Boolean);
   const rawOrigin = req.headers.get('origin') || '';
   const origin = normalize(rawOrigin);
   
@@ -29,9 +25,19 @@ function pickAllowedOrigin(req: NextRequest): string {
     'http://localhost:3002'
   ];
   
+  // Always allow the requested origin if it's in our allowed list
+  if (origin && allowedDomains.includes(origin)) {
+    return rawOrigin || origin;
+  }
+  
+  // Fallback to configured CORS_ORIGIN
+  const configured = (process.env.CORS_ORIGIN || '')
+    .split(',')
+    .map((s) => normalize(s.trim()))
+    .filter(Boolean);
+    
   if (configured.length === 0) return '*';
   if (origin && configured.includes(origin)) return rawOrigin || origin;
-  if (origin && allowedDomains.includes(origin)) return rawOrigin || origin;
   
   for (const pat of configured) {
     if (pat.includes('*') && origin && matchesPattern(origin, pat)) {
