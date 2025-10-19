@@ -18,8 +18,21 @@ function pickAllowedOrigin(req: NextRequest): string {
     .filter(Boolean);
   const rawOrigin = req.headers.get('origin') || '';
   const origin = normalize(rawOrigin);
+  
+  // Allow both symilegal and symifrontlegalfinal domains
+  const allowedDomains = [
+    'https://symilegal.vercel.app',
+    'https://symifrontlegalfinal.vercel.app',
+    'https://symifrontlegal.vercel.app',
+    'http://localhost:3000',
+    'http://localhost:3001',
+    'http://localhost:3002'
+  ];
+  
   if (configured.length === 0) return '*';
   if (origin && configured.includes(origin)) return rawOrigin || origin;
+  if (origin && allowedDomains.includes(origin)) return rawOrigin || origin;
+  
   for (const pat of configured) {
     if (pat.includes('*') && origin && matchesPattern(origin, pat)) {
       return rawOrigin || origin;
