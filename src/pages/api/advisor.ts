@@ -17,7 +17,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   try {
     const { problem, city } = req.body;
     
-    if (!problem || problem.length < 10) {
+    if (!problem || problem.length < 5) {
       return res.status(400).json({ error: true, message: 'Problem description too short' });
     }
 
