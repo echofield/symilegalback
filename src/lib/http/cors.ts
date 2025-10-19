@@ -24,6 +24,14 @@ const DEFAULT_ALLOWED_ORIGINS = [
 ];
 
 function getAllowedOrigin(req: NextApiRequest): string {
+        const rawOrigin = (req.headers.origin as string) || '';
+        const origin = normalize(rawOrigin);
+        
+        // Temporarily allow all Vercel domains for testing
+        if (origin && origin.includes('vercel.app')) {
+                return rawOrigin || origin;
+        }
+        
         const configured = (process.env.CORS_ORIGIN || '')
                 .split(',')
                 .map((s) => normalize(s.trim()))
@@ -31,8 +39,7 @@ function getAllowedOrigin(req: NextApiRequest): string {
         if (configured.length === 0) {
                 configured.push(...DEFAULT_ALLOWED_ORIGINS);
         }
-        const rawOrigin = (req.headers.origin as string) || '';
-        const origin = normalize(rawOrigin);
+        
         if (origin && configured.includes(origin)) return rawOrigin || origin;
         // support wildcard patterns like https://app-*.vercel.app
         for (const pat of configured) {
