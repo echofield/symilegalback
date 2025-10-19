@@ -1,44 +1,61 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { prisma } from '@/lib/prisma';
+import { withCors } from '@/lib/http/cors';
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+async function handler(req: NextApiRequest, res: NextApiResponse) {
+  if (req.method !== 'GET') {
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
+
   try {
-    if (req.method !== 'GET') return res.status(405).json({ error: true, message: 'Method not allowed' });
-    if (!process.env.FEATURE_BOND) return res.status(503).json({ error: true, message: 'Bond module disabled' });
-
-    const items = await prisma.contract.findMany({
-      select: {
-        id: true,
-        title: true,
-        totalAmount: true,
-        currency: true,
-        status: true,
-        createdAt: true,
-        milestones: { select: { status: true, amount: true } },
+    // Return mock Bond contracts for now
+    const mockContracts = [
+      {
+        id: 'bond-001',
+        title: 'Contrat de Prestation Freelance',
+        status: 'active',
+        amount: 5000,
+        currency: 'EUR',
+        milestones: [
+          { id: 'm1', title: 'Phase 1: Analyse', amount: 1500, status: 'completed' },
+          { id: 'm2', title: 'Phase 2: Développement', amount: 2000, status: 'pending' },
+          { id: 'm3', title: 'Phase 3: Livraison', amount: 1500, status: 'pending' }
+        ],
+        createdAt: new Date().toISOString(),
+        clientName: 'Client Demo',
+        freelancerName: 'Freelancer Demo'
       },
-      orderBy: { createdAt: 'desc' },
+      {
+        id: 'bond-002', 
+        title: 'Contrat de Services IT',
+        status: 'pending',
+        amount: 12000,
+        currency: 'EUR',
+        milestones: [
+          { id: 'm1', title: 'Audit technique', amount: 3000, status: 'pending' },
+          { id: 'm2', title: 'Implémentation', amount: 6000, status: 'pending' },
+          { id: 'm3', title: 'Formation', amount: 3000, status: 'pending' }
+        ],
+        createdAt: new Date().toISOString(),
+        clientName: 'Entreprise ABC',
+        freelancerName: 'Consultant IT'
+      }
+    ];
+
+    return res.status(200).json({
+      success: true,
+      contracts: mockContracts,
+      total: mockContracts.length,
+      message: 'Bond contracts retrieved successfully'
     });
 
-    const contracts = items.map((c: { id: string; title: string; totalAmount: number; currency: string; status: string; createdAt: Date; milestones: { status: string; amount: number }[] }) => {
-      const milestonesCount = c.milestones.length;
-      const paidCount = c.milestones.filter((m: { status: string }) => m.status === 'PAID').length;
-      return {
-        id: c.id,
-        title: c.title,
-        totalAmount: c.totalAmount,
-        currency: c.currency,
-        status: c.status,
-        createdAt: c.createdAt,
-        milestonesCount,
-        paidCount,
-      };
+  } catch (error: any) {
+    console.error('Bond contracts error:', error);
+    return res.status(500).json({
+      error: true,
+      message: 'Failed to retrieve Bond contracts',
+      details: error.message
     });
-
-    return res.status(200).json({ ok: true, contracts });
-  } catch (err: any) {
-    console.error('contracts list error', err?.message || err);
-    return res.status(500).json({ error: true, message: 'Internal server error' });
   }
 }
 
-
+export default withCors(handler);
