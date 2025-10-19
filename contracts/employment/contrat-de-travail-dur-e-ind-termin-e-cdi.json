@@ -1,28 +1,89 @@
 {
   "metadata": {
     "title": "Contrat de travail à durée indéterminée (CDI)",
+    "category": "travail",
     "jurisdiction": "FR",
     "governing_law": "France",
-    "version": "1.0.0"
+    "version": "2.0.0",
+    "requires_notary": false,
+    "official_registration": false,
+    "legal_articles": [
+      "Code du travail, articles L. 1221-1 et suivants",
+      "Code civil, articles 1101 et suivants"
+    ],
+    "last_updated": "2025-10-18",
+    "complexity": "intermediate",
+    "estimated_time": "15-20 minutes"
   },
   "inputs": [
-    {"key": "employeur_nom", "label": "Nom ou raison sociale de l'employeur", "type": "text", "required": true},
-    {"key": "employeur_adresse", "label": "Adresse du siège social", "type": "textarea", "required": true},
+    {"key": "employeur_societe", "label": "Raison sociale de l'employeur", "type": "text", "required": true},
+    {"key": "forme_juridique", "label": "Forme juridique (SARL, SAS, etc.)", "type": "text", "required": true},
+    {"key": "siret", "label": "Numéro SIRET", "type": "text", "required": true},
+    {"key": "siege_social", "label": "Adresse du siège social", "type": "text", "required": true},
+    {"key": "representant_nom", "label": "Nom du représentant légal", "type": "text", "required": true},
+    {"key": "representant_qualite", "label": "Qualité du représentant (PDG, Gérant, etc.)", "type": "text", "required": true},
+
     {"key": "salarie_nom", "label": "Nom et prénom du salarié", "type": "text", "required": true},
-    {"key": "salarie_adresse", "label": "Adresse du salarié", "type": "textarea", "required": true},
+    {"key": "salarie_date_naissance", "label": "Date de naissance du salarié", "type": "date", "required": true},
+    {"key": "salarie_lieu_naissance", "label": "Lieu de naissance", "type": "text", "required": true},
+    {"key": "salarie_nationalite", "label": "Nationalité", "type": "text", "required": true},
+    {"key": "salarie_secu", "label": "N° Sécurité sociale", "type": "text", "required": true},
+    {"key": "salarie_adresse", "label": "Adresse du salarié", "type": "text", "required": true},
+
     {"key": "poste", "label": "Intitulé du poste", "type": "text", "required": true},
+    {"key": "categorie", "label": "Catégorie socio-professionnelle", "type": "text", "required": true},
+    {"key": "position", "label": "Position", "type": "text", "required": true},
+    {"key": "coefficient", "label": "Coefficient", "type": "text", "required": true},
+    {"key": "convention_collective", "label": "Convention collective applicable", "type": "text", "required": true},
     {"key": "date_debut", "label": "Date de début du contrat", "type": "date", "required": true},
-    {"key": "remuneration", "label": "Rémunération brute mensuelle (€)", "type": "number", "required": true}
+
+    {"key": "duree_essai", "label": "Durée période d'essai (mois)", "type": "number", "required": true},
+    {"key": "preavis_essai_jours", "label": "Préavis (jours) durant 8 premiers jours", "type": "number", "required": true},
+    {"key": "preavis_essai_mois", "label": "Préavis (mois) au-delà", "type": "number", "required": true},
+
+    {"key": "duree_travail", "label": "Durée hebdomadaire (heures)", "type": "number", "required": true},
+    {"key": "jours_travail", "label": "Nombre de jours de travail/semaine", "type": "number", "required": true},
+    {"key": "horaires_details", "label": "Horaires détaillés", "type": "textarea", "required": true},
+    {"key": "forfait_jours_clause", "label": "Clause forfait-jours (si applicable)", "type": "textarea", "required": false},
+    {"key": "lieu_travail", "label": "Lieu de travail", "type": "text", "required": true},
+    {"key": "teletravail_clause", "label": "Clause de télétravail (si applicable)", "type": "textarea", "required": false},
+
+    {"key": "salaire_brut_annuel", "label": "Salaire brut annuel (€)", "type": "number", "required": true},
+    {"key": "salaire_brut_mensuel", "label": "Salaire brut mensuel (€)", "type": "number", "required": true},
+    {"key": "salaire_base", "label": "Salaire de base (€)", "type": "number", "required": true},
+    {"key": "primes_variables", "label": "Primes/variables (détails)", "type": "textarea", "required": false},
+    {"key": "jour_paiement", "label": "Jour de paiement mensuel", "type": "number", "required": true},
+
+    {"key": "non_concurrence_applicable", "label": "Clause de non-concurrence (texte ou 'non')", "type": "textarea", "required": false},
+    {"key": "duree_non_concurrence", "label": "Durée non-concurrence (mois)", "type": "number", "required": false},
+    {"key": "secteurs_non_concurrence", "label": "Secteurs concernés", "type": "textarea", "required": false},
+    {"key": "territoire_non_concurrence", "label": "Territoire", "type": "text", "required": false},
+    {"key": "indemnite_non_concurrence", "label": "Indemnité non-concurrence (%)", "type": "number", "required": false},
+
+    {"key": "preavis_demission", "label": "Préavis en cas de démission", "type": "text", "required": true},
+    {"key": "lieu_signature", "label": "Lieu de signature", "type": "text", "required": true},
+    {"key": "date_signature", "label": "Date de signature", "type": "date", "required": true}
   ],
   "clauses": [
-    {"id": "parties", "title": "Parties", "body": "Le présent contrat de travail à durée indéterminée est conclu entre {{employeur_nom}}, dont le siège social est situé {{employeur_adresse}}, ci-après dénommé « l'Employeur », et {{salarie_nom}}, demeurant {{salarie_adresse}}, ci-après dénommé « le Salarié »."},
-    {"id": "objet", "title": "Objet du contrat", "body": "Le Salarié est engagé en qualité de {{poste}}, à compter du {{date_debut}}."},
-    {"id": "duree", "title": "Durée du contrat", "body": "Le présent contrat est conclu pour une durée indéterminée."},
-    {"id": "periode_essai", "title": "Période d'essai", "body": "Le contrat débute par une période d'essai dont la durée et les conditions de renouvellement sont fixées conformément aux dispositions légales et conventionnelles applicables."},
-    {"id": "remuneration_clause", "title": "Rémunération", "body": "Le Salarié percevra une rémunération brute mensuelle de {{remuneration}} euros, versée mensuellement par virement bancaire."},
-    {"id": "duree_travail", "title": "Durée du travail", "body": "La durée du travail est fixée conformément aux dispositions légales et conventionnelles en vigueur."},
-    {"id": "conges", "title": "Congés payés", "body": "Le Salarié bénéficie de congés payés dans les conditions prévues par la loi et la convention collective applicable."},
-    {"id": "loi_applicable", "title": "Loi applicable", "body": "Le présent contrat est soumis au droit français. Tout litige relatif à son interprétation ou son exécution relève de la compétence du Conseil de prud'hommes."}
+    {"id": "identification_parties", "title": "Article 1 - Identification des parties", "body": "Entre les soussignés:\n\n**L'EMPLOYEUR:**\n- Raison sociale: {{employeur_societe}}\n- Forme juridique: {{forme_juridique}}\n- SIRET: {{siret}}\n- Siège social: {{siege_social}}\n- Représenté par: {{representant_nom}}, en qualité de {{representant_qualite}}\n\nCi-après dénommé « l'Employeur »,\n\nD'une part,\n\nEt:\n\n**LE SALARIÉ:**\n- Nom et prénom: {{salarie_nom}}\n- Date de naissance: {{salarie_date_naissance}}\n- Lieu de naissance: {{salarie_lieu_naissance}}\n- Nationalité: {{salarie_nationalite}}\n- Numéro de sécurité sociale: {{salarie_secu}}\n- Adresse: {{salarie_adresse}}\n\nCi-après dénommé « le Salarié »,\n\nD'autre part,\n\nIl a été convenu ce qui suit:"},
+    {"id": "base_legale", "title": "Article 2 - Base légale", "body": "Le présent contrat est établi conformément aux dispositions du Code du travail, notamment les articles L. 1221-1 et suivants relatifs au contrat de travail à durée indéterminée."},
+    {"id": "embauche", "title": "Article 3 - Embauche", "body": "Le Salarié est engagé à compter du {{date_debut}} en qualité de {{poste}}, classification {{classification}} de la convention collective {{convention_collective}}.\n\nCatégorie socio-professionnelle: {{categorie}}\nPosition: {{position}}\nCoefficient: {{coefficient}}"},
+    {"id": "periode_essai", "title": "Article 4 - Période d'essai", "body": "Le présent contrat est conclu sous réserve d'une période d'essai de {{duree_essai}} mois, renouvelable une fois pour une durée équivalente, conformément à l'article L. 1221-19 du Code du travail.\n\nPendant cette période, chaque partie pourra rompre le contrat moyennant un préavis de:\n- {{preavis_essai_jours}} jours si la rupture intervient dans les 8 premiers jours;\n- {{preavis_essai_mois}} mois au-delà."},
+    {"id": "fonctions", "title": "Article 5 - Fonctions et missions", "body": "Le Salarié exercera les fonctions de {{poste}}, sous la responsabilité hiérarchique de {{responsable_hierarchique}}.\n\nSes principales missions seront:\n{{missions_principales}}\n\nLe Salarié s'engage à consacrer l'intégralité de son activité professionnelle à l'Employeur et à ne pas exercer d'autre activité professionnelle, salariée ou non, sans autorisation préalable écrite."},
+    {"id": "lieu_travail", "title": "Article 6 - Lieu de travail", "body": "Le Salarié exercera ses fonctions à {{lieu_travail}}.\n\nToutefois, en fonction des nécessités du service, le Salarié pourra être amené à effectuer des déplacements professionnels en France ou à l'étranger.\n\n{{teletravail_clause}}"},
+    {"id": "duree_temps", "title": "Article 7 - Durée et horaires de travail", "body": "Le Salarié est soumis à un horaire de {{duree_travail}} heures par semaine, réparti sur {{jours_travail}} jours.\n\nHoraires: {{horaires_details}}\n\n{{forfait_jours_clause}}"},
+    {"id": "remuneration", "title": "Article 8 - Rémunération", "body": "En contrepartie de son travail, le Salarié percevra une rémunération brute annuelle de {{salaire_brut_annuel}} euros, soit {{salaire_brut_mensuel}} euros bruts par mois, versés par virement bancaire le {{jour_paiement}} de chaque mois.\n\nCette rémunération comprend:\n- Salaire de base: {{salaire_base}} €\n- {{primes_variables}}\n\nLa rémunération est revue annuellement lors de l'entretien d'évaluation."},
+    {"id": "conges", "title": "Article 9 - Congés payés", "body": "Le Salarié bénéficie de congés payés conformément aux dispositions légales et conventionnelles en vigueur, soit 2,5 jours ouvrables par mois travaillé (30 jours ouvrables par an).\n\nLes dates de congés sont fixées en accord avec l'Employeur, en tenant compte des contraintes du service."},
+    {"id": "maladie", "title": "Article 10 - Maladie et accident", "body": "En cas de maladie ou d'accident, le Salarié doit prévenir l'Employeur dans les 48 heures et faire parvenir un certificat médical dans les 48 heures suivant l'arrêt de travail.\n\nLe Salarié bénéficiera d'un maintien de salaire conformément aux dispositions de la convention collective applicable."},
+    {"id": "mutuelle", "title": "Article 11 - Protection sociale complémentaire", "body": "Le Salarié bénéficie obligatoirement du régime de prévoyance et de mutuelle d'entreprise.\n\n- Part patronale: {{part_patronale_mutuelle}}%\n- Part salariale: {{part_salariale_mutuelle}}%\n\nLes garanties et conditions sont détaillées dans la notice d'information remise au Salarié."},
+    {"id": "confidentialite", "title": "Article 12 - Confidentialité et propriété intellectuelle", "body": "Le Salarié s'engage à respecter la confidentialité de toutes les informations dont il aura connaissance dans le cadre de ses fonctions (secrets de fabrication, fichiers clients, méthodes commerciales, etc.).\n\nCette obligation subsiste après la rupture du contrat, sans limitation de durée.\n\nToute création intellectuelle réalisée par le Salarié dans le cadre de ses fonctions appartient à l'Employeur, conformément à l'article L. 611-7 du Code de la propriété intellectuelle."},
+    {"id": "clause_non_concurrence", "title": "Article 13 - Clause de non-concurrence", "body": "{{non_concurrence_applicable}}\n\nPendant une durée de {{duree_non_concurrence}} mois suivant la rupture du contrat, le Salarié s'interdit d'exercer, directement ou indirectement, une activité concurrente dans les domaines suivants: {{secteurs_non_concurrence}}, sur le territoire {{territoire_non_concurrence}}.\n\nEn contrepartie, le Salarié percevra une indemnité mensuelle de {{indemnite_non_concurrence}}% de son dernier salaire brut.\n\nL'Employeur se réserve le droit de renoncer à cette clause moyennant un préavis de 15 jours avant la fin du contrat."},
+    {"id": "rupture", "title": "Article 14 - Rupture du contrat", "body": "Le contrat pourra être rompu:\n- Par démission du Salarié, moyennant un préavis de {{preavis_demission}}\n- Par licenciement de l'Employeur, selon les dispositions légales et conventionnelles\n- Par rupture conventionnelle, d'un commun accord\n- Par départ ou mise à la retraite\n\nLa durée du préavis pourra être réduite d'un commun accord entre les parties."},
+    {"id": "modification", "title": "Article 15 - Modification du contrat", "body": "Toute modification du présent contrat devra faire l'objet d'un avenant écrit, signé par les deux parties."},
+    {"id": "litiges", "title": "Article 16 - Règlement des litiges", "body": "En cas de différend relatif à l'interprétation ou à l'exécution du présent contrat, les parties s'efforceront de trouver une solution amiable.\n\nÀ défaut, le litige sera porté devant le Conseil de Prud'hommes territorialement compétent."},
+    {"id": "loi_applicable", "title": "Article 17 - Loi applicable", "body": "Le présent contrat est soumis au droit français et notamment au Code du travail et à la convention collective {{convention_collective}}."},
+    {"id": "exemplaires", "title": "Article 18 - Exemplaires", "body": "Le présent contrat est établi en deux exemplaires originaux, dont un remis au Salarié."},
+    {"id": "signatures", "title": "Article 19 - Signatures", "body": "Fait à {{lieu_signature}}, le {{date_signature}}.\n\nEn deux exemplaires originaux.\n\n**L'EMPLOYEUR**\n{{employeur_societe}}\nReprésenté par {{representant_nom}}\n\nSignature précédée de la mention « Lu et approuvé » :\n\n_________________________\n\n\n**LE SALARIÉ**\n{{salarie_nom}}\n\nSignature précédée de la mention « Lu et approuvé, bon pour acceptation des fonctions de {{poste}} » :\n\n_________________________"}
   ]
 }
 

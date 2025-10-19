@@ -1,20 +1,56 @@
 {
   "metadata": {
     "title": "Convention de séparation de corps",
+    "category": "famille",
     "jurisdiction": "FR",
     "governing_law": "France",
-    "version": "1.0.0"
+    "version": "2.0.0",
+    "requires_notary": false,
+    "official_registration": false,
+    "legal_articles": ["Articles 296 à 310 Code civil"]
   },
   "inputs": [
-    {"key": "epoux1_nom", "label": "Nom du premier époux", "type": "text", "required": true},
-    {"key": "epoux2_nom", "label": "Nom du second époux", "type": "text", "required": true},
-    {"key": "date_effet", "label": "Date d’effet de la séparation", "type": "date", "required": true}
+    {"key": "party1_nom_complet", "label": "Nom et prénoms (époux 1)", "type": "text", "required": true},
+    {"key": "party1_date_naissance", "label": "Date de naissance (époux 1)", "type": "date", "required": true},
+    {"key": "party1_lieu_naissance", "label": "Lieu de naissance (époux 1)", "type": "text", "required": true},
+    {"key": "party1_adresse", "label": "Adresse complète (époux 1)", "type": "text", "required": true},
+    {"key": "party1_nationalite", "label": "Nationalité (époux 1)", "type": "text", "required": true},
+
+    {"key": "party2_nom_complet", "label": "Nom et prénoms (époux 2)", "type": "text", "required": true},
+    {"key": "party2_date_naissance", "label": "Date de naissance (époux 2)", "type": "date", "required": true},
+    {"key": "party2_lieu_naissance", "label": "Lieu de naissance (époux 2)", "type": "text", "required": true},
+    {"key": "party2_adresse", "label": "Adresse complète (époux 2)", "type": "text", "required": true},
+    {"key": "party2_nationalite", "label": "Nationalité (époux 2)", "type": "text", "required": true},
+
+    {"key": "party1_details", "label": "Détails complets époux 1 (préambule)", "type": "textarea", "required": false},
+    {"key": "party2_details", "label": "Détails complets époux 2 (préambule)", "type": "textarea", "required": false},
+
+    {"key": "epoux_debiteur", "label": "Époux débiteur de la contribution", "type": "text", "required": false},
+    {"key": "epoux_creancier", "label": "Époux créancier", "type": "text", "required": false},
+    {"key": "montant_contribution", "label": "Montant contribution (€)", "type": "number", "required": false},
+    {"key": "date_effet", "label": "Date d’effet de la séparation", "type": "date", "required": true},
+    {"key": "juridiction", "label": "Juridiction compétente", "type": "text", "required": true},
+    {"key": "lieu_signature", "label": "Lieu de signature", "type": "text", "required": true},
+    {"key": "date_signature", "label": "Date de signature", "type": "date", "required": true},
+    {"key": "nombre_exemplaires", "label": "Nombre d'exemplaires originaux", "type": "number", "required": true}
   ],
   "clauses": [
-    {"id": "objet", "title": "Objet de la convention", "body": "Les époux {{epoux1_nom}} et {{epoux2_nom}} conviennent d’une séparation de corps dans les conditions prévues par le Code civil."},
+    {"id": "preamble", "title": "Préambule", "body": "Entre les soussignés:\n\n{{party1_details}}\n\nD'une part,\n\nEt:\n\n{{party2_details}}\n\nD'autre part,\n\nIl a été convenu et arrêté ce qui suit:"},
+    {"id": "legal_basis", "title": "Base légale", "body": "La présente convention est établie conformément aux articles 296 à 310 du Code civil français."},
+    {"id": "objet", "title": "Objet de la convention", "body": "Les époux {{party1_nom_complet}} et {{party2_nom_complet}} conviennent d’une séparation de corps dans les conditions prévues par le Code civil."},
     {"id": "residence", "title": "Résidence séparée", "body": "Chacun des époux fixera sa résidence séparément à compter du {{date_effet}}."},
+    {"id": "pension_alimentaire_conjoint", "title": "Pension alimentaire entre époux", "body": "L'époux {{epoux_debiteur}} versera à l'époux {{epoux_creancier}} une contribution à l'entretien du foyer de {{montant_contribution}} euros par mois."},
+    {"id": "consequences_juridiques", "title": "Conséquences de la séparation", "body": "La séparation de corps:\n- Suspend le devoir de cohabitation;\n- Met fin au devoir de communauté de vie;\n- Maintient le lien conjugal (impossibilité de se remarier);\n- Entraîne la séparation de biens si le régime était communautaire."},
     {"id": "obligations", "title": "Obligations réciproques", "body": "La séparation de corps ne met pas fin au mariage mais suspend le devoir de cohabitation."},
-    {"id": "liquidation", "title": "Liquidation du régime", "body": "Les époux s’accordent sur la répartition des biens communs conformément à l’accord notarié."}
+    {"id": "duree", "title": "Durée et entrée en vigueur", "body": "La présente convention entre en vigueur à compter de sa signature par les deux parties, soit le {{date_signature}}."},
+    {"id": "modification", "title": "Modification de la convention", "body": "Toute modification de la présente convention devra faire l'objet d'un avenant écrit, signé par les deux parties."},
+    {"id": "resiliation", "title": "Résiliation", "body": "La présente convention peut être résiliée: d'un commun accord, unilatéralement avec préavis de 30 jours, ou de plein droit en cas de manquement grave."},
+    {"id": "litiges", "title": "Règlement des litiges", "body": "Tout différend sera porté devant les tribunaux compétents de {{juridiction}} après tentative amiable."},
+    {"id": "loi_applicable", "title": "Loi applicable", "body": "La présente convention est soumise au droit français."},
+    {"id": "frais", "title": "Frais", "body": "Les frais éventuellement engagés (notaire, enregistrement) sont à la charge des parties selon accord, à défaut à parts égales."},
+    {"id": "confidentialite", "title": "Confidentialité", "body": "Les informations échangées sont confidentielles, sauf obligation légale."},
+    {"id": "exemplaires", "title": "Exemplaires", "body": "La présente convention est établie en {{nombre_exemplaires}} exemplaires originaux, dont un pour chaque partie."},
+    {"id": "signatures", "title": "Signatures", "body": "Fait à {{lieu_signature}}, le {{date_signature}}.\n\n**Époux 1:** {{party1_nom_complet}}\nSignature précédée de la mention « Lu et approuvé, bon pour accord »\n\n_____________________\n\n**Époux 2:** {{party2_nom_complet}}\nSignature précédée de la mention « Lu et approuvé, bon pour accord »\n\n_____________________"}
   ]
 }
 

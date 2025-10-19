@@ -1,96 +1,61 @@
 {
   "metadata": {
-    "title": "Freelance Services Agreement",
-    "jurisdiction": "UK | US",
-    "governing_law": "England & Wales | California",
-    "version": "1.0.0"
+    "title": "Contrat de prestation de services (Freelance)",
+    "category": "entreprise",
+    "jurisdiction": "FR",
+    "governing_law": "France",
+    "version": "2.0.0",
+    "requires_notary": false,
+    "official_registration": false,
+    "legal_articles": ["Code civil, articles 1101, 1103, 1104"],
+    "last_updated": "2025-10-18",
+    "complexity": "intermediate",
+    "estimated_time": "15-20 minutes"
   },
   "inputs": [
-    {
-      "key": "client_name",
-      "label": "Client Name",
-      "type": "text",
-      "required": true
-    },
-    {
-      "key": "freelancer_name",
-      "label": "Freelancer Name",
-      "type": "text",
-      "required": true
-    },
-    {
-      "key": "project_scope",
-      "label": "Describe the work",
-      "type": "textarea",
-      "required": true
-    },
-    {
-      "key": "fee",
-      "label": "Total fee or rate",
-      "type": "currency",
-      "required": true
-    },
-    {
-      "key": "payment_terms",
-      "label": "Payment terms (e.g., 50/50, net 14)",
-      "type": "text",
-      "required": true
-    },
-    {
-      "key": "start_date",
-      "label": "Start date",
-      "type": "date",
-      "required": true
-    },
-    {
-      "key": "end_date",
-      "label": "End date (optional)",
-      "type": "date",
-      "required": false
-    },
-    {
-      "key": "ip_mode",
-      "label": "IP: license | assignment | work-for-hire",
-      "type": "select",
-      "required": true
-    }
+    {"key": "client_raison_sociale", "label": "Client - Raison sociale", "type": "text", "required": true},
+    {"key": "client_siret", "label": "Client - SIRET", "type": "text", "required": false},
+    {"key": "client_adresse", "label": "Client - Adresse", "type": "text", "required": true},
+    {"key": "client_representant", "label": "Client - Représentant", "type": "text", "required": false},
+
+    {"key": "freelancer_nom", "label": "Prestataire - Nom / Dénomination", "type": "text", "required": true},
+    {"key": "freelancer_siret", "label": "Prestataire - SIRET (si pro)", "type": "text", "required": false},
+    {"key": "freelancer_adresse", "label": "Prestataire - Adresse", "type": "text", "required": true},
+
+    {"key": "project_scope", "label": "Objet de la mission (détaillé)", "type": "textarea", "required": true},
+    {"key": "livrables", "label": "Livrables et exigences", "type": "textarea", "required": true},
+    {"key": "delais", "label": "Délais et jalons", "type": "textarea", "required": true},
+    {"key": "fee", "label": "Rémunération / forfait (€)", "type": "number", "required": true},
+    {"key": "payment_terms", "label": "Modalités de paiement (ex: 30%/70%, net 30)", "type": "text", "required": true},
+    {"key": "penalites_retard", "label": "Pénalités de retard (optionnel)", "type": "text", "required": false},
+    {"key": "start_date", "label": "Date de début", "type": "date", "required": true},
+    {"key": "end_date", "label": "Date de fin (facultatif)", "type": "date", "required": false},
+    {"key": "ip_mode", "label": "PI: licence | cession | œuvre de commande", "type": "select", "required": true},
+    {"key": "assurance_rc", "label": "Assurance RC pro (références)", "type": "text", "required": false},
+    {"key": "juridiction", "label": "Juridiction compétente", "type": "text", "required": true},
+    {"key": "lieu_signature", "label": "Lieu de signature", "type": "text", "required": true},
+    {"key": "date_signature", "label": "Date de signature", "type": "date", "required": true}
   ],
   "clauses": [
-    {
-      "id": "services",
-      "title": "Services",
-      "body": "The Freelancer will perform the following work: {{project_scope}}."
-    },
-    {
-      "id": "fees",
-      "title": "Fees & Payments",
-      "body": "Client will pay {{fee}} according to {{payment_terms}}."
-    },
-    {
-      "id": "ip",
-      "title": "Intellectual Property",
-      "body": "Rights transfer depend on {{ip_mode}}; full rights vest upon full payment."
-    },
-    {
-      "id": "confidentiality",
-      "title": "Confidentiality",
-      "body": "Both parties keep private information secret."
-    },
-    {
-      "id": "liability",
-      "title": "Limitation of Liability",
-      "body": "Neither party shall be liable for indirect damages; cap equals fees paid."
-    },
-    {
-      "id": "termination",
-      "title": "Termination",
-      "body": "Either party may terminate with seven days’ notice for breach."
-    },
-    {
-      "id": "law",
-      "title": "Governing Law",
-      "body": "This Agreement is governed by {{governing_law}}."
-    }
+    {"id": "identification_parties", "title": "Article 1 - Identification des parties", "body": "Entre: {{client_raison_sociale}} (SIRET: {{client_siret}}), {{client_adresse}}, représenté par {{client_representant}} (le \"Client\"); et {{freelancer_nom}} (SIRET: {{freelancer_siret}}), {{freelancer_adresse}} (le \"Prestataire\")."},
+    {"id": "base_legale", "title": "Article 2 - Base légale", "body": "Le présent contrat est régi par le Code civil (art. 1101, 1103, 1104) et par les usages professionnels applicables."},
+    {"id": "objet_mission", "title": "Article 3 - Objet et périmètre de la mission", "body": "Le Prestataire réalise les prestations suivantes: {{project_scope}}. Les livrables attendus: {{livrables}}. Les jalons et délais: {{delais}}."},
+    {"id": "duree", "title": "Article 4 - Durée et renouvellement", "body": "Le contrat prend effet à compter du {{start_date}} et prendra fin le {{end_date}} sauf renouvellement écrit convenu entre les parties."},
+    {"id": "remuneration", "title": "Article 5 - Rémunération et modalités de paiement", "body": "Le Client versera au Prestataire la somme de {{fee}} €, selon les modalités: {{payment_terms}}. D'éventuelles pénalités de retard: {{penalites_retard}}."},
+    {"id": "obligations_prestataire", "title": "Article 6 - Obligations du Prestataire", "body": "Le Prestataire s'engage à exécuter la mission avec diligence, conformément aux règles de l'art et aux standards de qualité communiqués."},
+    {"id": "obligations_client", "title": "Article 7 - Obligations du Client", "body": "Le Client fournit l'ensemble des informations et accès nécessaires et valide les livrables dans des délais raisonnables."},
+    {"id": "pi", "title": "Article 8 - Propriété intellectuelle", "body": "Selon le mode {{ip_mode}}: en cas de cession, les droits sont transférés après complet paiement; en cas de licence, les droits concédés sont limités à l'usage convenu; en cas d'œuvre de commande, les droits sont transférés conformément à la loi."},
+    {"id": "confidentialite", "title": "Article 9 - Confidentialité", "body": "Chaque partie s'engage à garder strictement confidentielles les informations de l'autre partie, pour une durée de 5 ans après la fin du contrat."},
+    {"id": "garanties", "title": "Article 10 - Garanties et conformité", "body": "Le Prestataire garantit que les livrables sont exempts de contrefaçon et conformes au périmètre défini, sous réserve des limites convenues."},
+    {"id": "responsabilite", "title": "Article 11 - Responsabilité et assurances", "body": "La responsabilité de chaque partie est limitée au montant total des honoraires payés au titre du contrat; aucune responsabilité pour dommages indirects. Assurance RC pro: {{assurance_rc}}."},
+    {"id": "donnees", "title": "Article 12 - Données personnelles", "body": "Si applicable, les parties conviennent d'un traitement des données conforme au RGPD, et d'un DPA séparé si nécessaire."},
+    {"id": "sous_traitance", "title": "Article 13 - Sous-traitance", "body": "Toute sous-traitance nécessite l'accord écrit préalable du Client; le Prestataire demeure responsable de ses sous-traitants."},
+    {"id": "modification", "title": "Article 14 - Modifications et avenants", "body": "Toute modification du périmètre, du planning ou des honoraires donnera lieu à un avenant écrit signé des parties."},
+    {"id": "resiliation", "title": "Article 15 - Résiliation", "body": "En cas de manquement grave non réparé sous 15 jours après mise en demeure, la partie non défaillante peut résilier le contrat; restent dues les prestations réalisées."},
+    {"id": "force_majeure", "title": "Article 16 - Force majeure", "body": "Aucune partie ne sera tenue responsable en cas de survenance d'un événement de force majeure au sens de l'article 1218 du Code civil."},
+    {"id": "litiges", "title": "Article 17 - Règlement des litiges", "body": "Les parties chercheront une solution amiable; à défaut, compétence est attribuée aux tribunaux de {{juridiction}}."},
+    {"id": "loi_applicable", "title": "Article 18 - Loi applicable", "body": "Le présent contrat est régi par le droit français."},
+    {"id": "signatures", "title": "Article 19 - Signatures", "body": "Fait à {{lieu_signature}}, le {{date_signature}}.\n\n**Le Client**\n{{client_raison_sociale}}\n\n_____________________\n\n**Le Prestataire**\n{{freelancer_nom}}\n\n_____________________"}
   ],
   "annotations": [
     {

@@ -1,0 +1,132 @@
+{
+  "info": {
+    "name": "Bond (Escrow) API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:3000" }
+  ],
+  "item": [
+    {
+      "name": "Contracts - List",
+      "request": { "method": "GET", "url": "{{baseUrl}}/api/escrow/contracts" }
+    },
+    {
+      "name": "Contracts - Detail",
+      "request": { "method": "GET", "url": "{{baseUrl}}/api/escrow/contracts/contract_id" }
+    },
+    {
+      "name": "Contracts - Questions (all)",
+      "request": { "method": "GET", "url": "{{baseUrl}}/api/contracts/questions" }
+    },
+    {
+      "name": "Contracts - Questions (by id=service)",
+      "request": { "method": "GET", "url": "{{baseUrl}}/api/contracts/questions?id=service" }
+    },
+    {
+      "name": "Contracts - Templates (all)",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/contracts/templates"
+      }
+    },
+    {
+      "name": "Contracts - Templates (by id)",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/contracts/templates?id=challenge"
+      }
+    },
+    {
+      "name": "Contracts - Suggest",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{baseUrl}}/api/contracts/suggest",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"description\": \"Développer un site vitrine\",\n  \"budget\": 500000,\n  \"roleA\": \"Client\",\n  \"roleB\": \"Prestataire\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Contracts - Create",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{baseUrl}}/api/contracts/create",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Site vitrine\",\n  \"payerId\": \"user_payer\",\n  \"payeeId\": \"user_payee\",\n  \"currency\": \"eur\",\n  \"termsJson\": {\"terms\": [\"Paiement à jalons\"]},\n  \"milestones\": [\n    {\"title\": \"Cadrage\", \"description\": \"Spécifications\", \"amount\": 100000},\n    {\"title\": \"Prototype\", \"description\": \"V1\", \"amount\": 200000}\n  ]\n}"
+        }
+      }
+    },
+    {
+      "name": "Contracts - PDF",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{baseUrl}}/api/contracts/pdf",
+        "body": { "mode": "raw", "raw": "{\n  \"contractId\": \"contract_id\"\n}" }
+      }
+    },
+    {
+      "name": "Escrow - Create Intent",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{baseUrl}}/api/escrow/intent/create",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"contractId\": \"contract_id\",\n  \"amount\": 1000,\n  \"currency\": \"eur\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Escrow - Milestone Submit",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{baseUrl}}/api/escrow/milestone/submit",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"milestoneId\": \"milestone_id\",\n  \"proofs\": [\n    {\"url\": \"https://example.com/proof1\", \"kind\": \"link\"}\n  ]\n}"
+        }
+      }
+    },
+    {
+      "name": "Escrow - Milestone Validate",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{baseUrl}}/api/escrow/milestone/validate",
+        "body": { "mode": "raw", "raw": "{\n  \"milestoneId\": \"milestone_id\"\n}" }
+      }
+    },
+    {
+      "name": "Escrow - Stripe Webhook (example)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Stripe-Signature", "value": "<from_stripe_cli>" }
+        ],
+        "url": "{{baseUrl}}/api/escrow/stripe-webhook",
+        "body": {
+          "mode": "raw",
+          "raw": "{ \n  \"id\": \"evt_test\", \n  \"type\": \"payment_intent.succeeded\",\n  \"data\": {\n    \"object\": { \n      \"id\": \"pi_test\", \n      \"amount\": 1000, \n      \"currency\": \"eur\", \n      \"metadata\": { \"contractId\": \"contract_id\" } \n    }\n  }\n}"
+        }
+      }
+    },
+    {
+      "name": "Escrow - Cron Auto-Approve",
+      "request": {
+        "method": "GET",
+        "header": [ { "key": "Authorization", "value": "Bearer {{CRON_SECRET}}" } ],
+        "url": "{{baseUrl}}/api/escrow/cron/auto-approve"
+      }
+    }
+  ]
+}
+
+

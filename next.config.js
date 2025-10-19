@@ -6,6 +6,11 @@ const nextConfig = {
     outputFileTracingIncludes: {
       '/api/**': ['./contracts/**']
     }
+  },
+  async rewrites() {
+    return [
+      { source: '/api/bond/:path*', destination: '/api/escrow/:path*' },
+    ];
   }
 };
 

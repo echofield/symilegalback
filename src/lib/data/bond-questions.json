@@ -1,0 +1,24 @@
+{
+  "service": [
+    { "id": "payment_mode", "question": "Le paiement est-il en une fois ou par étapes ?", "options": ["Une fois", "Par jalons"] },
+    { "id": "confidentiality", "question": "Souhaitez-vous une clause de confidentialité ?", "options": ["Oui", "Non"] }
+  ],
+  "travaux": [
+    { "id": "devis", "question": "Y a-t-il un devis signé ?", "options": ["Oui", "Non"] },
+    { "id": "reception", "question": "Inclure clause de réception des travaux ?", "options": ["Oui", "Non"] }
+  ],
+  "creation": [
+    { "id": "rights", "question": "Les droits d’auteur sont-ils transférés ?", "options": ["Oui", "Non"] },
+    { "id": "versions", "question": "Prévoir plusieurs versions intermédiaires ?", "options": ["Oui", "Non"] }
+  ],
+  "challenge": [
+    { "id": "mise", "question": "Y a-t-il une mise symbolique (argent, gage, promesse) ?", "options": ["Oui", "Non"] },
+    { "id": "duration", "question": "Durée du défi ?", "options": ["1 semaine", "1 mois", "3 mois"] }
+  ],
+  "hybrid": [
+    { "id": "complexity", "question": "Souhaitez-vous un contrat simple ou détaillé ?", "options": ["Simple", "Détaillé"] },
+    { "id": "legal", "question": "Inclure des clauses légales standard ?", "options": ["Oui", "Non"] }
+  ]
+}
+
+

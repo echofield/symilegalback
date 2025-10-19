@@ -13,6 +13,10 @@ import { supabaseAdmin, getUserFromRequestAuth } from '@/lib/supabase';
 import type { ContractTemplate } from '@/types/contracts';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
+  // Enforce HTTP method
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: true, message: 'Method not allowed' });
+  }
   await rateLimit(req, res);
   const { requestId, startTime } = startMonitor('/api/generate');
   try {

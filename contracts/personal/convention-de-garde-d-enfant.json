@@ -1,21 +1,71 @@
 {
   "metadata": {
     "title": "Convention de garde d’enfant",
+    "category": "famille",
     "jurisdiction": "FR",
     "governing_law": "France",
-    "version": "1.0.0"
+    "version": "2.0.0",
+    "requires_notary": false,
+    "official_registration": false,
+    "legal_articles": [
+      "Article 373-2 Code civil",
+      "Articles 373-2-1 à 373-2-11 Code civil"
+    ]
   },
   "inputs": [
-    {"key": "parent1_nom", "label": "Nom du premier parent", "type": "text", "required": true},
-    {"key": "parent2_nom", "label": "Nom du second parent", "type": "text", "required": true},
+    {"key": "party1_nom_complet", "label": "Nom et prénoms (partie 1)", "type": "text", "required": true},
+    {"key": "party1_date_naissance", "label": "Date de naissance (partie 1)", "type": "date", "required": true},
+    {"key": "party1_lieu_naissance", "label": "Lieu de naissance (partie 1)", "type": "text", "required": true},
+    {"key": "party1_adresse", "label": "Adresse complète (partie 1)", "type": "text", "required": true},
+    {"key": "party1_nationalite", "label": "Nationalité (partie 1)", "type": "text", "required": true},
+
+    {"key": "party2_nom_complet", "label": "Nom et prénoms (partie 2)", "type": "text", "required": true},
+    {"key": "party2_date_naissance", "label": "Date de naissance (partie 2)", "type": "date", "required": true},
+    {"key": "party2_lieu_naissance", "label": "Lieu de naissance (partie 2)", "type": "text", "required": true},
+    {"key": "party2_adresse", "label": "Adresse complète (partie 2)", "type": "text", "required": true},
+    {"key": "party2_nationalite", "label": "Nationalité (partie 2)", "type": "text", "required": true},
+
+    {"key": "party1_details", "label": "Détails complets partie 1 (préambule)", "type": "textarea", "required": false},
+    {"key": "party2_details", "label": "Détails complets partie 2 (préambule)", "type": "textarea", "required": false},
+
     {"key": "enfants", "label": "Noms et âges des enfants", "type": "textarea", "required": true},
-    {"key": "type_garde", "label": "Type de garde (alternée ou principale)", "type": "select", "required": true}
+    {"key": "type_garde", "label": "Type de garde (alternée ou principale)", "type": "select", "required": true},
+    {"key": "calendrier_details", "label": "Calendrier détaillé des visites/hébergements", "type": "textarea", "required": true},
+    {"key": "parent_debiteur", "label": "Parent débiteur de la pension", "type": "text", "required": false},
+    {"key": "montant_pension", "label": "Montant de la pension alimentaire (€)", "type": "number", "required": false},
+    {"key": "jour_paiement", "label": "Jour de paiement mensuel (ex: 5)", "type": "text", "required": false},
+
+    {"key": "juridiction", "label": "Juridiction compétente", "type": "text", "required": true},
+    {"key": "lieu_signature", "label": "Lieu de signature", "type": "text", "required": true},
+    {"key": "date_signature", "label": "Date de signature", "type": "date", "required": true},
+    {"key": "nombre_exemplaires", "label": "Nombre d'exemplaires originaux", "type": "number", "required": true}
   ],
   "clauses": [
-    {"id": "objet", "title": "Objet", "body": "Les parents {{parent1_nom}} et {{parent2_nom}} conviennent des modalités de garde pour leurs enfants {{enfants}}."},
-    {"id": "garde", "title": "Organisation de la garde", "body": "La garde sera {{type_garde}}, selon un calendrier fixé d’un commun accord."},
-    {"id": "pension", "title": "Contribution à l’entretien", "body": "Chaque parent contribuera aux dépenses selon ses ressources et les besoins des enfants."},
-    {"id": "communication", "title": "Communication entre parents", "body": "Les parents s’engagent à une communication respectueuse et régulière pour le bien des enfants."}
+    {
+      "id": "preamble",
+      "title": "Préambule",
+      "body": "Entre les soussignés:\n\n{{party1_details}}\n\nD'une part,\n\nEt:\n\n{{party2_details}}\n\nD'autre part,\n\nIl a été convenu et arrêté ce qui suit:"
+    },
+    {
+      "id": "legal_basis",
+      "title": "Base légale",
+      "body": "La présente convention est établie conformément aux articles 373-2 et suivants du Code civil français."
+    },
+    {"id": "objet", "title": "Objet", "body": "Les parents {{party1_nom_complet}} et {{party2_nom_complet}} conviennent des modalités de garde pour leurs enfants {{enfants}}."},
+    {"id": "autorite_parentale", "title": "Exercice de l'autorité parentale", "body": "Conformément à l'article 373-2 du Code civil, l'autorité parentale est exercée conjointement par les deux parents. Les décisions importantes (santé, éducation, orientation) seront prises d'un commun accord."},
+    {"id": "garde", "title": "Organisation de la garde", "body": "La garde sera {{type_garde}}, selon le calendrier suivant:\n{{calendrier_details}}"},
+    {"id": "droit_visite", "title": "Droits de visite et d'hébergement", "body": "Le parent chez qui l'enfant n'a pas sa résidence principale dispose d'un droit de visite et d'hébergement selon le calendrier suivant:\n{{calendrier_details}}"},
+    {"id": "pension_alimentaire", "title": "Pension alimentaire", "body": "Le parent {{parent_debiteur}} versera mensuellement une pension alimentaire de {{montant_pension}} euros au profit de l'enfant, payable le {{jour_paiement}} de chaque mois.\n\nCette pension sera révisée annuellement selon l'indice des prix à la consommation (INSEE)."},
+    {"id": "communication", "title": "Communication entre parents", "body": "Les parents s’engagent à une communication respectueuse et régulière pour le bien des enfants."},
+    {"id": "duree", "title": "Durée et entrée en vigueur", "body": "La présente convention entre en vigueur à compter de sa signature par les deux parties, soit le {{date_signature}}. Elle demeure valable jusqu'à nouvelle décision ou résiliation conformément aux présentes."},
+    {"id": "modification", "title": "Modification de la convention", "body": "Toute modification de la présente convention devra faire l'objet d'un avenant écrit, signé par les deux parties."},
+    {"id": "resiliation", "title": "Résiliation", "body": "La présente convention peut être résiliée:\n- D'un commun accord entre les parties, par écrit;\n- Unilatéralement, sous réserve d'un préavis de 30 jours;\n- De plein droit en cas de manquement grave d'une des parties à ses obligations."},
+    {"id": "litiges", "title": "Règlement des litiges", "body": "Les parties s'engagent à tenter de résoudre à l'amiable tout différend relatif à l'interprétation ou à l'exécution de la présente convention.\n\nEn cas d'échec, le litige sera porté devant les tribunaux compétents de {{juridiction}}, conformément aux règles de procédure civile française."},
+    {"id": "loi_applicable", "title": "Loi applicable", "body": "La présente convention est soumise au droit français. Toute question d'interprétation ou d'exécution relève de la loi française."},
+    {"id": "frais", "title": "Frais", "body": "Les frais engendrés par la présente convention (enregistrement, notaire, le cas échéant) sont à la charge des parties à parts égales, sauf stipulation contraire."},
+    {"id": "confidentialite", "title": "Confidentialité", "body": "Les parties s'engagent à traiter de manière confidentielle les informations échangées dans le cadre de la présente convention, sauf obligation légale contraire."},
+    {"id": "exemplaires", "title": "Exemplaires", "body": "La présente convention est établie en {{nombre_exemplaires}} exemplaires originaux, dont un pour chaque partie."},
+    {"id": "signatures", "title": "Signatures", "body": "Fait à {{lieu_signature}}, le {{date_signature}}.\n\nEn deux exemplaires originaux.\n\n**Partie 1:**\nNom: {{party1_nom_complet}}\nSignature précédée de la mention « Lu et approuvé, bon pour accord »:\n\n_____________________\n\n**Partie 2:**\nNom: {{party2_nom_complet}}\nSignature précédée de la mention « Lu et approuvé, bon pour accord »:\n\n_____________________"}
   ]
 }
 

@@ -1,21 +1,54 @@
 {
   "metadata": {
     "title": "Convention de PACS (Pacte civil de solidarité)",
+    "category": "famille",
     "jurisdiction": "FR",
     "governing_law": "France",
-    "version": "1.0.0"
+    "version": "2.0.0",
+    "requires_notary": false,
+    "official_registration": true,
+    "legal_articles": ["Articles 515-1 à 515-7 Code civil"]
   },
   "inputs": [
-    {"key": "partenaire1_nom", "label": "Nom du premier partenaire", "type": "text", "required": true},
-    {"key": "partenaire2_nom", "label": "Nom du second partenaire", "type": "text", "required": true},
+    {"key": "party1_nom_complet", "label": "Nom et prénoms (partie 1)", "type": "text", "required": true},
+    {"key": "party1_date_naissance", "label": "Date de naissance (partie 1)", "type": "date", "required": true},
+    {"key": "party1_lieu_naissance", "label": "Lieu de naissance (partie 1)", "type": "text", "required": true},
+    {"key": "party1_adresse", "label": "Adresse complète (partie 1)", "type": "text", "required": true},
+    {"key": "party1_nationalite", "label": "Nationalité (partie 1)", "type": "text", "required": true},
+
+    {"key": "party2_nom_complet", "label": "Nom et prénoms (partie 2)", "type": "text", "required": true},
+    {"key": "party2_date_naissance", "label": "Date de naissance (partie 2)", "type": "date", "required": true},
+    {"key": "party2_lieu_naissance", "label": "Lieu de naissance (partie 2)", "type": "text", "required": true},
+    {"key": "party2_adresse", "label": "Adresse complète (partie 2)", "type": "text", "required": true},
+    {"key": "party2_nationalite", "label": "Nationalité (partie 2)", "type": "text", "required": true},
+
+    {"key": "party1_details", "label": "Détails complets partie 1 (préambule)", "type": "textarea", "required": false},
+    {"key": "party2_details", "label": "Détails complets partie 2 (préambule)", "type": "textarea", "required": false},
+
     {"key": "adresse_commune", "label": "Adresse commune", "type": "text", "required": true},
-    {"key": "regime_biens", "label": "Régime choisi (séparation ou indivision)", "type": "select", "required": true}
+    {"key": "regime_biens", "label": "Régime choisi (séparation ou indivision)", "type": "select", "required": true},
+    {"key": "juridiction", "label": "Juridiction compétente", "type": "text", "required": true},
+    {"key": "lieu_signature", "label": "Lieu de signature", "type": "text", "required": true},
+    {"key": "date_signature", "label": "Date de signature", "type": "date", "required": true},
+    {"key": "nombre_exemplaires", "label": "Nombre d'exemplaires originaux", "type": "number", "required": true}
   ],
   "clauses": [
-    {"id": "objet", "title": "Objet de la convention", "body": "Les partenaires {{partenaire1_nom}} et {{partenaire2_nom}} déclarent conclure un pacte civil de solidarité conformément aux dispositions du Code civil."},
+    {"id": "preamble", "title": "Préambule", "body": "Entre les soussignés:\n\n{{party1_details}}\n\nD'une part,\n\nEt:\n\n{{party2_details}}\n\nD'autre part,\n\nIl a été convenu et arrêté ce qui suit:"},
+    {"id": "legal_basis", "title": "Base légale", "body": "La présente convention est établie conformément aux articles 515-1 à 515-7 du Code civil français."},
+    {"id": "objet", "title": "Objet de la convention", "body": "Les partenaires {{party1_nom_complet}} et {{party2_nom_complet}} déclarent conclure un pacte civil de solidarité conformément aux dispositions du Code civil."},
     {"id": "vie_commune", "title": "Vie commune", "body": "Les partenaires s'engagent à une vie commune et à une aide matérielle réciproque, proportionnelle à leurs ressources."},
     {"id": "regime", "title": "Régime des biens", "body": "Les partenaires choisissent le régime de {{regime_biens}} pour les biens acquis pendant le PACS."},
-    {"id": "resiliation", "title": "Rupture du PACS", "body": "Le PACS pourra être rompu par déclaration conjointe ou unilatérale, selon la procédure prévue par la loi."}
+    {"id": "solidarite", "title": "Solidarité pour les dettes", "body": "Les partenaires sont solidairement tenus des dettes contractées par l'un d'eux pour les besoins de la vie courante, à l'exception des dépenses manifestement excessives."},
+    {"id": "enregistrement", "title": "Enregistrement", "body": "La présente convention sera enregistrée auprès du greffe du tribunal judiciaire ou auprès d'un notaire, conformément à l'article 515-3 du Code civil."},
+    {"id": "duree", "title": "Durée et entrée en vigueur", "body": "La présente convention entre en vigueur à compter de sa signature par les deux parties, soit le {{date_signature}}."},
+    {"id": "modification", "title": "Modification de la convention", "body": "Toute modification de la présente convention devra faire l'objet d'un avenant écrit, signé par les deux parties."},
+    {"id": "resiliation", "title": "Résiliation", "body": "La présente convention peut être résiliée: d'un commun accord, unilatéralement par déclaration au greffe, ou de plein droit en cas de manquement grave."},
+    {"id": "litiges", "title": "Règlement des litiges", "body": "En cas d'échec de la résolution amiable, le litige sera porté devant les tribunaux compétents de {{juridiction}}."},
+    {"id": "loi_applicable", "title": "Loi applicable", "body": "La présente convention est soumise au droit français."},
+    {"id": "frais", "title": "Frais", "body": "Les frais d'enregistrement et, le cas échéant, de notaire, sont à la charge des partenaires selon accord contraire ou par moitié."},
+    {"id": "confidentialite", "title": "Confidentialité", "body": "Les informations échangées sont confidentielles, sauf obligation légale contraire."},
+    {"id": "exemplaires", "title": "Exemplaires", "body": "La présente convention est établie en {{nombre_exemplaires}} exemplaires originaux, dont un pour chaque partenaire."},
+    {"id": "signatures", "title": "Signatures", "body": "Fait à {{lieu_signature}}, le {{date_signature}}.\n\n**Partenaire 1:** {{party1_nom_complet}}\nSignature précédée de la mention « Lu et approuvé, bon pour accord »\n\n_____________________\n\n**Partenaire 2:** {{party2_nom_complet}}\nSignature précédée de la mention « Lu et approuvé, bon pour accord »\n\n_____________________"}
   ]
 }
 
