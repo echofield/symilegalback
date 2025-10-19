@@ -1,56 +1,23 @@
 {
   "metadata": {
     "title": "Reconnaissance de dette",
-    "category": "patrimoine",
     "jurisdiction": "FR",
     "governing_law": "France",
-    "version": "2.0.0",
-    "requires_notary": false,
-    "official_registration": false,
-    "legal_articles": ["Article 1326 Code civil", "Article 1376 Code civil"]
+    "version": "1.0.0"
   },
   "inputs": [
-    {"key": "party1_nom_complet", "label": "Nom et prénoms du débiteur", "type": "text", "required": true},
-    {"key": "party1_date_naissance", "label": "Date de naissance (débiteur)", "type": "date", "required": true},
-    {"key": "party1_lieu_naissance", "label": "Lieu de naissance (débiteur)", "type": "text", "required": true},
-    {"key": "party1_adresse", "label": "Adresse complète (débiteur)", "type": "text", "required": true},
-    {"key": "party1_nationalite", "label": "Nationalité (débiteur)", "type": "text", "required": true},
-
-    {"key": "party2_nom_complet", "label": "Nom et prénoms du créancier", "type": "text", "required": true},
-    {"key": "party2_date_naissance", "label": "Date de naissance (créancier)", "type": "date", "required": true},
-    {"key": "party2_lieu_naissance", "label": "Lieu de naissance (créancier)", "type": "text", "required": true},
-    {"key": "party2_adresse", "label": "Adresse complète (créancier)", "type": "text", "required": true},
-    {"key": "party2_nationalite", "label": "Nationalité (créancier)", "type": "text", "required": true},
-
-    {"key": "party1_details", "label": "Détails complets débiteur (préambule)", "type": "textarea", "required": false},
-    {"key": "party2_details", "label": "Détails complets créancier (préambule)", "type": "textarea", "required": false},
-
+    {"key": "debiteur", "label": "Nom du débiteur", "type": "text", "required": true},
+    {"key": "creancier", "label": "Nom du créancier", "type": "text", "required": true},
     {"key": "montant", "label": "Montant de la dette (€)", "type": "number", "required": true},
-    {"key": "montant_lettres", "label": "Montant en toutes lettres", "type": "text", "required": true},
-    {"key": "date_reconnaissance", "label": "Date de signature", "type": "date", "required": true},
-    {"key": "date_remboursement", "label": "Date de remboursement prévue", "type": "date", "required": true},
-    {"key": "echeancier_details", "label": "Échéancier détaillé (si applicable)", "type": "textarea", "required": false},
-    {"key": "coordonnees_bancaires", "label": "Coordonnées bancaires du créancier", "type": "text", "required": false},
-    {"key": "juridiction", "label": "Juridiction compétente", "type": "text", "required": true},
-    {"key": "lieu_signature", "label": "Lieu de signature", "type": "text", "required": true},
-    {"key": "nombre_exemplaires", "label": "Nombre d'exemplaires originaux", "type": "number", "required": true}
+    {"key": "date_reconnaissance", "label": "Date de signature de la reconnaissance", "type": "date", "required": true},
+    {"key": "date_remboursement", "label": "Date de remboursement prévue", "type": "date", "required": true}
   ],
   "clauses": [
-    {"id": "preamble", "title": "Préambule", "body": "Entre les soussignés:\n\n{{party1_details}}\n\nD'une part,\n\nEt:\n\n{{party2_details}}\n\nD'autre part,\n\nIl a été convenu et arrêté ce qui suit:"},
-    {"id": "legal_basis", "title": "Base légale", "body": "La présente convention est établie conformément aux articles 1326 et 1376 du Code civil français."},
-    {"id": "parties", "title": "Parties", "body": "Je soussigné(e) {{party1_nom_complet}}, reconnais devoir à {{party2_nom_complet}} la somme de {{montant}} euros ({{montant_lettres}})."},
+    {"id": "parties", "title": "Parties", "body": "Je soussigné(e) {{debiteur}}, reconnais devoir à {{creancier}} la somme de {{montant}} euros."},
     {"id": "motif", "title": "Origine de la dette", "body": "Cette somme correspond à un prêt d’argent consenti à titre personnel ou à tout autre engagement financier convenu entre les parties."},
-    {"id": "modalites_remboursement", "title": "Modalités de remboursement", "body": "Le remboursement s'effectuera:\n- En une seule fois le {{date_remboursement}}\n- OU selon l'échéancier suivant: {{echeancier_details}}\n\nPar virement bancaire au compte suivant: {{coordonnees_bancaires}}"},
-    {"id": "defaut_paiement", "title": "Défaut de paiement", "body": "En cas de défaut de paiement à l'échéance du {{date_remboursement}}, et après mise en demeure restée sans effet pendant 15 jours, des intérêts de retard au taux légal en vigueur seront dus de plein droit."},
-    {"id": "mention_manuscrite", "title": "Mention manuscrite obligatoire", "body": "Conformément à l'article 1376 du Code civil, le débiteur doit apposer de sa main la mention suivante:\n\n« Bon pour reconnaissance de dette de la somme de {{montant}} euros ({{montant_lettres}} euros). »\n\nCette mention manuscrite est obligatoire pour la validité de l'acte."},
     {"id": "remboursement", "title": "Remboursement", "body": "Je m’engage à rembourser intégralement cette somme au plus tard le {{date_remboursement}}."},
     {"id": "interets", "title": "Intérêts éventuels", "body": "Sauf convention contraire, la dette ne porte pas intérêt. Tout intérêt applicable devra être précisé dans une clause annexe."},
     {"id": "preuve", "title": "Force probante", "body": "La présente reconnaissance de dette est rédigée en autant d’exemplaires que de parties et signée de la main du débiteur, en toutes lettres et chiffres, conformément à l’article 1326 du Code civil."},
-    {"id": "duree", "title": "Durée et entrée en vigueur", "body": "Le présent acte entre en vigueur à la date de signature, soit le {{date_reconnaissance}}."},
-    {"id": "modification", "title": "Modification", "body": "Toute modification devra faire l'objet d'un avenant écrit, signé des parties."},
-    {"id": "litiges", "title": "Règlement des litiges", "body": "Tout différend relatif au présent acte sera porté devant les tribunaux compétents de {{juridiction}} après tentative de règlement amiable."},
-    {"id": "loi_applicable", "title": "Loi applicable", "body": "Le présent acte est soumis au droit français."},
-    {"id": "exemplaires", "title": "Exemplaires", "body": "Le présent acte est établi en {{nombre_exemplaires}} exemplaires originaux, dont un pour chaque partie."},
-    {"id": "signatures", "title": "Signatures", "body": "Fait à {{lieu_signature}}, le {{date_reconnaissance}}.\n\n**Débiteur:** {{party1_nom_complet}}\nSignature précédée de la mention manuscrite « Bon pour reconnaissance de dette de {{montant}} euros ({{montant_lettres}}) »\n\n_____________________\n\n**Créancier:** {{party2_nom_complet}}\n\n_____________________"}
+    {"id": "signature", "title": "Signature", "body": "Fait à [ville], le {{date_reconnaissance}}.\n\nSignature du débiteur précédée de la mention manuscrite : « Bon pour reconnaissance de dette de {{montant}} euros »."}
   ]
 }

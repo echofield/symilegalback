@@ -31,10 +31,7 @@ export function buildPrompt(
     prompt += `- Avoid unnecessary legal jargon\n`;
   }
 
-  prompt += `\n\nOUTPUT REQUIREMENTS:\n- Return the contract as plain text, organized with headings.\n- Do not include the JSON from above.\n- Incorporate user inputs in the appropriate places.\n- Start the output with the final contract content only (no JSON echoes, no debug).\n`;
-
-  // Include the template id to allow local adapter to fetch the right template when no external AI is configured
-  prompt += `\n\nTEMPLATE_ID:${template.metadata.title}|${template.metadata.jurisdiction}|${template.metadata.version}`;
+  prompt += `\n\nOUTPUT REQUIREMENTS:\n- Return the contract as plain text, organized with headings.\n- Do not include the JSON from above.\n- Incorporate user inputs in the appropriate places.\n`;
 
   return prompt;
 }
