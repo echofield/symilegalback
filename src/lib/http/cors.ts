@@ -14,9 +14,13 @@ function matchesPattern(origin: string, pattern: string): boolean {
 
 const DEFAULT_ALLOWED_ORIGINS = [
         'https://symilegal.vercel.app',
+        'https://symifrontlegalfinal.vercel.app',
+        'https://symifrontlegal.vercel.app',
         'https://app.symilegal.com',
         'http://localhost:5173',
-        'https://symifrontlegal.vercel.app',
+        'http://localhost:3000',
+        'http://localhost:3001',
+        'http://localhost:3002',
 ];
 
 function getAllowedOrigin(req: NextApiRequest): string {
