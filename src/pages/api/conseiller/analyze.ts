@@ -18,21 +18,177 @@ async function callOpenAIAudit(problem: string) {
   const model = process.env.OPENAI_MODEL || 'gpt-4o-mini';
   if (!apiKey) throw new Error('OPENAI_API_KEY not set');
 
-  const sys = `Tu es un assistant juridique expert. Analyse et retourne UNIQUEMENT du JSON valide.`;
-  const user = `Analyse cette situation:\n\n"""\n${problem}\n"""\n\nRéponds UNIQUEMENT en JSON valide avec ce format exact (pas d'explications en dehors du JSON):\n{\n  "summary": "Résumé en 1-2 phrases de la situation",
-  "category": "catégorie juridique principale",
-  "specialty": "spécialité avocat recommandée",
-  "risks": ["risque 1", "risque 2"],
-  "points": ["point juridique 1", "point 2"],
-  "actions": ["action 1", "action 2"],
-  "urgency": "Faible|Moyenne|Élevée - explication courte",
-  "complexity": "Simple|Moyenne|Complexe",
-  "recommendedTemplateId": "id-du-template-le-plus-pertinent ou null",
-  "templateAvailable": true|false,
-  "needsLawyer": true|false,
-  "lawyerSpecialty": "spécialité avocat si needsLawyer=true sinon null",
-  "followupQuestions": ["question complémentaire si description incomplète"]
-}\n\nRègles pour needsLawyer=true: enjeux > 5000€, litige/procédure, pénal, ou négociation complexe.`;
+  const sys = `Tu es un expert juridique français avec 20 ans d'expérience. 
+Tu analyses les situations juridiques en profondeur avec précision et rigueur.
+Tu connais parfaitement le droit français : Code civil, Code du travail, Code de commerce, Code pénal, etc.
+Tu fournis toujours des références légales précises et des conseils actionnables.`;
+
+  const user = `Analyse cette situation juridique de manière APPROFONDIE et PROFESSIONNELLE :
+
+"""
+${problem}
+"""
+
+Réponds UNIQUEMENT en JSON valide avec ce format COMPLET ET DÉTAILLÉ :
+
+{
+  "summary": "Résumé exécutif en 2-3 phrases avec qualification juridique précise",
+  
+  "legalQualification": {
+    "category": "Catégorie juridique principale (ex: Droit du travail, Droit commercial, etc.)",
+    "subcategory": "Sous-catégorie spécifique",
+    "legalNature": "Nature juridique exacte (contrat, délit, litige, etc.)",
+    "applicableLaw": ["Article L.XXX du Code Y", "Loi du XX/XX/XXXX", "Jurisprudence Cass. XX"]
+  },
+  
+  "stakeholders": {
+    "parties": ["Partie 1: statut/rôle", "Partie 2: statut/rôle"],
+    "thirdParties": ["Tiers impliqués le cas échéant"],
+    "jurisdiction": "Tribunal compétent (TI, TJ, Prud'hommes, Commerce, etc.)"
+  },
+  
+  "financialAnalysis": {
+    "estimatedAmount": "Montant estimé de l'enjeu en euros",
+    "minAmount": "Montant minimum",
+    "maxAmount": "Montant maximum",
+    "costs": {
+      "legalFees": "Estimation frais d'avocat",
+      "courtFees": "Frais de justice",
+      "otherCosts": "Autres frais (expertise, huissier, etc.)"
+    }
+  },
+  
+  "timelineAnalysis": {
+    "prescriptionDelay": "Délai de prescription applicable",
+    "remainingTime": "Temps restant avant prescription",
+    "criticalDates": [
+      {"date": "JJ/MM/AAAA ou délai", "event": "Événement critique", "mandatory": true}
+    ],
+    "estimatedDuration": "Durée estimée de résolution (amiable/judiciaire)"
+  },
+  
+  "riskAssessment": {
+    "immediateRisks": [
+      {"risk": "Description du risque", "probability": "Faible/Moyenne/Élevée", "impact": "1-10"}
+    ],
+    "legalRisks": [
+      {"risk": "Risque juridique", "penalty": "Sanction possible", "references": ["Art. XXX"]}
+    ],
+    "financialRisks": [
+      {"risk": "Risque financier", "amount": "Montant estimé", "mitigation": "Solution"}
+    ],
+    "reputationalRisks": ["Impact réputation si applicable"],
+    "globalRisk": "Score 1-10 avec justification"
+  },
+  
+  "legalPoints": [
+    {
+      "point": "Point de droit crucial",
+      "explanation": "Explication détaillée",
+      "references": ["Article L.XXX", "Jurisprudence"],
+      "strength": "Force du point (Faible/Moyenne/Forte)"
+    }
+  ],
+  
+  "actionPlan": {
+    "immediate": [
+      {
+        "action": "Action à faire sous 48h",
+        "responsible": "Qui doit le faire",
+        "deadline": "Délai précis",
+        "documents": ["Documents nécessaires"],
+        "cost": "Coût estimé"
+      }
+    ],
+    "shortTerm": [
+      {
+        "action": "Action sous 15 jours",
+        "responsible": "Responsable",
+        "deadline": "Délai",
+        "prerequisites": ["Prérequis"]
+      }
+    ],
+    "mediumTerm": [
+      {
+        "action": "Action sous 3 mois",
+        "milestone": "Jalon clé",
+        "expectedOutcome": "Résultat attendu"
+      }
+    ]
+  },
+  
+  "evidenceRequired": {
+    "essential": ["Preuve indispensable 1", "Preuve 2"],
+    "supporting": ["Preuve complémentaire"],
+    "obtaining": [
+      {"evidence": "Type de preuve", "method": "Comment l'obtenir", "delay": "Délai"}
+    ]
+  },
+  
+  "resolutionStrategies": {
+    "amicable": {
+      "possible": true,
+      "probability": "Faible/Moyenne/Élevée",
+      "approach": "Stratégie de négociation",
+      "duration": "2-4 mois",
+      "cost": "500-2000€"
+    },
+    "mediation": {
+      "recommended": true,
+      "type": "Médiation conventionnelle/judiciaire",
+      "duration": "1-3 mois",
+      "cost": "1000-3000€"
+    },
+    "litigation": {
+      "lastResort": true,
+      "procedure": "Procédure applicable",
+      "duration": "6-18 mois",
+      "successRate": "60-80%",
+      "cost": "3000-15000€"
+    }
+  },
+  
+  "lawyerRecommendation": {
+    "necessary": true,
+    "urgency": "Immédiate/Sous 7 jours/Sous 1 mois",
+    "specialty": "Spécialité exacte requise",
+    "subSpecialties": ["Sous-spécialité 1", "Sous-spécialité 2"],
+    "expertise": ["Expertise spécifique recherchée"],
+    "estimatedHours": "20-50 heures",
+    "budget": "2000-10000€"
+  },
+  
+  "templates": {
+    "recommendedTemplateId": "ID du template le plus pertinent",
+    "alternativeTemplates": ["template-alternatif-1", "template-alternatif-2"],
+    "customizationNeeded": ["Point à personnaliser 1", "Point 2"],
+    "clausesToAdd": ["Clause spécifique à ajouter"]
+  },
+  
+  "followUp": {
+    "questions": [
+      "Question pour clarifier un point important non mentionné",
+      "Question sur un détail crucial manquant"
+    ],
+    "missingInfo": ["Information manquante importante"],
+    "assumptions": ["Hypothèse faite à valider"]
+  },
+  
+  "metadata": {
+    "complexity": "Simple/Moyenne/Complexe/Très complexe",
+    "urgency": "Score 1-10 avec justification",
+    "confidence": "Niveau de confiance dans l'analyse 70-100%",
+    "lastUpdated": "Date de dernière mise à jour du droit applicable"
+  }
+}
+
+RÈGLES IMPÉRATIVES :
+- Toujours citer des articles de loi précis
+- Donner des montants réalistes en euros
+- Fournir des délais concrets
+- needsLawyer=true si : enjeux > 5000€, procédure judiciaire, pénal, ou négociation complexe
+- Être précis sur les juridictions compétentes
+- Donner un plan d'action chronologique clair`;
 
   const r = await fetch('https://api.openai.com/v1/chat/completions', {
     method: 'POST',
@@ -75,7 +231,42 @@ async function callOpenAIAudit(problem: string) {
 async function callPerplexityLawyers(city: string, specialty: string) {
   const apiKey = process.env.PERPLEXITY_API_KEY;
   if (!apiKey) return [] as any[];
-  const prompt = `Trouve 5 avocats spécialisés en "${specialty}" à ${city}, France. Retourne UNIQUEMENT ce JSON:\n{\n  "lawyers": [\n    { "name": "", "firm": "", "specialty": "", "city": "", "phone": "", "email": "", "address": "", "rating": 0 }\n  ]\n}`;
+  
+  const prompt = `Trouve 10 avocats RÉELS et VÉRIFIÉS spécialisés en "${specialty}" 
+situés à ${city} ou proche (max 30km), France.
+
+Critères prioritaires:
+- Disponibles cette semaine
+- Honoraires moyens
+- Inscrits au Barreau avec numéro CNBF
+- Cabinets actifs en 2024-2025
+- Avec coordonnées vérifiables
+
+Pour CHAQUE avocat, fournis OBLIGATOIREMENT:
+- Nom complet et titre (Maître)
+- Cabinet (raison sociale complète)
+- Adresse précise avec code postal
+- Téléphone direct (pas standard)
+- Email professionnel
+- Site web
+- Spécialités certifiées CNB
+- Années d'expérience
+- Tarif consultation (en euros)
+- Honoraires moyens (fourchette)
+- Langues parlées
+- Disponibilité actuelle
+
+Recherche aussi sur:
+- Annuaire du Barreau de ${city}
+- ordre-avocats.fr
+- consultation.avocat.fr
+- justifit.fr
+- alexia.fr
+- doctrine.fr
+- Google Maps "avocat ${specialty} ${city}"
+
+Format JSON structuré UNIQUEMENT, pas de texte.`;
+
   const r = await fetch('https://api.perplexity.ai/chat/completions', {
     method: 'POST',
     headers: {
@@ -84,12 +275,29 @@ async function callPerplexityLawyers(city: string, specialty: string) {
     },
     body: JSON.stringify({
       model: 'llama-3.1-sonar-large-128k-online',
-      messages: [{ role: 'user', content: prompt }],
+      messages: [
+        {
+          role: 'system',
+          content: 'Tu es un assistant spécialisé dans la recherche d\'avocats en France. Tu ne fournis que des informations vérifiées et actuelles. Réponds toujours en JSON valide.'
+        },
+        {
+          role: 'user',
+          content: prompt
+        }
+      ],
+      temperature: 0.1,
+      top_p: 0.9,
+      return_citations: true,
+      search_domain_filter: ["ordre-avocats.fr", "cnbf.fr", "consultation.avocat.fr", "justifit.fr"],
+      search_recency_filter: "month",
+      stream: false
     }),
   });
+  
   if (!r.ok) return [];
   const data = await r.json();
   const text = data?.choices?.[0]?.message?.content || '';
+  
   try {
     const match = text.match(/\{[\s\S]*\}/);
     const parsed = JSON.parse(match ? match[0] : text);
@@ -129,16 +337,30 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     return res.status(200).json({
       audit: {
         summary: audit.summary,
-        risks: audit.risks,
-        points: audit.points || [],
-        actions: audit.actions || [],
-        urgency: audit.urgency,
-        complexity: audit.complexity,
+        legalQualification: audit.legalQualification,
+        stakeholders: audit.stakeholders,
+        financialAnalysis: audit.financialAnalysis,
+        timelineAnalysis: audit.timelineAnalysis,
+        riskAssessment: audit.riskAssessment,
+        legalPoints: audit.legalPoints,
+        actionPlan: audit.actionPlan,
+        evidenceRequired: audit.evidenceRequired,
+        resolutionStrategies: audit.resolutionStrategies,
+        lawyerRecommendation: audit.lawyerRecommendation,
+        templates: audit.templates,
+        followUp: audit.followUp,
+        metadata: audit.metadata,
+        // Compatibilité avec l'ancien format
+        risks: audit.riskAssessment?.immediateRisks?.map(r => r.risk) || [],
+        points: audit.legalPoints?.map(p => p.point) || [],
+        actions: audit.actionPlan?.immediate?.map(a => a.action) || [],
+        urgency: audit.metadata?.urgency || audit.urgency,
+        complexity: audit.metadata?.complexity || audit.complexity,
       },
       recommendedTemplate,
-      needsLawyer: Boolean(audit?.needsLawyer),
-      lawyerSpecialty: audit?.lawyerSpecialty || audit?.specialty || null,
-      followupQuestions: Array.isArray(audit?.followupQuestions) ? audit.followupQuestions : [],
+      needsLawyer: Boolean(audit?.lawyerRecommendation?.necessary),
+      lawyerSpecialty: audit?.lawyerRecommendation?.specialty || audit?.specialty || null,
+      followupQuestions: Array.isArray(audit?.followUp?.questions) ? audit.followUp.questions : [],
       recommendedLawyers,
       timestamp: new Date().toISOString(),
     });

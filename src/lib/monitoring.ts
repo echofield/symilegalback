@@ -1,19 +1,168 @@
-import crypto from 'crypto';
-import { logger } from '@/lib/logger';
+// lib/monitoring.ts
+import { NextApiRequest, NextApiResponse } from 'next';
 
-export function startMonitor(route: string, meta?: Record<string, any>) {
-  const requestId = crypto.randomBytes(6).toString('hex');
-  const startTime = Date.now();
-  logger.info({ requestId, route, event: 'start', ...(meta || {}) });
-  return { requestId, startTime };
+interface HealthStatus {
+  status: 'healthy' | 'degraded' | 'down';
+  timestamp: string;
+  services: {
+    database: boolean;
+    openai: boolean;
+    perplexity: boolean;
+    cache: boolean;
+  };
+  metrics?: {
+    responseTime: number;
+    dbConnections: number;
+    cacheHitRate: number;
+  };
 }
 
-export function endMonitor(requestId: string, route: string, startTime: number, meta?: Record<string, any>) {
-  const duration = Date.now() - startTime;
-  logger.info({ requestId, route, duration, event: 'end', ...(meta || {}) });
+class MonitoringService {
+  // Log des événements métier importants
+  logEvent(eventName: string, properties?: any) {
+    console.log(`[EVENT] ${eventName}`, properties);
+    
+    // Custom logging vers votre système
+    this.sendToLoggingService({
+      timestamp: new Date().toISOString(),
+      event: eventName,
+      properties,
+      environment: process.env.NODE_ENV,
+    });
+  }
+
+  // Tracking des erreurs
+  captureError(error: Error, context?: any) {
+    console.error('[ERROR]', error, context);
+  }
+
+  // Monitoring des performances
+  measurePerformance(name: string, fn: () => Promise<any>) {
+    return async (...args: any[]) => {
+      const start = performance.now();
+      
+      try {
+        const result = await fn(...args);
+        const duration = performance.now() - start;
+        
+        this.logEvent('performance', {
+          operation: name,
+          duration,
+          success: true,
+        });
+        
+        return result;
+      } catch (error) {
+        const duration = performance.now() - start;
+        
+        this.logEvent('performance', {
+          operation: name,
+          duration,
+          success: false,
+          error: error.message,
+        });
+        
+        throw error;
+      }
+    };
+  }
+
+  // Alertes critiques
+  sendAlert(message: string, severity: 'low' | 'medium' | 'high' | 'critical') {
+    if (severity === 'critical' || severity === 'high') {
+      // Envoyer une notification immédiate
+      this.sendNotification({
+        message,
+        severity,
+        timestamp: new Date().toISOString(),
+        service: 'symi-legal',
+      });
+    }
+  }
+
+  private async sendToLoggingService(data: any) {
+    // Implémenter l'envoi vers votre service de logs
+    try {
+      await fetch('/api/logs', {
+        method: 'POST',
+        body: JSON.stringify(data),
+      });
+    } catch (error) {
+      console.error('Failed to send logs:', error);
+    }
+  }
+
+  private async sendNotification(alert: any) {
+    // Implémenter l'envoi de notifications
+    if (process.env.SLACK_WEBHOOK_URL) {
+      await fetch(process.env.SLACK_WEBHOOK_URL, {
+        method: 'POST',
+        body: JSON.stringify({
+          text: `🚨 ${alert.severity.toUpperCase()}: ${alert.message}`,
+        }),
+      });
+    }
+  }
 }
 
-export function logAIUsage(requestId: string, route: string, tokens: number, provider: string) {
-  logger.info({ requestId, route, provider, tokens, event: 'ai_usage' });
-}
+export const monitoring = new MonitoringService();
 
+// Health check endpoint
+export default async function healthCheck(
+  req: NextApiRequest,
+  res: NextApiResponse<HealthStatus>
+) {
+  const start = Date.now();
+  const services = {
+    database: false,
+    openai: false,
+    perplexity: false,
+    cache: false,
+  };
+
+  try {
+    // Check Database
+    const { prisma } = await import('@/lib/prisma');
+    await prisma.$queryRaw`SELECT 1`;
+    services.database = true;
+  } catch (error) {
+    console.error('Database health check failed:', error);
+  }
+
+  try {
+    // Check OpenAI
+    const response = await fetch('https://api.openai.com/v1/models', {
+      headers: { Authorization: `Bearer ${process.env.OPENAI_API_KEY}` },
+    });
+    services.openai = response.ok;
+  } catch (error) {
+    console.error('OpenAI health check failed:', error);
+  }
+
+  try {
+    // Check Perplexity
+    const response = await fetch('https://api.perplexity.ai/health');
+    services.perplexity = response.ok;
+  } catch (error) {
+    console.error('Perplexity health check failed:', error);
+  }
+
+  const allHealthy = Object.values(services).every(v => v);
+  const someHealthy = Object.values(services).some(v => v);
+
+  const status: HealthStatus = {
+    status: allHealthy ? 'healthy' : someHealthy ? 'degraded' : 'down',
+    timestamp: new Date().toISOString(),
+    services,
+    metrics: {
+      responseTime: Date.now() - start,
+      dbConnections: 0,
+      cacheHitRate: 0,
+    },
+  };
+
+  // Définir le code de statut HTTP approprié
+  const httpStatus = allHealthy ? 200 : someHealthy ? 503 : 500;
+  
+  res.status(httpStatus).json(status);
+}
