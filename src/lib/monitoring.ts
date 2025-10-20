@@ -83,10 +83,8 @@ class MonitoringService {
   private async sendToLoggingService(data: any) {
     // Implémenter l'envoi vers votre service de logs
     try {
-      await fetch('/api/logs', {
-        method: 'POST',
-        body: JSON.stringify(data),
-      });
+      // Skip logging service for now - just log to console
+      console.log('[MONITORING]', data);
     } catch (error) {
       console.error('Failed to send logs:', error);
     }
