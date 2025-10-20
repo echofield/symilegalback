@@ -1,72 +1,137 @@
-import type { NextApiHandler, NextApiRequest, NextApiResponse } from 'next';
+// lib/http/cors.ts - Enhanced CORS middleware
+import type { NextApiRequest, NextApiResponse } from 'next';
 
-function normalize(url: string): string {
-        return url.replace(/\/$/, '');
-}
-
-function matchesPattern(origin: string, pattern: string): boolean {
-        // Support '*' wildcard anywhere in pattern
-        // Escape regex then replace \* with '.*'
-        const escaped = pattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-        const re = new RegExp('^' + escaped.replace(/\\\*/g, '.*') + '$');
-        return re.test(origin);
-}
-
-const DEFAULT_ALLOWED_ORIGINS = [
-        'https://symilegal.vercel.app',
-        'https://symifrontlegalfinal.vercel.app',
-        'https://symifrontlegal.vercel.app',
-        'https://app.symilegal.com',
-        'http://localhost:5173',
-        'http://localhost:3000',
-        'http://localhost:3001',
-        'http://localhost:3002',
+export const DEFAULT_ALLOWED_ORIGINS = [
+  'http://localhost:3000',
+  'http://localhost:3001', 
+  'https://symifrontlegal.vercel.app',
+  'https://symifrontlegalfinal.vercel.app',
+  'https://symifrontlegal*.vercel.app',
+  'https://symione.vercel.app',
+  'https://symione*.vercel.app'
 ];
 
-function getAllowedOrigin(req: NextApiRequest): string {
-        const rawOrigin = (req.headers.origin as string) || '';
-        const origin = normalize(rawOrigin);
-        
-        // Temporarily allow all Vercel domains for testing
-        if (origin && origin.includes('vercel.app')) {
-                return rawOrigin || origin;
-        }
-        
-        const configured = (process.env.CORS_ORIGIN || '')
-                .split(',')
-                .map((s) => normalize(s.trim()))
-                .filter(Boolean);
-        if (configured.length === 0) {
-                configured.push(...DEFAULT_ALLOWED_ORIGINS);
-        }
-        
-        if (origin && configured.includes(origin)) return rawOrigin || origin;
-        // support wildcard patterns like https://app-*.vercel.app
-        for (const pat of configured) {
-                if (pat.includes('*') && origin && matchesPattern(origin, pat)) {
-                        return rawOrigin || origin;
-                }
-        }
-        if (configured.includes('*')) return '*';
-	// fallback to the first configured origin (normalized)
-	return configured[0];
+export const DEFAULT_ALLOWED_METHODS = [
+  'GET',
+  'POST', 
+  'PUT',
+  'DELETE',
+  'OPTIONS',
+  'PATCH'
+];
+
+export const DEFAULT_ALLOWED_HEADERS = [
+  'Content-Type',
+  'Authorization',
+  'X-Requested-With',
+  'Accept',
+  'Origin',
+  'Access-Control-Request-Method',
+  'Access-Control-Request-Headers'
+];
+
+export interface CorsOptions {
+  origins?: string[];
+  methods?: string[];
+  headers?: string[];
+  credentials?: boolean;
+  maxAge?: number;
 }
 
-export function withCors(handler: NextApiHandler): NextApiHandler {
-	return async function corsWrapped(req: NextApiRequest, res: NextApiResponse) {
-		const allowOrigin = getAllowedOrigin(req);
-		res.setHeader('Access-Control-Allow-Origin', allowOrigin);
-		res.setHeader('Vary', 'Origin');
-		res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE,OPTIONS');
-		res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
-		res.setHeader('Access-Control-Max-Age', '86400');
+export function withCors(options: CorsOptions = {}, handler?: any) {
+  return function corsMiddleware(req: NextApiRequest, res: NextApiResponse, next?: () => void) {
+    const {
+      origins = DEFAULT_ALLOWED_ORIGINS,
+      methods = DEFAULT_ALLOWED_METHODS,
+      headers = DEFAULT_ALLOWED_HEADERS,
+      credentials = false,
+      maxAge = 86400 // 24 hours
+    } = options;
 
-		if (req.method === 'OPTIONS') {
-			return res.status(204).end();
-		}
+    const origin = req.headers.origin;
+    const isAllowedOrigin = origins.some(allowedOrigin => {
+      if (allowedOrigin.includes('*')) {
+        const pattern = allowedOrigin.replace('*', '.*');
+        return new RegExp(pattern).test(origin || '');
+      }
+      return allowedOrigin === origin;
+    });
 
-		return handler(req, res);
-	};
+    if (origin && isAllowedOrigin) {
+      res.setHeader('Access-Control-Allow-Origin', origin);
+    } else if (origins.includes('*')) {
+      res.setHeader('Access-Control-Allow-Origin', '*');
+    }
+
+    res.setHeader('Access-Control-Allow-Methods', methods.join(', '));
+    res.setHeader('Access-Control-Allow-Headers', headers.join(', '));
+    
+    if (credentials) {
+      res.setHeader('Access-Control-Allow-Credentials', 'true');
+    }
+    
+    res.setHeader('Access-Control-Max-Age', maxAge.toString());
+
+    // Handle preflight requests
+    if (req.method === 'OPTIONS') {
+      res.status(200).end();
+      return;
+    }
+
+    if (handler) {
+      return handler(req, res);
+    }
+
+    if (next) {
+      next();
+    }
+  };
 }
 
+// Convenience function for wrapping handlers
+export function corsHandler(handler: any, options?: CorsOptions) {
+  return async (req: NextApiRequest, res: NextApiResponse) => {
+    withCors(options)(req, res);
+    return handler(req, res);
+  };
+}
 
+// Security headers middleware
+export function withSecurityHeaders(req: NextApiRequest, res: NextApiResponse, next?: () => void) {
+  // Security headers
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'DENY');
+  res.setHeader('X-XSS-Protection', '1; mode=block');
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
+  
+  // Content Security Policy
+  res.setHeader('Content-Security-Policy', 
+    "default-src 'self'; " +
+    "script-src 'self' 'unsafe-inline' 'unsafe-eval'; " +
+    "style-src 'self' 'unsafe-inline'; " +
+    "img-src 'self' data: https:; " +
+    "font-src 'self' data:; " +
+    "connect-src 'self' https://api.openai.com https://api.perplexity.ai;"
+  );
+
+  if (next) {
+    next();
+  }
+}
+
+// Combined middleware for API routes
+export function withApiMiddleware(options?: CorsOptions) {
+  return function apiMiddleware(handler: any) {
+    return async (req: NextApiRequest, res: NextApiResponse) => {
+      // Apply CORS
+      withCors(options)(req, res);
+      
+      // Apply security headers
+      withSecurityHeaders(req, res);
+      
+      // Call the handler
+      return handler(req, res);
+    };
+  };
+}

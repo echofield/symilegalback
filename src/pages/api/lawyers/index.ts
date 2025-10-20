@@ -37,4 +37,4 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   return { lawyers: [], timestamp: new Date().toISOString() };
 }
 
-export default withCors(withValidation(RequestSchema, ResponseSchema, handler));
+export default withCors({}, withValidation(RequestSchema, ResponseSchema, handler));

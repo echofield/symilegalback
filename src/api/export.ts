@@ -37,5 +37,5 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-export default withCors(handler);
+export default withCors({}, handler);
 

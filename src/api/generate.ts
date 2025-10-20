@@ -101,5 +101,5 @@ function renderFromTemplate(tpl: ContractTemplate, inputs: Record<string, any>):
   return `${header}\n${parties}\n${body}`;
 }
 
-export default withCors(withValidation(GenerateRequestSchema, GenerateResponseSchema, handler));
+export default withCors({}, withValidation(GenerateRequestSchema, GenerateResponseSchema, handler));
 
