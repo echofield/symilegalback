@@ -19,7 +19,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const dict = JSON.parse(raw) as Record<string, any[]>;
 
     const id = parsed.data.id;
-    let questions = [];
+    let questions: any;
     
     if (id) {
       questions = dict[id] ?? [];

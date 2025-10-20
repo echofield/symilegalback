@@ -1,5 +1,5 @@
 // bond-qa-intelligent.ts
-import { intelligentQASystem } from './bond-questions-enhanced.json';
+import bondQuestionsData from './data/bond-questions-enhanced.json';
 
 // Types pour le système Q&A
 interface Question {
@@ -45,6 +45,9 @@ interface ValidationRule {
   errorMessage: string;
 }
 
+// Base de questions enrichie par type de contrat
+export const intelligentQASystem: Record<string, Question[]> = bondQuestionsData as Record<string, Question[]>;
+
 // Classe pour gérer le flux Q&A
 export class IntelligentQAManager {
   private currentFlow: QAFlow;
@@ -52,13 +55,14 @@ export class IntelligentQAManager {
   private currentSectionIndex: number = 0;
 
   constructor(templateId: string) {
-    this.currentFlow = this.buildQAFlow(templateId);
-    if (!this.currentFlow) {
+    const flow = this.buildQAFlow(templateId);
+    if (!flow) {
       throw new Error(`Template ${templateId} not found`);
     }
+    this.currentFlow = flow;
   }
 
-  private buildQAFlow(templateId: string): QAFlow {
+  private buildQAFlow(templateId: string): QAFlow | null {
     const questions = intelligentQASystem[templateId];
     if (!questions) return null;
 
@@ -130,43 +134,6 @@ export class IntelligentQAManager {
       )
     });
 
-    // Section 6: Spécificités par type
-    if (templateId === 'travaux') {
-      sections.push({
-        id: 'construction',
-        title: 'Spécificités travaux',
-        description: 'Aspects techniques et réglementaires',
-        order: 6,
-        questions: questions.filter(q => 
-          ['devis_exists', 'planning_phases', 'insurance_required', 'reception_clause', 'penalties_delay', 'weather_clause', 'material_supply'].includes(q.id)
-        )
-      });
-    }
-
-    if (templateId === 'creation') {
-      sections.push({
-        id: 'creative',
-        title: 'Spécificités création',
-        description: 'Aspects créatifs et droits d\'auteur',
-        order: 6,
-        questions: questions.filter(q => 
-          ['deliverables_count', 'revisions_included', 'usage_rights', 'moral_rights', 'portfolio_usage'].includes(q.id)
-        )
-      });
-    }
-
-    if (templateId === 'challenge') {
-      sections.push({
-        id: 'challenge_rules',
-        title: 'Règles du défi',
-        description: 'Définition et organisation du défi',
-        order: 6,
-        questions: questions.filter(q => 
-          ['participants_count', 'challenge_type', 'challenge_description', 'rules_clarity', 'verification_method', 'penalties', 'arbitration'].includes(q.id)
-        )
-      });
-    }
-
     return sections.filter(section => section.questions.length > 0);
   }
 
@@ -190,28 +157,6 @@ export class IntelligentQAManager {
         errorMessage: 'Le montant minimum d\'un contrat est de 100€'
       }
     ];
-
-    if (templateId === 'service') {
-      rules.push({
-        id: 'service_description_length',
-        description: 'Description de service suffisamment détaillée',
-        validate: (answers) => {
-          return !answers.service_description || answers.service_description.length >= 50;
-        },
-        errorMessage: 'La description du service doit faire au moins 50 caractères'
-      });
-    }
-
-    if (templateId === 'travaux') {
-      rules.push({
-        id: 'work_description_length',
-        description: 'Description des travaux suffisamment détaillée',
-        validate: (answers) => {
-          return !answers.work_description || answers.work_description.length >= 100;
-        },
-        errorMessage: 'La description des travaux doit faire au moins 100 caractères'
-      });
-    }
 
     return rules;
   }
@@ -521,5 +466,3 @@ function postProcessContract(contract: string, answers: Record<string, any>): st
     return contract;
   }
 }
-
-export { intelligentQASystem };

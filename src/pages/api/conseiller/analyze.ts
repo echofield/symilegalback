@@ -337,30 +337,105 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     return res.status(200).json({
       audit: {
         summary: audit.summary,
-        legalQualification: audit.legalQualification,
-        stakeholders: audit.stakeholders,
-        financialAnalysis: audit.financialAnalysis,
-        timelineAnalysis: audit.timelineAnalysis,
-        riskAssessment: audit.riskAssessment,
-        legalPoints: audit.legalPoints,
-        actionPlan: audit.actionPlan,
-        evidenceRequired: audit.evidenceRequired,
-        resolutionStrategies: audit.resolutionStrategies,
-        lawyerRecommendation: audit.lawyerRecommendation,
-        templates: audit.templates,
-        followUp: audit.followUp,
-        metadata: audit.metadata,
+        // Nouveau format professionnel
+        legalQualification: (audit as any).legalQualification || {
+          category: audit.category,
+          subcategory: audit.specialty,
+          legalNature: 'À déterminer',
+          applicableLaw: ['Code civil', 'Code du travail']
+        },
+        stakeholders: (audit as any).stakeholders || {
+          parties: ['Client', 'Prestataire'],
+          thirdParties: [],
+          jurisdiction: 'Tribunal compétent'
+        },
+        financialAnalysis: (audit as any).financialAnalysis || {
+          estimatedAmount: 'À estimer',
+          minAmount: 'À estimer',
+          maxAmount: 'À estimer',
+          costs: {
+            legalFees: 'À estimer',
+            courtFees: 'À estimer',
+            otherCosts: 'À estimer'
+          }
+        },
+        timelineAnalysis: (audit as any).timelineAnalysis || {
+          prescriptionDelay: 'À déterminer',
+          remainingTime: 'À déterminer',
+          criticalDates: [],
+          estimatedDuration: 'À estimer'
+        },
+        riskAssessment: (audit as any).riskAssessment || {
+          immediateRisks: audit.risks?.map(r => ({ risk: r, probability: 'Moyenne', impact: '5' })) || [],
+          legalRisks: [],
+          financialRisks: [],
+          reputationalRisks: [],
+          globalRisk: '5'
+        },
+        legalPoints: (audit as any).legalPoints || audit.points?.map(p => ({
+          point: p,
+          explanation: 'À développer',
+          references: ['Code civil'],
+          strength: 'Moyenne'
+        })) || [],
+        actionPlan: (audit as any).actionPlan || {
+          immediate: audit.actions?.map(a => ({
+            action: a,
+            responsible: 'À déterminer',
+            deadline: 'À déterminer',
+            documents: [],
+            cost: 'À estimer'
+          })) || [],
+          shortTerm: [],
+          mediumTerm: []
+        },
+        evidenceRequired: (audit as any).evidenceRequired || {
+          essential: [],
+          supporting: [],
+          obtaining: []
+        },
+        resolutionStrategies: (audit as any).resolutionStrategies || {
+          amicable: { possible: true, probability: 'Moyenne', approach: 'Négociation', duration: '2-4 mois', cost: '500-2000€' },
+          mediation: { recommended: true, type: 'Médiation conventionnelle', duration: '1-3 mois', cost: '1000-3000€' },
+          litigation: { lastResort: true, procedure: 'Procédure applicable', duration: '6-18 mois', successRate: '60-80%', cost: '3000-15000€' }
+        },
+        lawyerRecommendation: (audit as any).lawyerRecommendation || {
+          necessary: audit.needsLawyer || false,
+          urgency: 'Sous 1 mois',
+          specialty: audit.specialty || audit.lawyerSpecialty || 'À déterminer',
+          subSpecialties: [],
+          expertise: [],
+          estimatedHours: '20-50 heures',
+          budget: '2000-10000€'
+        },
+        templates: (audit as any).templates || {
+          recommendedTemplateId: audit.recommendedTemplateId || null,
+          alternativeTemplates: [],
+          customizationNeeded: [],
+          clausesToAdd: []
+        },
+        followUp: (audit as any).followUp || {
+          questions: audit.followupQuestions || [],
+          missingInfo: [],
+          assumptions: []
+        },
+        metadata: (audit as any).metadata || {
+          complexity: audit.complexity || 'Moyenne',
+          urgency: audit.urgency || '5',
+          confidence: '80%',
+          lastUpdated: new Date().toISOString()
+        },
         // Compatibilité avec l'ancien format
-        risks: audit.riskAssessment?.immediateRisks?.map(r => r.risk) || [],
-        points: audit.legalPoints?.map(p => p.point) || [],
-        actions: audit.actionPlan?.immediate?.map(a => a.action) || [],
-        urgency: audit.metadata?.urgency || audit.urgency,
-        complexity: audit.metadata?.complexity || audit.complexity,
+        risks: (audit as any).riskAssessment?.immediateRisks?.map((r: any) => r.risk) || audit.risks || [],
+        points: (audit as any).legalPoints?.map((p: any) => p.point) || audit.points || [],
+        actions: (audit as any).actionPlan?.immediate?.map((a: any) => a.action) || audit.actions || [],
+        urgency: (audit as any).metadata?.urgency || audit.urgency,
+        complexity: (audit as any).metadata?.complexity || audit.complexity,
       },
       recommendedTemplate,
-      needsLawyer: Boolean(audit?.lawyerRecommendation?.necessary),
-      lawyerSpecialty: audit?.lawyerRecommendation?.specialty || audit?.specialty || null,
-      followupQuestions: Array.isArray(audit?.followUp?.questions) ? audit.followUp.questions : [],
+      needsLawyer: Boolean((audit as any)?.lawyerRecommendation?.necessary || audit?.needsLawyer),
+      lawyerSpecialty: (audit as any)?.lawyerRecommendation?.specialty || audit?.specialty || audit?.lawyerSpecialty || null,
+      followupQuestions: Array.isArray((audit as any)?.followUp?.questions) ? (audit as any).followUp.questions : audit?.followupQuestions || [],
       recommendedLawyers,
       timestamp: new Date().toISOString(),
     });

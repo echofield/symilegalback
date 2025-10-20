@@ -37,7 +37,7 @@ class MonitoringService {
   }
 
   // Monitoring des performances
-  measurePerformance(name: string, fn: () => Promise<any>) {
+  measurePerformance(name: string, fn: (...args: any[]) => Promise<any>) {
     return async (...args: any[]) => {
       const start = performance.now();
       
@@ -52,7 +52,7 @@ class MonitoringService {
         });
         
         return result;
-      } catch (error) {
+      } catch (error: any) {
         const duration = performance.now() - start;
         
         this.logEvent('performance', {
@@ -106,6 +106,41 @@ class MonitoringService {
 }
 
 export const monitoring = new MonitoringService();
+
+// Fonctions de monitoring pour compatibilité avec l'ancien code
+export function startMonitor(endpoint: string) {
+  const requestId = Math.random().toString(36).substring(7);
+  const startTime = Date.now();
+  
+  monitoring.logEvent('api_request_start', {
+    requestId,
+    endpoint,
+    timestamp: new Date().toISOString(),
+  });
+  
+  return { requestId, startTime };
+}
+
+export function endMonitor(requestId: string, endpoint: string, startTime: number) {
+  const duration = Date.now() - startTime;
+  
+  monitoring.logEvent('api_request_end', {
+    requestId,
+    endpoint,
+    duration,
+    timestamp: new Date().toISOString(),
+  });
+}
+
+export function logAIUsage(requestId: string, endpoint: string, tokens: number, provider: string) {
+  monitoring.logEvent('ai_usage', {
+    requestId,
+    endpoint,
+    tokens,
+    provider,
+    timestamp: new Date().toISOString(),
+  });
+}
 
 // Health check endpoint
 export default async function healthCheck(
