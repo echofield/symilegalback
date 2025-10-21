@@ -30,7 +30,7 @@ export class OptimizedDatabaseService {
     });
 
     if (contract) {
-      await this.cache.set(cacheKey, contract, 1800); // 30 minutes
+      await this.cache.set(cacheKey, contract, { ttl: 1800 }); // 30 minutes
       monitoring.logEvent('db_cache_set', { operation: 'getContract', id });
     }
 
@@ -86,7 +86,7 @@ export class OptimizedDatabaseService {
       }
     };
 
-    await this.cache.set(cacheKey, result, 900); // 15 minutes
+    await this.cache.set(cacheKey, result, { ttl: 900 }); // 15 minutes
     monitoring.logEvent('db_cache_set', { operation: 'getContracts', filters });
 
     return result;
@@ -200,7 +200,7 @@ export class OptimizedDatabaseService {
       },
     ];
 
-    await this.cache.set(cacheKey, templates, 3600); // 1 hour
+    await this.cache.set(cacheKey, templates, { ttl: 3600 }); // 1 hour
     monitoring.logEvent('db_cache_set', { operation: 'getTemplates' });
 
     return templates;
@@ -254,7 +254,7 @@ export class OptimizedDatabaseService {
       completionRate: totalContracts > 0 ? (completedContracts / totalContracts) * 100 : 0,
     };
 
-    await this.cache.set(cacheKey, stats, 1800); // 30 minutes
+    await this.cache.set(cacheKey, stats, { ttl: 1800 }); // 30 minutes
     return stats;
   }
 
