@@ -21,7 +21,7 @@
     "id": "travaux",
     "title": "Contrat de travaux",
     "description": "Contrat chantier / construction avec jalons (études, gros œuvre, réception).",
-    "roles": ["Maître d’ouvrage", "Entreprise"],
+    "roles": ["Maître d'ouvrage", "Entreprise"],
     "milestones": [
       { "title": "Études", "description": "Plans, métrés, autorisations", "amount": 150000 },
       { "title": "Gros œuvre", "description": "Structure et clos-couvert", "amount": 650000 },
@@ -32,7 +32,7 @@
       "Pénalités de retard si prévues au devis.",
       "Réception contradictoire avec procès-verbal."
     ],
-    "risks": ["Retards d’approvisionnement", "Intempéries"],
+    "risks": ["Retards d'approvisionnement", "Intempéries"],
     "tags": ["travaux", "chantier", "construction"]
   },
   {
@@ -47,39 +47,21 @@
     ],
     "terms": [
       "Droits cédés/licenciés selon périmètre défini.",
-      "Mentions d’auteur et crédits.",
+      "Mentions d'auteur et crédits.",
       "Validation sur livrables selon calendrier."
     ],
     "risks": ["Inspiration/itérations", "Contraintes de calendrier"],
     "tags": ["creation", "art", "media"]
   },
   {
-    "id": "challenge",
-    "title": "Pacte entre amis (challenge)",
-    "description": "Contrat ludique de challenge entre amis avec jalons/étapes simples.",
-    "roles": ["Ami A", "Ami B"],
-    "milestones": [
-      { "title": "Inscription", "description": "Mise en place des règles", "amount": 10000 },
-      { "title": "Mi-parcours", "description": "Contrôle intermédiaire", "amount": 10000 },
-      { "title": "Final", "description": "Vérification des objectifs", "amount": 10000 }
-    ],
-    "terms": [
-      "Règles claires, acceptées par les parties.",
-      "Arbitrage amical en cas de contestation.",
-      "Aucun enjeu professionnel ou juridique lourd."
-    ],
-    "risks": ["Divergence d’interprétation", "Abandon"],
-    "tags": ["challenge", "fun", "friends"]
-  },
-  {
-    "id": "hybrid",
-    "title": "Contrat IA libre",
-    "description": "Décrivez votre projet librement et laissez l’IA générer un contrat complet à jalons sans modèle prédéfini.",
+    "id": "custom",
+    "title": "Contrat personnalisé",
+    "description": "Décrivez votre projet librement et générez un contrat complet à jalons sur-mesure.",
     "roles": ["Partie A", "Partie B"],
     "milestones": [],
     "terms": [],
     "risks": [],
-    "tags": ["ai", "custom", "hybrid"]
+    "tags": ["custom", "flexible", "personalized"]
   }
 ]
 

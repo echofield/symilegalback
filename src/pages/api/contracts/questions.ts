@@ -5,7 +5,7 @@ import path from 'path';
 import { monitoring } from '@/lib/monitoring';
 
 const querySchema = z.object({ id: z.string().optional() });
-const DATA_PATH = path.join(process.cwd(), 'src', 'lib', 'data', 'bond-questions-enhanced.json');
+const DATA_PATH = path.join(process.cwd(), 'src', 'lib', 'data', 'bond-questions.json');
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
