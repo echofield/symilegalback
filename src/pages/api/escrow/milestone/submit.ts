@@ -23,7 +23,17 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     const { milestoneId, proofs } = body;
     
     await prisma.$transaction(async (tx) => {
-      await tx.proof.createMany({ data: proofs.map((p: any) => ({ ...p, milestoneId })) });
+      // Create proofs first
+      await tx.proof.createMany({ 
+        data: proofs.map((p: any) => ({ 
+          milestoneId,
+          url: p.url,
+          kind: p.kind,
+          createdAt: new Date()
+        })) 
+      });
+      
+      // Update milestone status
       await tx.milestone.update({ 
         where: { id: milestoneId }, 
         data: { 

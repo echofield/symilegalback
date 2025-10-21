@@ -34,8 +34,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     });
 
     return res.status(200).json({ 
-      ok: true, 
-      questions: questions,
+      success: true, 
+      data: { questions: questions },
+      message: 'Questions retrieved successfully',
       timestamp: new Date().toISOString(),
     });
   } catch (err: any) {
