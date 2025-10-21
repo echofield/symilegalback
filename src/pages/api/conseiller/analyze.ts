@@ -9,11 +9,14 @@ export const runtime = 'nodejs';
 const RequestSchema = z.object({
   problem: z.string().min(50),
   city: z.string().optional(),
+  situationType: z.string().optional(),
+  urgence: z.string().optional(),
+  hasProofs: z.string().optional(),
 });
 
 const ResponseSchema = z.object({}).passthrough();
 
-async function callOpenAIAudit(problem: string) {
+async function callOpenAIAudit(problem: string, situationType?: string, urgence?: string, hasProofs?: string) {
   const apiKey = process.env.OPENAI_API_KEY;
   const model = process.env.OPENAI_MODEL || 'gpt-4o-mini';
   if (!apiKey) throw new Error('OPENAI_API_KEY not set');
@@ -25,6 +28,12 @@ Tu fournis toujours des références légales précises et des conseils actionna
 
   const user = `Analyse cette situation juridique de manière APPROFONDIE et PROFESSIONNELLE :
 
+CONTEXTE ENRICHISSANT:
+- Type de situation: ${situationType || 'Non spécifié'}
+- Niveau d'urgence: ${urgence || 'Non spécifié'}
+- Preuves disponibles: ${hasProofs || 'Non spécifié'}
+
+SITUATION DÉTAILLÉE:
 """
 ${problem}
 """
@@ -255,6 +264,7 @@ Pour CHAQUE avocat, fournis OBLIGATOIREMENT:
 - Honoraires moyens (fourchette)
 - Langues parlées
 - Disponibilité actuelle
+- Lien Google Maps (format: https://maps.google.com/?q=ADRESSE_COMPLETE)
 
 Recherche aussi sur:
 - Annuaire du Barreau de ${city}
@@ -309,10 +319,16 @@ Format JSON structuré UNIQUEMENT, pas de texte.`;
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') return res.status(405).json({ error: true, message: 'Method not allowed' });
-  const { problem, city } = req.body as { problem: string; city?: string };
+  const { problem, city, situationType, urgence, hasProofs } = req.body as { 
+    problem: string; 
+    city?: string; 
+    situationType?: string; 
+    urgence?: string; 
+    hasProofs?: string; 
+  };
 
   try {
-    const audit = await callOpenAIAudit(problem);
+    const audit = await callOpenAIAudit(problem, situationType, urgence, hasProofs);
     let recommendedTemplate: any = null;
     if (audit?.recommendedTemplateId) {
       try {
@@ -332,6 +348,11 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     let recommendedLawyers: any[] = [];
     if (city && audit?.specialty) {
       recommendedLawyers = await callPerplexityLawyers(city, audit.specialty);
+      // Add Google Maps links to lawyers
+      recommendedLawyers = recommendedLawyers.map(lawyer => ({
+        ...lawyer,
+        google_maps_url: lawyer.google_maps_url || `https://maps.google.com/?q=${encodeURIComponent(lawyer.adresse || lawyer.address || '')}`
+      }));
     }
 
     return res.status(200).json({
