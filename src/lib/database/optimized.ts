@@ -1,10 +1,10 @@
 // lib/database/optimized.ts - Optimized database queries
 import { prisma } from '@/lib/prisma';
-import { cache, CacheService } from '@/lib/cache/redis';
+import { cache, CacheKeys } from '@/lib/cache/redis';
 import { monitoring } from '@/lib/monitoring';
 
 export class OptimizedDatabaseService {
-  private cache: CacheService;
+  private cache: typeof cache;
 
   constructor() {
     this.cache = cache;
@@ -12,7 +12,7 @@ export class OptimizedDatabaseService {
 
   // Contract operations with caching
   async getContract(id: string) {
-    const cacheKey = CacheService.contractKey(id);
+    const cacheKey = CacheKeys.contract(id);
     const cached = await this.cache.get(cacheKey);
     
     if (cached) {
@@ -44,7 +44,7 @@ export class OptimizedDatabaseService {
     limit?: number;
     offset?: number;
   } = {}) {
-    const cacheKey = CacheService.contractsListKey(filters);
+    const cacheKey = CacheKeys.contracts();
     const cached = await this.cache.get(cacheKey);
     
     if (cached) {
@@ -164,7 +164,7 @@ export class OptimizedDatabaseService {
 
   // Template operations with caching
   async getTemplates() {
-    const cacheKey = CacheService.templatesListKey();
+    const cacheKey = CacheKeys.bondTemplates();
     const cached = await this.cache.get(cacheKey);
     
     if (cached) {
@@ -261,7 +261,7 @@ export class OptimizedDatabaseService {
   // Cache invalidation helpers
   private async invalidateContractCaches(contractId: string) {
     const patterns = [
-      CacheService.contractKey(contractId),
+      CacheKeys.contract(contractId),
       'contracts:list:*',
       'stats:contracts',
     ];
