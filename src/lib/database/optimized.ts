@@ -272,7 +272,7 @@ export class OptimizedDatabaseService {
         // For now, just clear specific keys
         continue;
       }
-      await this.cache.del(pattern);
+      await this.cache.invalidatePattern(pattern);
     }
   }
 
