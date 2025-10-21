@@ -190,7 +190,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         const lawyersPromise = callPerplexityLawyers(city, audit.specialty);
         recommendedLawyers = await Promise.race([lawyersPromise, timeoutPromise]) as any[];
         // Add Google Maps links to lawyers
-        recommendedLawyers = recommendedLawyers.map(lawyer => ({
+        recommendedLawyers = recommendedLawyers.map((lawyer: any) => ({
           ...lawyer,
           google_maps_url: lawyer.google_maps_url || `https://maps.google.com/?q=${encodeURIComponent(lawyer.adresse || lawyer.address || '')}`
         }));
@@ -245,14 +245,14 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
           reputationalRisks: [],
           globalRisk: '5'
         },
-        legalPoints: audit.points?.map(p => ({
+        legalPoints: audit.points?.map((p: string) => ({
           point: p,
           explanation: 'À développer',
           references: ['Code civil'],
           strength: 'Moyenne'
         })) || [],
         actionPlan: {
-          immediate: audit.actions?.map(a => ({
+          immediate: audit.actions?.map((a: string) => ({
             action: a,
             responsible: 'À déterminer',
             deadline: 'À déterminer',
