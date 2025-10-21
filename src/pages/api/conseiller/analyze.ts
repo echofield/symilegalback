@@ -239,7 +239,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
           estimatedDuration: 'À estimer'
         },
         riskAssessment: {
-          immediateRisks: audit.risks?.map(r => ({ risk: r, probability: 'Moyenne', impact: '5' })) || [],
+          immediateRisks: audit.risks?.map((r: string) => ({ risk: r, probability: 'Moyenne', impact: '5' })) || [],
           legalRisks: [],
           financialRisks: [],
           reputationalRisks: [],
