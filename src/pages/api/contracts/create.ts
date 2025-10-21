@@ -41,7 +41,7 @@ const ResponseSchema = z.object({
   timestamp: z.string(),
 });
 
-async function handler(req: NextApiRequest, res: NextApiResponse<ContractCreateResponse>) {
+async function handler(req: NextApiRequest, res: NextApiResponse<ContractCreateResponse | { error: true; message: string; timestamp: string }>) {
   const body = req.body;
   
   try {
