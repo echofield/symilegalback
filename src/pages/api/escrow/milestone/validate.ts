@@ -1,10 +1,11 @@
+import type { NextApiRequest, NextApiResponse } from 'next';
 import { z } from 'zod';
 import { prisma } from '@/lib/prisma';
 import { MilestoneStatus } from '@prisma/client';
 
 const schema = z.object({ milestoneId: z.string() });
 
-export default async function handler(req: any, res: any) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') return res.status(405).end();
   const parsed = schema.safeParse(req.body);
   if (!parsed.success) return res.status(400).json({ error: true });
