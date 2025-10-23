@@ -101,4 +101,21 @@ model PayoutLog {
   createdAt   DateTime @default(now())
 }
 
+model Transaction {
+  id                 Int      @id @default(autoincrement())
+  sessionId          String   @unique
+  documentType       String
+  amount             Decimal  @db.Decimal(10, 2)
+  customerEmail      String
+  pdfUrl             String
+  stripePaymentIntent String?
+  status             String   @default("completed")
+  createdAt          DateTime @default(now())
+  expiresAt          DateTime @default(dbgenerated("now() + interval '30 days'"))
+
+  @@map("transactions")
+  @@index([customerEmail], name: "idx_transactions_email")
+  @@index([createdAt], name: "idx_transactions_created")
+}
+
 
