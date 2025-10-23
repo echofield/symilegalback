@@ -1,0 +1,46 @@
+{
+  "metadata": {
+    "title": "Referral / Affiliate Agreement",
+    "jurisdiction": "UK | US",
+    "governing_law": "England & Wales | Delaware",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {
+      "key": "company",
+      "label": "Company",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "affiliate",
+      "label": "Affiliate Name",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "commission_rate",
+      "label": "Commission Rate (%)",
+      "type": "number",
+      "required": true
+    }
+  ],
+  "clauses": [
+    {
+      "id": "referrals",
+      "title": "Referrals",
+      "body": "Affiliate promotes Company products and earns {{commission_rate}}% on qualified sales."
+    },
+    {
+      "id": "payment",
+      "title": "Payouts",
+      "body": "Commissions paid monthly within 30 days after month-end."
+    },
+    {
+      "id": "branding",
+      "title": "Brand Use",
+      "body": "Affiliate may use Company branding under provided guidelines."
+    }
+  ],
+  "annotations": []
+}

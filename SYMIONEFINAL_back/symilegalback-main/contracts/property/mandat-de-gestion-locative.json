@@ -1,0 +1,22 @@
+{
+  "metadata": {
+    "title": "Mandat de gestion locative",
+    "jurisdiction": "FR",
+    "governing_law": "France",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {"key": "proprietaire_nom", "label": "Nom du propriétaire", "type": "text", "required": true},
+    {"key": "gestionnaire_nom", "label": "Nom du gestionnaire", "type": "text", "required": true},
+    {"key": "adresse_bien", "label": "Adresse du bien", "type": "text", "required": true},
+    {"key": "commission_gestion", "label": "Commission de gestion (%)", "type": "number", "required": true}
+  ],
+  "clauses": [
+    {"id": "objet", "title": "Objet du mandat", "body": "{{proprietaire_nom}} confie à {{gestionnaire_nom}} la gestion du bien situé à {{adresse_bien}}."},
+    {"id": "missions", "title": "Missions du gestionnaire", "body": "Le gestionnaire est chargé de percevoir les loyers, d’assurer la relation avec les locataires et de représenter le propriétaire dans les démarches administratives."},
+    {"id": "remuneration", "title": "Rémunération", "body": "La rémunération du gestionnaire est fixée à {{commission_gestion}} % des loyers encaissés."},
+    {"id": "responsabilite", "title": "Responsabilité", "body": "Le gestionnaire agit au nom et pour le compte du propriétaire, sans garantie de résultat."},
+    {"id": "duree", "title": "Durée du mandat", "body": "Le présent mandat est conclu pour une durée d’un an, renouvelable tacitement."}
+  ]
+}
+

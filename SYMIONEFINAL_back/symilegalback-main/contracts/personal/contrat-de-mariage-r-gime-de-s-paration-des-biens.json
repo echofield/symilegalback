@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "title": "Contrat de mariage – régime de séparation des biens",
+    "jurisdiction": "FR",
+    "governing_law": "France",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {"key": "epoux1_nom", "label": "Nom du premier époux", "type": "text", "required": true},
+    {"key": "epoux2_nom", "label": "Nom du second époux", "type": "text", "required": true},
+    {"key": "notaire_nom", "label": "Nom du notaire", "type": "text", "required": true},
+    {"key": "date_signature", "label": "Date de signature", "type": "date", "required": true}
+  ],
+  "clauses": [
+    {"id": "objet", "title": "Objet du contrat", "body": "Les futurs époux {{epoux1_nom}} et {{epoux2_nom}} conviennent d'adopter le régime de la séparation de biens conformément à l'article 1536 du Code civil."},
+    {"id": "propriete", "title": "Propriété des biens", "body": "Chacun des époux conserve la propriété, la jouissance et la libre disposition de ses biens personnels."},
+    {"id": "dettes", "title": "Dettes et engagements", "body": "Chaque époux demeure seul responsable des dettes contractées en son nom propre."},
+    {"id": "notaire", "title": "Établissement de l’acte", "body": "Le présent contrat a été reçu par Me {{notaire_nom}}, notaire, le {{date_signature}}."}
+  ]
+}
+

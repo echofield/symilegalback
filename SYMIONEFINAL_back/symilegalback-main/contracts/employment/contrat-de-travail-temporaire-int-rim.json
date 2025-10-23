@@ -1,0 +1,28 @@
+{
+  "metadata": {
+    "title": "Contrat de travail temporaire (intérim)",
+    "jurisdiction": "FR",
+    "governing_law": "France",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {"key": "entreprise_travail_temporaire", "label": "Nom de l'entreprise de travail temporaire", "type": "text", "required": true},
+    {"key": "entreprise_utilisatrice", "label": "Nom de l'entreprise utilisatrice", "type": "text", "required": true},
+    {"key": "salarie_nom", "label": "Nom et prénom du salarié intérimaire", "type": "text", "required": true},
+    {"key": "motif", "label": "Motif de recours à l'intérim", "type": "textarea", "required": true},
+    {"key": "poste", "label": "Intitulé du poste de travail", "type": "text", "required": true},
+    {"key": "date_debut", "label": "Date de début de la mission", "type": "date", "required": true},
+    {"key": "duree_mission", "label": "Durée de la mission (en jours)", "type": "number", "required": true}
+  ],
+  "clauses": [
+    {"id": "parties", "title": "Parties", "body": "Le présent contrat de mission est conclu entre {{entreprise_travail_temporaire}}, ci-après dénommée « l'Entreprise de travail temporaire », et {{salarie_nom}}, ci-après dénommé « le Salarié intérimaire »."},
+    {"id": "entreprise_utilisatrice", "title": "Entreprise utilisatrice", "body": "Le Salarié intérimaire effectuera sa mission au sein de {{entreprise_utilisatrice}}."},
+    {"id": "motif", "title": "Motif du recours à l'intérim", "body": "Le recours au travail temporaire est justifié par le motif suivant : {{motif}}."},
+    {"id": "mission", "title": "Caractéristiques de la mission", "body": "Le Salarié intérimaire occupera le poste de {{poste}}, à compter du {{date_debut}}, pour une durée de {{duree_mission}} jours."},
+    {"id": "remuneration_clause", "title": "Rémunération", "body": "Le Salarié intérimaire percevra une rémunération au moins égale à celle que percevrait, après période d'essai, un salarié de l'entreprise utilisatrice de qualification équivalente occupant le même poste."},
+    {"id": "indemnite_fin_mission", "title": "Indemnité de fin de mission", "body": "À l'issue de la mission, le Salarié intérimaire percevra une indemnité de fin de mission égale à 10 % de la rémunération totale brute, sauf exceptions légales."},
+    {"id": "indemnite_conges", "title": "Indemnité compensatrice de congés payés", "body": "Le Salarié intérimaire percevra une indemnité compensatrice de congés payés égale à 10 % de la rémunération totale brute."},
+    {"id": "loi_applicable", "title": "Loi applicable", "body": "Le présent contrat est régi par les dispositions du Code du travail relatives au travail temporaire et relève de la compétence du Conseil de prud'hommes."}
+  ]
+}
+

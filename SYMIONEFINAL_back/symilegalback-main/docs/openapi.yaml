@@ -1,0 +1,798 @@
+// docs/openapi.yaml - Complete OpenAPI 3.0 specification
+openapi: 3.0.3
+info:
+  title: Symi Legal API
+  description: |
+    Professional legal contract generation and analysis API with AI-powered features.
+    
+    ## Features
+    - **Conseiller Juridique**: AI-powered legal analysis with lawyer recommendations
+    - **Bond Contracts**: Milestone-based escrow contracts with intelligent Q&A
+    - **Contract Templates**: Pre-built legal templates for various use cases
+    - **Payment Integration**: Stripe-powered escrow system
+    
+    ## Authentication
+    Most endpoints require no authentication for basic usage. Rate limiting applies.
+    
+    ## Rate Limits
+    - Public endpoints: 200 requests per 15 minutes
+    - Protected endpoints: 50 requests per 15 minutes
+    - AI endpoints: 20 requests per 15 minutes
+  version: 2.0.0
+  contact:
+    name: Symi Legal Support
+    email: support@symilegal.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: https://symilegalback.vercel.app/api
+    description: Production server
+  - url: http://localhost:3000/api
+    description: Development server
+
+paths:
+  /health:
+    get:
+      summary: Health Check
+      description: Check the health status of all services
+      tags: [System]
+      responses:
+        '200':
+          description: All services healthy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthStatus'
+        '503':
+          description: Some services degraded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthStatus'
+
+  /conseiller/analyze:
+    post:
+      summary: Legal Analysis
+      description: |
+        Analyze a legal situation and get professional recommendations.
+        Returns detailed legal audit with lawyer recommendations.
+      tags: [Conseiller]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LegalAnalysisRequest'
+      responses:
+        '200':
+          description: Analysis completed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LegalAnalysisResponse'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          description: Rate limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /contracts/templates:
+    get:
+      summary: Get Contract Templates
+      description: Retrieve available contract templates
+      tags: [Contracts]
+      parameters:
+        - name: id
+          in: query
+          description: Template ID to filter by
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Templates retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TemplatesResponse'
+
+  /contracts/questions:
+    get:
+      summary: Get Bond Questions
+      description: Retrieve Q&A questions for Bond contract creation
+      tags: [Bond]
+      parameters:
+        - name: id
+          in: query
+          description: Template ID to get questions for
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Questions retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuestionsResponse'
+
+  /contracts/suggest:
+    post:
+      summary: Suggest Contract
+      description: AI-powered contract suggestion based on Q&A answers
+      tags: [Bond]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContractSuggestionRequest'
+      responses:
+        '200':
+          description: Contract suggested successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContractSuggestionResponse'
+
+  /contracts/create:
+    post:
+      summary: Create Contract
+      description: Create a new Bond contract
+      tags: [Bond]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateContractRequest'
+      responses:
+        '201':
+          description: Contract created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContractResponse'
+
+  /escrow/contracts:
+    get:
+      summary: List Escrow Contracts
+      description: Retrieve all escrow contracts
+      tags: [Escrow]
+      responses:
+        '200':
+          description: Contracts retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContractsListResponse'
+
+  /escrow/contracts/{id}:
+    get:
+      summary: Get Escrow Contract
+      description: Retrieve a specific escrow contract by ID
+      tags: [Escrow]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Contract retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContractResponse'
+        '404':
+          description: Contract not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /escrow/intent/create:
+    post:
+      summary: Create Payment Intent
+      description: Create a Stripe payment intent for escrow
+      tags: [Escrow]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentIntentRequest'
+      responses:
+        '200':
+          description: Payment intent created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentIntentResponse'
+
+  /escrow/milestone/submit:
+    post:
+      summary: Submit Milestone
+      description: Submit deliverables for a milestone
+      tags: [Escrow]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubmitMilestoneRequest'
+      responses:
+        '200':
+          description: Milestone submitted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MilestoneResponse'
+
+  /escrow/milestone/validate:
+    post:
+      summary: Validate Milestone
+      description: Approve or reject a milestone submission
+      tags: [Escrow]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ValidateMilestoneRequest'
+      responses:
+        '200':
+          description: Milestone validated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MilestoneResponse'
+
+components:
+  schemas:
+    HealthStatus:
+      type: object
+      required: [status, timestamp, services]
+      properties:
+        status:
+          type: string
+          enum: [healthy, degraded, down]
+        timestamp:
+          type: string
+          format: date-time
+        services:
+          type: object
+          properties:
+            database:
+              type: boolean
+            openai:
+              type: boolean
+            perplexity:
+              type: boolean
+            cache:
+              type: boolean
+        metrics:
+          type: object
+          properties:
+            responseTime:
+              type: number
+            dbConnections:
+              type: number
+            cacheHitRate:
+              type: number
+
+    LegalAnalysisRequest:
+      type: object
+      required: [problem]
+      properties:
+        problem:
+          type: string
+          minLength: 10
+          description: Legal problem description
+        city:
+          type: string
+          description: City for lawyer recommendations
+        context:
+          type: string
+          description: Additional context
+        urgency:
+          type: string
+          enum: [low, medium, high]
+
+    LegalAnalysisResponse:
+      type: object
+      required: [audit, timestamp]
+      properties:
+        audit:
+          type: object
+          properties:
+            summary:
+              type: string
+            legalQualification:
+              type: object
+              properties:
+                category:
+                  type: string
+                subcategory:
+                  type: string
+                legalNature:
+                  type: string
+                applicableLaw:
+                  type: array
+                  items:
+                    type: string
+            stakeholders:
+              type: object
+              properties:
+                parties:
+                  type: array
+                  items:
+                    type: string
+                thirdParties:
+                  type: array
+                  items:
+                    type: string
+                jurisdiction:
+                  type: string
+            financialAnalysis:
+              type: object
+              properties:
+                estimatedAmount:
+                  type: string
+                minAmount:
+                  type: string
+                maxAmount:
+                  type: string
+                costs:
+                  type: object
+                  properties:
+                    legalFees:
+                      type: string
+                    courtFees:
+                      type: string
+                    otherCosts:
+                      type: string
+            riskAssessment:
+              type: object
+              properties:
+                immediateRisks:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      risk:
+                        type: string
+                      probability:
+                        type: string
+                      impact:
+                        type: string
+                globalRisk:
+                  type: string
+            actionPlan:
+              type: object
+              properties:
+                immediate:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      action:
+                        type: string
+                      responsible:
+                        type: string
+                      deadline:
+                        type: string
+                      cost:
+                        type: string
+            lawyerRecommendation:
+              type: object
+              properties:
+                necessary:
+                  type: boolean
+                urgency:
+                  type: string
+                specialty:
+                  type: string
+                estimatedHours:
+                  type: string
+                budget:
+                  type: string
+        recommendedLawyers:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              firm:
+                type: string
+              address:
+                type: string
+              phone:
+                type: string
+              email:
+                type: string
+              specialties:
+                type: array
+                items:
+                  type: string
+              experience:
+                type: string
+              consultationFees:
+                type: string
+        timestamp:
+          type: string
+          format: date-time
+
+    TemplatesResponse:
+      type: object
+      required: [success, templates]
+      properties:
+        success:
+          type: boolean
+        templates:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContractTemplate'
+        timestamp:
+          type: string
+          format: date-time
+
+    ContractTemplate:
+      type: object
+      required: [id, name, description, category]
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        category:
+          type: string
+        version:
+          type: string
+        isActive:
+          type: boolean
+
+    QuestionsResponse:
+      type: object
+      required: [success, questions]
+      properties:
+        success:
+          type: boolean
+        questions:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/BondQuestion'
+        timestamp:
+          type: string
+          format: date-time
+
+    BondQuestion:
+      type: object
+      required: [id, question, type]
+      properties:
+        id:
+          type: string
+        question:
+          type: string
+        type:
+          type: string
+          enum: [select, multiselect, text, number, date, conditional]
+        options:
+          type: array
+          items:
+            type: string
+        validation:
+          type: object
+          properties:
+            required:
+              type: boolean
+            min:
+              type: number
+            max:
+              type: number
+            pattern:
+              type: string
+        conditions:
+          type: object
+          properties:
+            dependsOn:
+              type: string
+            showIf:
+              type: string
+        help:
+          type: string
+        legalImplication:
+          type: string
+
+    ContractSuggestionRequest:
+      type: object
+      required: [templateId, answers]
+      properties:
+        templateId:
+          type: string
+        answers:
+          type: object
+          additionalProperties: true
+
+    ContractSuggestionResponse:
+      type: object
+      required: [success, contract]
+      properties:
+        success:
+          type: boolean
+        contract:
+          type: object
+          properties:
+            title:
+              type: string
+            parties:
+              type: object
+              properties:
+                client:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    role:
+                      type: string
+                    address:
+                      type: string
+                provider:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    role:
+                      type: string
+                    address:
+                      type: string
+            milestones:
+              type: array
+              items:
+                $ref: '#/components/schemas/Milestone'
+            totalAmount:
+              type: number
+            currency:
+              type: string
+        timestamp:
+          type: string
+          format: date-time
+
+    CreateContractRequest:
+      type: object
+      required: [title, clientId, providerId, totalAmount, milestones]
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        clientId:
+          type: string
+        providerId:
+          type: string
+        templateId:
+          type: string
+        totalAmount:
+          type: number
+          minimum: 0
+        currency:
+          type: string
+          enum: [EUR, USD, GBP]
+          default: EUR
+        milestones:
+          type: array
+          items:
+            $ref: '#/components/schemas/Milestone'
+          minItems: 1
+        jurisdiction:
+          type: string
+          default: FR
+        governingLaw:
+          type: string
+          default: French law
+
+    Milestone:
+      type: object
+      required: [title, amount]
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        amount:
+          type: number
+          minimum: 0
+        deadline:
+          type: string
+          format: date-time
+        deliverables:
+          type: array
+          items:
+            type: string
+        acceptanceCriteria:
+          type: string
+        status:
+          type: string
+          enum: [pending, in_progress, submitted, approved, rejected, paid]
+          default: pending
+
+    ContractResponse:
+      type: object
+      required: [success, contract]
+      properties:
+        success:
+          type: boolean
+        contract:
+          type: object
+          required: [id, title, status, totalAmount, currency, createdAt]
+          properties:
+            id:
+              type: string
+            title:
+              type: string
+            description:
+              type: string
+            status:
+              type: string
+              enum: [draft, pending, active, completed, cancelled, disputed]
+            totalAmount:
+              type: number
+            currency:
+              type: string
+            milestones:
+              type: array
+              items:
+                $ref: '#/components/schemas/Milestone'
+            createdAt:
+              type: string
+              format: date-time
+            updatedAt:
+              type: string
+              format: date-time
+        timestamp:
+          type: string
+          format: date-time
+
+    ContractsListResponse:
+      type: object
+      required: [success, contracts, total]
+      properties:
+        success:
+          type: boolean
+        contracts:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContractResponse'
+        total:
+          type: number
+        timestamp:
+          type: string
+          format: date-time
+
+    PaymentIntentRequest:
+      type: object
+      required: [contractId, amount]
+      properties:
+        contractId:
+          type: string
+        amount:
+          type: number
+          minimum: 0
+        currency:
+          type: string
+          enum: [EUR, USD, GBP]
+          default: EUR
+        description:
+          type: string
+
+    PaymentIntentResponse:
+      type: object
+      required: [success, clientSecret, paymentIntentId]
+      properties:
+        success:
+          type: boolean
+        clientSecret:
+          type: string
+        paymentIntentId:
+          type: string
+        amount:
+          type: number
+        currency:
+          type: string
+        status:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+
+    SubmitMilestoneRequest:
+      type: object
+      required: [milestoneId, deliverables]
+      properties:
+        milestoneId:
+          type: string
+        deliverables:
+          type: array
+          items:
+            type: string
+          minItems: 1
+        proof:
+          type: string
+        notes:
+          type: string
+
+    ValidateMilestoneRequest:
+      type: object
+      required: [milestoneId, approved]
+      properties:
+        milestoneId:
+          type: string
+        approved:
+          type: boolean
+        feedback:
+          type: string
+
+    MilestoneResponse:
+      type: object
+      required: [success, milestone]
+      properties:
+        success:
+          type: boolean
+        milestone:
+          $ref: '#/components/schemas/Milestone'
+        timestamp:
+          type: string
+          format: date-time
+
+    ErrorResponse:
+      type: object
+      required: [error, message]
+      properties:
+        error:
+          type: boolean
+          example: true
+        message:
+          type: string
+        code:
+          type: string
+        details:
+          type: object
+        timestamp:
+          type: string
+          format: date-time
+
+  securitySchemes:
+    ApiKey:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: API key for authentication (if required)
+
+tags:
+  - name: System
+    description: System health and monitoring
+  - name: Conseiller
+    description: AI-powered legal analysis
+  - name: Contracts
+    description: Contract templates and management
+  - name: Bond
+    description: Bond escrow contract system
+  - name: Escrow
+    description: Escrow payment and milestone management

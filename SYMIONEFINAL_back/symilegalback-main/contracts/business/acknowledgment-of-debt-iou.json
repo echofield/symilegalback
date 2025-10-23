@@ -1,0 +1,97 @@
+{
+  "metadata": {
+    "title": "Acknowledgment of Debt (IOU)",
+    "jurisdiction": "UK",
+    "governing_law": "England & Wales",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {
+      "key": "debtor_name",
+      "label": "Debtor Name (person who owes)",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "creditor_name",
+      "label": "Creditor Name (person owed)",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "debt_amount",
+      "label": "Amount Owed",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "debt_reason",
+      "label": "Reason for Debt (e.g., personal loan, unpaid invoice)",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "acknowledgment_date",
+      "label": "Date of Acknowledgment",
+      "type": "date",
+      "required": true
+    },
+    {
+      "key": "payment_due_date",
+      "label": "Payment Due Date",
+      "type": "date",
+      "required": true
+    }
+  ],
+  "clauses": [
+    {
+      "id": "acknowledgment",
+      "title": "Acknowledgment of Debt",
+      "body": "I, {{debtor_name}} (the 'Debtor'), acknowledge that I owe {{creditor_name}} (the 'Creditor') the sum of {{debt_amount}} as of {{acknowledgment_date}}. This debt arose from: {{debt_reason}}."
+    },
+    {
+      "id": "amount",
+      "title": "Amount Owed",
+      "body": "The total amount owed is {{debt_amount}}. This represents the full outstanding debt as of the date of this acknowledgment. The Debtor confirms this amount is accurate and agrees to pay it in full."
+    },
+    {
+      "id": "payment",
+      "title": "Payment Terms",
+      "body": "The Debtor agrees to pay the full amount of {{debt_amount}} to the Creditor by {{payment_due_date}}. Payment will be made via [bank transfer/cash/check/other method] to the Creditor. The Debtor may pay earlier without penalty."
+    },
+    {
+      "id": "default",
+      "title": "Consequences of Non-Payment",
+      "body": "If the Debtor fails to pay by {{payment_due_date}}, the Creditor may pursue legal action to recover the debt. The Debtor will be responsible for any reasonable legal costs and collection fees incurred by the Creditor. Interest may accrue on overdue amounts at the statutory rate."
+    },
+    {
+      "id": "purpose",
+      "title": "Purpose of Document",
+      "body": "This Acknowledgment of Debt serves as written confirmation of the outstanding amount and the Debtor's commitment to repay. It may be used as evidence of the debt in any legal proceedings if payment is not made as agreed."
+    },
+    {
+      "id": "law",
+      "title": "Governing Law",
+      "body": "This Acknowledgment is governed by the laws of England & Wales. Both parties submit to the jurisdiction of the courts of England & Wales for any disputes."
+    },
+    {
+      "id": "signatures",
+      "title": "Signatures",
+      "body": "By signing below, the Debtor confirms the accuracy of this debt acknowledgment and commits to repayment.\n\nDebtor: _________________ Date: _______\n\nCreditor: _________________ Date: _______ (acknowledged and accepted)"
+    }
+  ],
+  "annotations": [
+    {
+      "clause_id": "acknowledgment",
+      "tooltip": "Written acknowledgment of debt can restart the limitation period for legal claims."
+    },
+    {
+      "clause_id": "payment",
+      "tooltip": "Specific payment date and method reduce ambiguity."
+    },
+    {
+      "clause_id": "purpose",
+      "tooltip": "IOUs serve as evidence of debt and payment obligation in legal proceedings."
+    }
+  ]
+}

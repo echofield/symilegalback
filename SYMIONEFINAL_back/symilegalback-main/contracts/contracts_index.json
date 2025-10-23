@@ -1,0 +1,512 @@
+[
+  {
+    "id": "acknowledgment-of-debt-iou",
+    "title": "Acknowledgment of Debt (IOU)",
+    "category": "business",
+    "path": "/contracts/business/acknowledgment-of-debt-iou.json"
+  },
+  {
+    "id": "attestation-de-fin-de-contrat-et-solde-de-tout-compte",
+    "title": "Attestation de fin de contrat et solde de tout compte",
+    "category": "employment",
+    "path": "/contracts/employment/attestation-de-fin-de-contrat-et-solde-de-tout-compte.json"
+  },
+  {
+    "id": "avenant-au-contrat-de-travail",
+    "title": "Avenant au contrat de travail",
+    "category": "employment",
+    "path": "/contracts/employment/avenant-au-contrat-de-travail.json"
+  },
+  {
+    "id": "bail-commercial",
+    "title": "Bail commercial",
+    "category": "property",
+    "path": "/contracts/property/bail-commercial.json"
+  },
+  {
+    "id": "bail-commercial-3-6-9",
+    "title": "Bail commercial (3-6-9)",
+    "category": "property",
+    "path": "/contracts/property/bail-commercial-3-6-9.json"
+  },
+  {
+    "id": "bail-d-habitation-non-meubl",
+    "title": "Bail d’habitation non meublé",
+    "category": "property",
+    "path": "/contracts/property/bail-d-habitation-non-meubl.json"
+  },
+  {
+    "id": "bail-de-location-meubl-e",
+    "title": "Bail de location meublée",
+    "category": "property",
+    "path": "/contracts/property/bail-de-location-meubl-e.json"
+  },
+  {
+    "id": "bail-professionnel",
+    "title": "Bail professionnel",
+    "category": "property",
+    "path": "/contracts/property/bail-professionnel.json"
+  },
+  {
+    "id": "cease-desist-letter",
+    "title": "Cease & Desist Letter",
+    "category": "closure",
+    "path": "/contracts/closure/cease-desist-letter.json"
+  },
+  {
+    "id": "cleaning-services-agreement",
+    "title": "Cleaning Services Agreement",
+    "category": "property",
+    "path": "/contracts/property/cleaning-services-agreement.json"
+  },
+  {
+    "id": "collaboration-agreement-creators",
+    "title": "Collaboration Agreement (Creators)",
+    "category": "business",
+    "path": "/contracts/business/collaboration-agreement-creators.json"
+  },
+  {
+    "id": "commission-agreement",
+    "title": "Commission Agreement",
+    "category": "business",
+    "path": "/contracts/business/commission-agreement.json"
+  },
+  {
+    "id": "commission-agreement-sales",
+    "title": "Commission Agreement (Sales)",
+    "category": "business",
+    "path": "/contracts/business/commission-agreement-sales.json"
+  },
+  {
+    "id": "confidentiality-agreement-employee",
+    "title": "Confidentiality Agreement (Employee)",
+    "category": "employment",
+    "path": "/contracts/employment/confidentiality-agreement-employee.json"
+  },
+  {
+    "id": "consulting-agreement",
+    "title": "Consulting Agreement",
+    "category": "business",
+    "path": "/contracts/business/consulting-agreement.json"
+  },
+  {
+    "id": "content-music-licensing-agreement",
+    "title": "Content / Music Licensing Agreement",
+    "category": "business",
+    "path": "/contracts/business/content-music-licensing-agreement.json"
+  },
+  {
+    "id": "contract-amendment-addendum",
+    "title": "Contract Amendment / Addendum",
+    "category": "closure",
+    "path": "/contracts/closure/contract-amendment-addendum.json"
+  },
+  {
+    "id": "contract-termination-notice",
+    "title": "Contract Termination Notice",
+    "category": "employment",
+    "path": "/contracts/employment/contract-termination-notice.json"
+  },
+  {
+    "id": "contractor-to-employee-transition-addendum",
+    "title": "Contractor to Employee Transition Addendum",
+    "category": "employment",
+    "path": "/contracts/employment/contractor-to-employee-transition-addendum.json"
+  },
+  {
+    "id": "contrat-d-apprentissage",
+    "title": "Contrat d'apprentissage",
+    "category": "employment",
+    "path": "/contracts/employment/contrat-d-apprentissage.json"
+  },
+  {
+    "id": "contrat-de-cautionnement",
+    "title": "Contrat de cautionnement",
+    "category": "property",
+    "path": "/contracts/property/contrat-de-cautionnement.json"
+  },
+  {
+    "id": "contrat-de-colocation",
+    "title": "Contrat de colocation",
+    "category": "property",
+    "path": "/contracts/property/contrat-de-colocation.json"
+  },
+  {
+    "id": "contrat-de-location-d-habitation-bail-r-sidence-principale",
+    "title": "Contrat de location d’habitation (bail résidence principale)",
+    "category": "property",
+    "path": "/contracts/property/contrat-de-location-d-habitation-bail-r-sidence-principale.json"
+  },
+  {
+    "id": "contrat-de-location-meubl-e-de-courte-dur-e",
+    "title": "Contrat de location meublée de courte durée",
+    "category": "property",
+    "path": "/contracts/property/contrat-de-location-meubl-e-de-courte-dur-e.json"
+  },
+  {
+    "id": "contrat-de-mariage-r-gime-de-s-paration-des-biens",
+    "title": "Contrat de mariage – régime de séparation des biens",
+    "category": "personal",
+    "path": "/contracts/personal/contrat-de-mariage-r-gime-de-s-paration-des-biens.json"
+  },
+  {
+    "id": "contrat-de-pr-t-entre-particuliers",
+    "title": "Contrat de prêt entre particuliers",
+    "category": "personal",
+    "path": "/contracts/personal/contrat-de-pr-t-entre-particuliers.json"
+  },
+  {
+    "id": "contrat-de-prestation-de-services",
+    "title": "Contrat de prestation de services",
+    "category": "business",
+    "path": "/contracts/business/contrat-de-prestation-de-services.json"
+  },
+  {
+    "id": "contrat-de-travail-dur-e-d-termin-e-cdd",
+    "title": "Contrat de travail à durée déterminée (CDD)",
+    "category": "employment",
+    "path": "/contracts/employment/contrat-de-travail-dur-e-d-termin-e-cdd.json"
+  },
+  {
+    "id": "contrat-de-travail-dur-e-ind-termin-e-cdi",
+    "title": "Contrat de travail à durée indéterminée (CDI)",
+    "category": "employment",
+    "path": "/contracts/employment/contrat-de-travail-dur-e-ind-termin-e-cdi.json"
+  },
+  {
+    "id": "contrat-de-travail-temporaire-int-rim",
+    "title": "Contrat de travail temporaire (intérim)",
+    "category": "employment",
+    "path": "/contracts/employment/contrat-de-travail-temporaire-int-rim.json"
+  },
+  {
+    "id": "convention-de-divorce-par-consentement-mutuel",
+    "title": "Convention de divorce par consentement mutuel",
+    "category": "personal",
+    "path": "/contracts/personal/convention-de-divorce-par-consentement-mutuel.json"
+  },
+  {
+    "id": "convention-de-garde-d-enfant",
+    "title": "Convention de garde d’enfant",
+    "category": "personal",
+    "path": "/contracts/personal/convention-de-garde-d-enfant.json"
+  },
+  {
+    "id": "convention-de-pacs-pacte-civil-de-solidarit",
+    "title": "Convention de PACS (Pacte civil de solidarité)",
+    "category": "personal",
+    "path": "/contracts/personal/convention-de-pacs-pacte-civil-de-solidarit.json"
+  },
+  {
+    "id": "convention-de-rupture-conventionnelle",
+    "title": "Convention de rupture conventionnelle",
+    "category": "employment",
+    "path": "/contracts/employment/convention-de-rupture-conventionnelle.json"
+  },
+  {
+    "id": "convention-de-s-paration-de-corps",
+    "title": "Convention de séparation de corps",
+    "category": "personal",
+    "path": "/contracts/personal/convention-de-s-paration-de-corps.json"
+  },
+  {
+    "id": "convention-de-stage",
+    "title": "Convention de stage",
+    "category": "employment",
+    "path": "/contracts/employment/convention-de-stage.json"
+  },
+  {
+    "id": "debt-repayment-plan",
+    "title": "Debt Repayment Plan",
+    "category": "business",
+    "path": "/contracts/business/debt-repayment-plan.json"
+  },
+  {
+    "id": "distribution-agreement",
+    "title": "Distribution Agreement",
+    "category": "business",
+    "path": "/contracts/business/distribution-agreement.json"
+  },
+  {
+    "id": "donation-agreement",
+    "title": "Donation Agreement",
+    "category": "closure",
+    "path": "/contracts/closure/donation-agreement.json"
+  },
+  {
+    "id": "employment-contract-fixed-term",
+    "title": "Employment Contract (Fixed-Term)",
+    "category": "employment",
+    "path": "/contracts/employment/employment-contract-fixed-term.json"
+  },
+  {
+    "id": "employment-offer-letter",
+    "title": "Employment Offer Letter",
+    "category": "employment",
+    "path": "/contracts/employment/employment-offer-letter.json"
+  },
+  {
+    "id": "equipment-rental-agreement",
+    "title": "Equipment Rental Agreement",
+    "category": "property",
+    "path": "/contracts/property/equipment-rental-agreement.json"
+  },
+  {
+    "id": "event-space-rental-agreement",
+    "title": "Event Space Rental Agreement",
+    "category": "property",
+    "path": "/contracts/property/event-space-rental-agreement.json"
+  },
+  {
+    "id": "freelance-services-agreement",
+    "title": "Freelance Services Agreement",
+    "category": "business",
+    "path": "/contracts/business/freelance-services-agreement.json"
+  },
+  {
+    "id": "handyman-trades-services-agreement",
+    "title": "Handyman / Trades Services Agreement",
+    "category": "property",
+    "path": "/contracts/property/handyman-trades-services-agreement.json"
+  },
+  {
+    "id": "intellectual-property-assignment",
+    "title": "Intellectual Property Assignment",
+    "category": "property",
+    "path": "/contracts/property/intellectual-property-assignment.json"
+  },
+  {
+    "id": "internship-agreement",
+    "title": "Internship Agreement",
+    "category": "employment",
+    "path": "/contracts/employment/internship-agreement.json"
+  },
+  {
+    "id": "ip-invention-assignment-employee",
+    "title": "IP & Invention Assignment (Employee)",
+    "category": "employment",
+    "path": "/contracts/employment/ip-invention-assignment-employee.json"
+  },
+  {
+    "id": "joint-venture-term-sheet",
+    "title": "Joint Venture Term Sheet",
+    "category": "business",
+    "path": "/contracts/business/joint-venture-term-sheet.json"
+  },
+  {
+    "id": "letter-of-intent",
+    "title": "Letter of Intent",
+    "category": "business",
+    "path": "/contracts/business/letter-of-intent.json"
+  },
+  {
+    "id": "lettre-de-licenciement-pour-faute-grave",
+    "title": "Lettre de licenciement pour faute grave",
+    "category": "employment",
+    "path": "/contracts/employment/lettre-de-licenciement-pour-faute-grave.json"
+  },
+  {
+    "id": "lettre-de-licenciement-pour-motif-personnel",
+    "title": "Lettre de licenciement pour motif personnel",
+    "category": "employment",
+    "path": "/contracts/employment/lettre-de-licenciement-pour-motif-personnel.json"
+  },
+  {
+    "id": "loan-agreement-between-friends",
+    "title": "Loan Agreement (Between Friends)",
+    "category": "business",
+    "path": "/contracts/business/loan-agreement-between-friends.json"
+  },
+  {
+    "id": "maintenance-service-agreement-home-office",
+    "title": "Maintenance / Service Agreement (Home/Office)",
+    "category": "property",
+    "path": "/contracts/property/maintenance-service-agreement-home-office.json"
+  },
+  {
+    "id": "mandat-de-gestion-locative",
+    "title": "Mandat de gestion locative",
+    "category": "property",
+    "path": "/contracts/property/mandat-de-gestion-locative.json"
+  },
+  {
+    "id": "mandat-de-vente-immobili-re",
+    "title": "Mandat de vente immobilière",
+    "category": "property",
+    "path": "/contracts/property/mandat-de-vente-immobili-re.json"
+  },
+  {
+    "id": "master-services-agreement",
+    "title": "Master Services Agreement",
+    "category": "business",
+    "path": "/contracts/business/master-services-agreement.json"
+  },
+  {
+    "id": "master-services-agreement-msa",
+    "title": "Master Services Agreement (MSA)",
+    "category": "business",
+    "path": "/contracts/business/master-services-agreement-msa.json"
+  },
+  {
+    "id": "memorandum-of-understanding",
+    "title": "Memorandum of Understanding",
+    "category": "closure",
+    "path": "/contracts/closure/memorandum-of-understanding.json"
+  },
+  {
+    "id": "mutual-non-disclosure-agreement",
+    "title": "Mutual Non-Disclosure Agreement",
+    "category": "business",
+    "path": "/contracts/business/mutual-non-disclosure-agreement.json"
+  },
+  {
+    "id": "non-compete-non-solicit-agreement",
+    "title": "Non-Compete / Non-Solicit Agreement",
+    "category": "employment",
+    "path": "/contracts/employment/non-compete-non-solicit-agreement.json"
+  },
+  {
+    "id": "one-way-non-disclosure-agreement",
+    "title": "One-Way Non-Disclosure Agreement",
+    "category": "business",
+    "path": "/contracts/business/one-way-non-disclosure-agreement.json"
+  },
+  {
+    "id": "partnership-agreement",
+    "title": "Partnership Agreement",
+    "category": "business",
+    "path": "/contracts/business/partnership-agreement.json"
+  },
+  {
+    "id": "partnership-agreement-simple",
+    "title": "Partnership Agreement (Simple)",
+    "category": "business",
+    "path": "/contracts/business/partnership-agreement-simple.json"
+  },
+  {
+    "id": "pet-care-pet-sitting-agreement",
+    "title": "Pet Care / Pet Sitting Agreement",
+    "category": "business",
+    "path": "/contracts/business/pet-care-pet-sitting-agreement.json"
+  },
+  {
+    "id": "portfolio-test-use-license",
+    "title": "Portfolio / Test-Use License",
+    "category": "business",
+    "path": "/contracts/business/portfolio-test-use-license.json"
+  },
+  {
+    "id": "promesse-synallagmatique-de-vente-immobili-re",
+    "title": "Promesse synallagmatique de vente immobilière",
+    "category": "property",
+    "path": "/contracts/property/promesse-synallagmatique-de-vente-immobili-re.json"
+  },
+  {
+    "id": "property-management-agreement",
+    "title": "Property Management Agreement",
+    "category": "property",
+    "path": "/contracts/property/property-management-agreement.json"
+  },
+  {
+    "id": "reconnaissance-de-dette",
+    "title": "Reconnaissance de dette",
+    "category": "personal",
+    "path": "/contracts/personal/reconnaissance-de-dette.json"
+  },
+  {
+    "id": "referral-affiliate-agreement",
+    "title": "Referral / Affiliate Agreement",
+    "category": "business",
+    "path": "/contracts/business/referral-affiliate-agreement.json"
+  },
+  {
+    "id": "refund-chargeback-resolution-letter",
+    "title": "Refund / Chargeback Resolution Letter",
+    "category": "closure",
+    "path": "/contracts/closure/refund-chargeback-resolution-letter.json"
+  },
+  {
+    "id": "release-of-claims",
+    "title": "Release of Claims",
+    "category": "closure",
+    "path": "/contracts/closure/release-of-claims.json"
+  },
+  {
+    "id": "residential-tenancy-agreement-basic",
+    "title": "Residential Tenancy Agreement (Basic)",
+    "category": "property",
+    "path": "/contracts/property/residential-tenancy-agreement-basic.json"
+  },
+  {
+    "id": "retainer-agreement",
+    "title": "Retainer Agreement",
+    "category": "business",
+    "path": "/contracts/business/retainer-agreement.json"
+  },
+  {
+    "id": "room-rental-lodger-agreement",
+    "title": "Room Rental / Lodger Agreement",
+    "category": "property",
+    "path": "/contracts/property/room-rental-lodger-agreement.json"
+  },
+  {
+    "id": "settlement-agreement",
+    "title": "Settlement Agreement",
+    "category": "closure",
+    "path": "/contracts/closure/settlement-agreement.json"
+  },
+  {
+    "id": "short-term-rental-terms-host-guest",
+    "title": "Short-Term Rental Terms (Host ↔ Guest)",
+    "category": "property",
+    "path": "/contracts/property/short-term-rental-terms-host-guest.json"
+  },
+  {
+    "id": "statement-of-work",
+    "title": "Statement of Work",
+    "category": "business",
+    "path": "/contracts/business/statement-of-work.json"
+  },
+  {
+    "id": "subcontractor-agreement",
+    "title": "Subcontractor Agreement",
+    "category": "business",
+    "path": "/contracts/business/subcontractor-agreement.json"
+  },
+  {
+    "id": "tat-des-lieux-d-entr-e-et-de-sortie",
+    "title": "État des lieux d’entrée et de sortie",
+    "category": "property",
+    "path": "/contracts/property/tat-des-lieux-d-entr-e-et-de-sortie.json"
+  },
+  {
+    "id": "termination-letter-employee-contractor",
+    "title": "Termination Letter (Employee/Contractor)",
+    "category": "employment",
+    "path": "/contracts/employment/termination-letter-employee-contractor.json"
+  },
+  {
+    "id": "terms-of-service",
+    "title": "Terms of Service",
+    "category": "business",
+    "path": "/contracts/business/terms-of-service.json"
+  },
+  {
+    "id": "terms-of-service-basic-website-app",
+    "title": "Terms of Service (Basic Website/App)",
+    "category": "business",
+    "path": "/contracts/business/terms-of-service-basic-website-app.json"
+  },
+  {
+    "id": "vendor-supplier-agreement",
+    "title": "Vendor / Supplier Agreement",
+    "category": "business",
+    "path": "/contracts/business/vendor-supplier-agreement.json"
+  },
+  {
+    "id": "work-for-hire-agreement",
+    "title": "Work-for-Hire Agreement",
+    "category": "business",
+    "path": "/contracts/business/work-for-hire-agreement.json"
+  }
+]

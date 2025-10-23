@@ -1,0 +1,46 @@
+{
+  "metadata": {
+    "title": "Commission Agreement",
+    "jurisdiction": "UK | US",
+    "governing_law": "England & Wales | New York",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {
+      "key": "salesperson",
+      "label": "Salesperson",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "company",
+      "label": "Company",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "commission",
+      "label": "Commission Rate (%)",
+      "type": "number",
+      "required": true
+    }
+  ],
+  "clauses": [
+    {
+      "id": "structure",
+      "title": "Structure",
+      "body": "Salesperson earns {{commission}}% on net revenue from approved sales."
+    },
+    {
+      "id": "payment",
+      "title": "Payment",
+      "body": "Commissions paid within 30 days after client payment."
+    },
+    {
+      "id": "termination",
+      "title": "Termination",
+      "body": "Accrued but unpaid commissions remain due on termination."
+    }
+  ],
+  "annotations": []
+}

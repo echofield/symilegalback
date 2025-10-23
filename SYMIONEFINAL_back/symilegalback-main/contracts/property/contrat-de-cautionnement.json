@@ -1,0 +1,22 @@
+{
+  "metadata": {
+    "title": "Contrat de cautionnement",
+    "jurisdiction": "FR",
+    "governing_law": "France",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {"key": "caution_nom", "label": "Nom de la caution", "type": "text", "required": true},
+    {"key": "debiteur_nom", "label": "Nom du débiteur", "type": "text", "required": true},
+    {"key": "creancier_nom", "label": "Nom du créancier", "type": "text", "required": true},
+    {"key": "montant_garanti", "label": "Montant garanti (€)", "type": "number", "required": true},
+    {"key": "duree", "label": "Durée de l'engagement (années)", "type": "number", "required": true}
+  ],
+  "clauses": [
+    {"id": "objet", "title": "Objet du cautionnement", "body": "{{caution_nom}} s’engage envers {{creancier_nom}} à garantir les dettes de {{debiteur_nom}} dans la limite de {{montant_garanti}} €."},
+    {"id": "duree", "title": "Durée", "body": "Le présent engagement est valable pour une durée de {{duree}} ans à compter de la signature."},
+    {"id": "benefice_discussion", "title": "Bénéfice de discussion", "body": "La caution déclare renoncer au bénéfice de discussion et de division prévu par le Code civil."},
+    {"id": "paiement", "title": "Paiement", "body": "La caution s’engage à régler les sommes dues sur simple demande du créancier en cas de défaillance du débiteur."}
+  ]
+}
+

@@ -1,0 +1,104 @@
+// Prisma schema for Bond (Escrow) module
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum ContractStatus {
+  DRAFT
+  ACTIVE
+  COMPLETED
+  CANCELLED
+}
+
+enum MilestoneStatus {
+  PENDING
+  SUBMITTED
+  APPROVED
+  PAID
+  DISPUTED
+}
+
+enum EscrowStatus {
+  HELD
+  RELEASED
+  REFUNDED
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Contract {
+  id            String          @id @default(cuid())
+  slug          String          @unique
+  title         String
+  creatorId     String
+  payerId       String
+  payeeId       String
+  currency      String
+  totalAmount   Int
+  termsJson     Json
+  pdfUrl        String?
+  status        ContractStatus  @default(DRAFT)
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  milestones    Milestone[]
+  escrowBatches EscrowBatch[]
+}
+
+model Milestone {
+  id          String          @id @default(cuid())
+  contractId  String
+  title       String
+  description String
+  amount      Int
+  dueAt       DateTime?
+  status      MilestoneStatus @default(PENDING)
+  submittedAt DateTime?
+  approvedAt  DateTime?
+  contract    Contract        @relation(fields: [contractId], references: [id], onDelete: Cascade)
+  proofs      Proof[]
+}
+
+model Proof {
+  id          String   @id @default(cuid())
+  milestoneId String
+  url         String
+  kind        String
+  createdAt   DateTime @default(now())
+  milestone   Milestone @relation(fields: [milestoneId], references: [id], onDelete: Cascade)
+}
+
+model EscrowBatch {
+  id              String   @id @default(cuid())
+  contractId      String
+  amount          Int
+  currency        String
+  status          EscrowStatus @default(HELD)
+  paymentIntentId String   @unique
+  chargeId        String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  contract        Contract @relation(fields: [contractId], references: [id], onDelete: Cascade)
+}
+
+model PayoutLog {
+  id          String   @id @default(cuid())
+  milestoneId String
+  payeeEmail  String
+  amount      Int
+  method      String
+  status      String
+  createdAt   DateTime @default(now())
+}
+
+

@@ -1,0 +1,112 @@
+{
+  "metadata": {
+    "title": "Contractor to Employee Transition Addendum",
+    "jurisdiction": "US",
+    "governing_law": "New York",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {
+      "key": "company_name",
+      "label": "Company Name",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "person_name",
+      "label": "Person's Name",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "transition_date",
+      "label": "Transition Date (when employment begins)",
+      "type": "date",
+      "required": true
+    },
+    {
+      "key": "new_job_title",
+      "label": "New Job Title (as employee)",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "new_salary",
+      "label": "Annual Salary (as employee)",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "contractor_end_date",
+      "label": "Contractor Agreement End Date",
+      "type": "date",
+      "required": true
+    }
+  ],
+  "clauses": [
+    {
+      "id": "transition",
+      "title": "Transition from Contractor to Employee",
+      "body": "This Addendum documents the transition of {{person_name}} (the 'Individual') from independent contractor to employee of {{company_name}} (the 'Company'). The existing contractor agreement will terminate on {{contractor_end_date}}, and employment will begin on {{transition_date}}."
+    },
+    {
+      "id": "contractor_end",
+      "title": "Termination of Contractor Relationship",
+      "body": "All rights and obligations under the previous contractor agreement will end on {{contractor_end_date}}. The Individual will submit a final invoice for any outstanding contractor work by that date. Any ongoing projects will be transitioned to the new employment arrangement."
+    },
+    {
+      "id": "employment_terms",
+      "title": "New Employment Terms",
+      "body": "Beginning {{transition_date}}, the Individual will be employed as {{new_job_title}} with an annual salary of {{new_salary}}. The Individual will receive a separate employment contract detailing full terms, conditions, and benefits. Employment will be at-will and subject to standard company policies."
+    },
+    {
+      "id": "ip_transition",
+      "title": "Intellectual Property Transition",
+      "body": "All intellectual property created as a contractor (as defined in the contractor agreement) remains subject to those terms. All work product created from {{transition_date}} forward will be owned by the Company under the employment agreement. Any transitional projects will be clearly documented regarding ownership."
+    },
+    {
+      "id": "benefits",
+      "title": "Benefits & Tax Status",
+      "body": "As an employee, the Individual will be eligible for company benefits including health insurance, retirement plans, and paid time off as outlined in the Employee Handbook. The Company will withhold taxes and provide W-2 tax forms. The Individual is no longer responsible for self-employment taxes or business expenses."
+    },
+    {
+      "id": "obligations",
+      "title": "New Obligations",
+      "body": "The Individual will be subject to all employee obligations including confidentiality agreements, IP assignment, and any non-compete or non-solicitation provisions (subject to state law). The Individual will receive and acknowledge these documents as part of the employment onboarding process."
+    },
+    {
+      "id": "continuity",
+      "title": "Continuity & Knowledge Transfer",
+      "body": "The Company values the Individual's existing knowledge and relationships developed during the contractor period. The Individual agrees to facilitate a smooth transition, including transferring knowledge, introducing clients (where appropriate), and ensuring project continuity."
+    },
+    {
+      "id": "outstanding_matters",
+      "title": "Outstanding Contractor Matters",
+      "body": "Any outstanding payments, expenses, or obligations from the contractor relationship will be settled by {{contractor_end_date}}. Neither party will have further obligations under the contractor agreement after all outstanding matters are resolved."
+    },
+    {
+      "id": "law",
+      "title": "Governing Law",
+      "body": "This Addendum is governed by New York law. It supplements and modifies the existing contractor agreement and will be incorporated into the new employment agreement."
+    },
+    {
+      "id": "signatures",
+      "title": "Signatures",
+      "body": "By signing below, both parties agree to this transition from contractor to employee status.\n\nIndividual: _________________ Date: _______\n\nCompany Representative: _________________ Date: _______"
+    }
+  ],
+  "annotations": [
+    {
+      "clause_id": "contractor_end",
+      "tooltip": "Clearly terminate the contractor relationship to avoid dual classification issues."
+    },
+    {
+      "clause_id": "ip_transition",
+      "tooltip": "Clarify which IP rules apply to transitional work to avoid disputes."
+    },
+    {
+      "clause_id": "benefits",
+      "tooltip": "Document the change in tax status and benefit eligibility clearly."
+    }
+  ]
+}

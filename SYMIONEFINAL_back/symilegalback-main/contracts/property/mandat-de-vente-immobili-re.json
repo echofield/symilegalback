@@ -1,0 +1,23 @@
+{
+  "metadata": {
+    "title": "Mandat de vente immobilière",
+    "jurisdiction": "FR",
+    "governing_law": "France",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {"key": "mandant_nom", "label": "Nom du mandant (propriétaire)", "type": "text", "required": true},
+    {"key": "mandataire_nom", "label": "Nom de l’agent immobilier", "type": "text", "required": true},
+    {"key": "adresse_bien", "label": "Adresse du bien à vendre", "type": "text", "required": true},
+    {"key": "prix_mandate", "label": "Prix de vente mandaté (€)", "type": "number", "required": true},
+    {"key": "commission", "label": "Commission de l’agent (%)", "type": "number", "required": true}
+  ],
+  "clauses": [
+    {"id": "objet", "title": "Objet du mandat", "body": "{{mandant_nom}} confie à {{mandataire_nom}} le mandat exclusif ou non exclusif de vendre le bien situé à {{adresse_bien}}."},
+    {"id": "prix", "title": "Prix de vente", "body": "Le bien est proposé à la vente au prix de {{prix_mandate}} €, sauf accord contraire du mandant."},
+    {"id": "commission_clause", "title": "Rémunération de l’agent", "body": "La commission due à l’agent est fixée à {{commission}} % du prix de vente et sera versée le jour de la signature de l’acte authentique."},
+    {"id": "duree", "title": "Durée du mandat", "body": "Le mandat est conclu pour une durée initiale de trois mois, renouvelable par tacite reconduction."},
+    {"id": "resiliation", "title": "Résiliation", "body": "Le mandant peut résilier le mandat à l’expiration de la période initiale par lettre recommandée."}
+  ]
+}
+

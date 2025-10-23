@@ -1,0 +1,68 @@
+[
+  {
+    "id": "service",
+    "title": "Prestation de service",
+    "description": "Contrat de prestation (consulting, développement, design) avec jalons de livraison.",
+    "roles": ["Client", "Prestataire"],
+    "milestones": [
+      { "title": "Cadrage", "description": "Spécifications et planning", "amount": 200000 },
+      { "title": "Prototype", "description": "Livrable v1 et retours", "amount": 400000 },
+      { "title": "Finalisation", "description": "Recette et mise en production", "amount": 400000 }
+    ],
+    "terms": [
+      "Paiement par jalons après validation.",
+      "Délai de validation de 5 jours ouvrés, au-delà validation tacite.",
+      "Cession/licence de droits à la livraison selon commande."
+    ],
+    "risks": ["Retards de validation", "Ambiguïté des livrables"],
+    "tags": ["service", "consulting", "dev", "design"]
+  },
+  {
+    "id": "travaux",
+    "title": "Contrat de travaux",
+    "description": "Contrat chantier / construction avec jalons (études, gros œuvre, réception).",
+    "roles": ["Maître d'ouvrage", "Entreprise"],
+    "milestones": [
+      { "title": "Études", "description": "Plans, métrés, autorisations", "amount": 150000 },
+      { "title": "Gros œuvre", "description": "Structure et clos-couvert", "amount": 650000 },
+      { "title": "Réception", "description": "Finitions et levée de réserves", "amount": 200000 }
+    ],
+    "terms": [
+      "Assurances et conformité réglementaire à charge du prestataire.",
+      "Pénalités de retard si prévues au devis.",
+      "Réception contradictoire avec procès-verbal."
+    ],
+    "risks": ["Retards d'approvisionnement", "Intempéries"],
+    "tags": ["travaux", "chantier", "construction"]
+  },
+  {
+    "id": "creation",
+    "title": "Projet artistique / création",
+    "description": "Contrat de création (musique, vidéo, graphisme) avec jalons créatifs.",
+    "roles": ["Commanditaire", "Artiste"],
+    "milestones": [
+      { "title": "Concept", "description": "Moodboard & direction artistique", "amount": 250000 },
+      { "title": "Composition/Production", "description": "Maquette ou rough", "amount": 350000 },
+      { "title": "Livraison finale", "description": "Master/Export + livrables source", "amount": 400000 }
+    ],
+    "terms": [
+      "Droits cédés/licenciés selon périmètre défini.",
+      "Mentions d'auteur et crédits.",
+      "Validation sur livrables selon calendrier."
+    ],
+    "risks": ["Inspiration/itérations", "Contraintes de calendrier"],
+    "tags": ["creation", "art", "media"]
+  },
+  {
+    "id": "custom",
+    "title": "Contrat personnalisé",
+    "description": "Décrivez votre projet librement et générez un contrat complet à jalons sur-mesure.",
+    "roles": ["Partie A", "Partie B"],
+    "milestones": [],
+    "terms": [],
+    "risks": [],
+    "tags": ["custom", "flexible", "personalized"]
+  }
+]
+
+

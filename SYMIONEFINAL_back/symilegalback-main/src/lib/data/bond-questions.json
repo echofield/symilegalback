@@ -1,0 +1,149 @@
+{
+  "service": [
+    {
+      "id": "client-type",
+      "question": "Quel est le type de client ?",
+      "type": "choice",
+      "options": ["Particulier", "Professionnel", "Copropriété", "Collectivité"],
+      "legalContext": "Détermine le droit applicable (B2C ou B2B) et les obligations légales (garantie consommateur, droit de rétractation, etc.)"
+    },
+    {
+      "id": "payment-mode",
+      "question": "Comment souhaitez-vous structurer le paiement ?",
+      "type": "choice",
+      "options": ["Paiement unique", "Paiement par jalons", "Paiement mensuel"],
+      "legalContext": "Le paiement par jalons sécurise les deux parties et facilite le suivi de l'avancement du projet."
+    },
+    {
+      "id": "confidentiality",
+      "question": "Souhaitez-vous inclure une clause de confidentialité ?",
+      "type": "choice",
+      "options": ["Oui, confidentialité stricte", "Oui, confidentialité standard", "Non"],
+      "legalContext": "Protège les informations sensibles échangées pendant la collaboration (données clients, processus métier, etc.)"
+    },
+    {
+      "id": "ip-rights",
+      "question": "Droits de propriété intellectuelle ?",
+      "type": "choice",
+      "options": ["Transfert complet au client", "Transfert partiel", "Licence d'exploitation"],
+      "legalContext": "Définit qui possède les droits sur les créations produites (code, designs, contenus, etc.)"
+    },
+    {
+      "id": "deadline",
+      "question": "Quel est le délai prévu pour la mission ?",
+      "type": "choice",
+      "options": ["Moins de 1 mois", "1-3 mois", "3-6 mois", "Plus de 6 mois"]
+    }
+  ],
+  "travaux": [
+    {
+      "id": "project-type",
+      "question": "Type de projet ?",
+      "type": "choice",
+      "options": ["Construction neuve", "Rénovation", "Extension", "Aménagement"],
+      "legalContext": "Détermine les normes applicables et les garanties légales (décennale, biennale, etc.)"
+    },
+    {
+      "id": "insurance",
+      "question": "Une assurance décennale est-elle requise ?",
+      "type": "choice",
+      "options": ["Oui, obligatoire", "Non nécessaire"],
+      "legalContext": "Obligatoire pour les travaux de construction qui touchent à la solidité de l'ouvrage."
+    },
+    {
+      "id": "payment-schedule",
+      "question": "Modalités de paiement souhaitées ?",
+      "type": "choice",
+      "options": ["Acompte + Solde", "Échelonné par phase", "Mensuel"],
+      "legalContext": "L'acompte est limité à 30% du montant total pour les particuliers (loi Scrivener)."
+    },
+    {
+      "id": "duration",
+      "question": "Durée estimée des travaux ?",
+      "type": "choice",
+      "options": ["Moins de 1 mois", "1-3 mois", "3-6 mois", "Plus de 6 mois"]
+    }
+  ],
+  "creation": [
+    {
+      "id": "creation-type",
+      "question": "Type de création ?",
+      "type": "choice",
+      "options": ["Design graphique", "Illustration", "Vidéo", "Musique", "Photo", "Autre"],
+      "legalContext": "Chaque type de création a des spécificités en termes de droits d'auteur et d'exploitation."
+    },
+    {
+      "id": "rights",
+      "question": "Cession des droits d'auteur ?",
+      "type": "choice",
+      "options": ["Cession totale", "Cession partielle", "Licence d'exploitation exclusive", "Licence non-exclusive"],
+      "legalContext": "La cession de droits d'auteur doit être expressément mentionnée et détaillée (support, durée, territoire)."
+    },
+    {
+      "id": "revisions",
+      "question": "Nombre de révisions incluses ?",
+      "type": "choice",
+      "options": ["1-2 révisions", "3-5 révisions", "Illimité (dans la limite du raisonnable)"],
+      "legalContext": "Définit le nombre d'allers-retours inclus dans le tarif initial. Au-delà, facturation supplémentaire."
+    },
+    {
+      "id": "usage",
+      "question": "Usage prévu de la création ?",
+      "type": "choice",
+      "options": ["Usage commercial", "Usage personnel", "Usage interne entreprise", "Usage web uniquement"],
+      "legalContext": "L'étendue des droits cédés dépend de l'usage prévu (commercial = tarif plus élevé)."
+    }
+  ],
+  "challenge": [
+    {
+      "id": "challenge-type",
+      "question": "Type de défi ?",
+      "type": "choice",
+      "options": ["Défi sportif", "Objectif personnel", "Pari amical", "Engagement mutuel"]
+    },
+    {
+      "id": "stake-type",
+      "question": "Type d'enjeu ?",
+      "type": "choice",
+      "options": ["Financier", "Symbolique", "Service rendu", "Don à une association"]
+    },
+    {
+      "id": "duration",
+      "question": "Durée du défi ?",
+      "type": "choice",
+      "options": ["1 semaine", "1 mois", "3 mois", "6 mois", "1 an"]
+    },
+    {
+      "id": "proof",
+      "question": "Comment valider l'accomplissement du défi ?",
+      "type": "choice",
+      "options": ["Photo/Vidéo", "Présence d'un témoin", "Auto-déclaration", "Données trackées (app sport, etc.)"]
+    }
+  ],
+  "hybrid": [
+    {
+      "id": "custom-description",
+      "question": "Décrivez votre besoin en détail",
+      "type": "input"
+    },
+    {
+      "id": "complexity",
+      "question": "Complexité estimée du projet ?",
+      "type": "choice",
+      "options": ["Simple", "Moyen", "Complexe"]
+    },
+    {
+      "id": "parties-count",
+      "question": "Combien de parties impliquées ?",
+      "type": "choice",
+      "options": ["2 parties", "3 parties", "4+ parties"]
+    },
+    {
+      "id": "special-clauses",
+      "question": "Clauses particulières à prévoir ?",
+      "type": "input"
+    }
+  ]
+}
+
+

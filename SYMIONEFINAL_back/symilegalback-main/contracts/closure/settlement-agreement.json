@@ -1,0 +1,68 @@
+{
+  "metadata": {
+    "title": "Settlement Agreement",
+    "jurisdiction": "UK | US",
+    "governing_law": "England & Wales | New York",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {
+      "key": "party_a",
+      "label": "Party A",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "party_b",
+      "label": "Party B",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "dispute_summary",
+      "label": "Brief description of dispute",
+      "type": "textarea",
+      "required": true
+    },
+    {
+      "key": "settlement_amount",
+      "label": "Settlement Amount",
+      "type": "currency",
+      "required": true
+    },
+    {
+      "key": "payment_due_date",
+      "label": "Payment Due Date",
+      "type": "date",
+      "required": true
+    }
+  ],
+  "clauses": [
+    {
+      "id": "background",
+      "title": "Background",
+      "body": "Parties have a dispute concerning {{dispute_summary}} and wish to resolve it amicably."
+    },
+    {
+      "id": "payment",
+      "title": "Settlement Payment",
+      "body": "{{party_b}} agrees to pay {{party_a}} {{settlement_amount}} by {{payment_due_date}}."
+    },
+    {
+      "id": "release",
+      "title": "Mutual Release",
+      "body": "Upon payment, both parties release each other from all related claims."
+    },
+    {
+      "id": "confidentiality",
+      "title": "Confidentiality",
+      "body": "The terms of this agreement remain confidential except as required by law."
+    },
+    {
+      "id": "law",
+      "title": "Governing Law",
+      "body": "This Agreement is governed by {{governing_law}}."
+    }
+  ],
+  "annotations": []
+}

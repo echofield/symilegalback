@@ -1,0 +1,52 @@
+{
+  "metadata": {
+    "title": "Work-for-Hire Agreement",
+    "jurisdiction": "UK | US",
+    "governing_law": "England & Wales | California",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {
+      "key": "client",
+      "label": "Client",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "creator",
+      "label": "Creator",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "deliverables",
+      "label": "Deliverables",
+      "type": "textarea",
+      "required": true
+    },
+    {
+      "key": "fee",
+      "label": "Fee",
+      "type": "currency",
+      "required": true
+    }
+  ],
+  "clauses": [
+    {
+      "id": "ownership",
+      "title": "Ownership",
+      "body": "Work created by {{creator}} for {{client}} is a work-for-hire; all rights belong to {{client}} upon payment."
+    },
+    {
+      "id": "payment",
+      "title": "Payment",
+      "body": "Fee of {{fee}} payable on delivery."
+    },
+    {
+      "id": "credit",
+      "title": "Credit",
+      "body": "Client may credit Creator at its discretion."
+    }
+  ],
+  "annotations": []
+}

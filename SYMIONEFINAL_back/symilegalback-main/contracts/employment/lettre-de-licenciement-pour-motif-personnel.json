@@ -1,0 +1,26 @@
+{
+  "metadata": {
+    "title": "Lettre de licenciement pour motif personnel",
+    "jurisdiction": "FR",
+    "governing_law": "France",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {"key": "employeur_nom", "label": "Nom ou raison sociale de l'employeur", "type": "text", "required": true},
+    {"key": "employeur_adresse", "label": "Adresse de l'employeur", "type": "textarea", "required": true},
+    {"key": "salarie_nom", "label": "Nom et prénom du salarié", "type": "text", "required": true},
+    {"key": "salarie_adresse", "label": "Adresse du salarié", "type": "textarea", "required": true},
+    {"key": "motif_licenciement", "label": "Motif du licenciement", "type": "textarea", "required": true},
+    {"key": "date_notification", "label": "Date de notification de la lettre", "type": "date", "required": true}
+  ],
+  "clauses": [
+    {"id": "entete", "title": "En-tête", "body": "{{employeur_nom}}\n{{employeur_adresse}}\n\nÀ l'attention de {{salarie_nom}}\n{{salarie_adresse}}\n\nLettre recommandée avec accusé de réception\n\nObjet : Notification de licenciement pour motif personnel"},
+    {"id": "formule_introduction", "title": "Formule d'introduction", "body": "Madame, Monsieur,\n\nNous faisons suite à l'entretien préalable qui s'est tenu le [date de l'entretien préalable] et vous notifions par la présente votre licenciement pour motif personnel."},
+    {"id": "motifs", "title": "Motifs du licenciement", "body": "Les motifs de votre licenciement sont les suivants :\n\n{{motif_licenciement}}"},
+    {"id": "preavis", "title": "Préavis", "body": "Conformément aux dispositions légales et conventionnelles, vous êtes tenu(e) d'effectuer un préavis dont la durée sera déterminée en application des textes applicables. Votre contrat de travail prendra définitivement fin à l'issue de cette période."},
+    {"id": "indemnites", "title": "Indemnités", "body": "Vous percevrez, le cas échéant, l'indemnité de licenciement prévue par la loi ou la convention collective applicable, ainsi que l'indemnité compensatrice de congés payés pour les congés acquis et non pris."},
+    {"id": "documents", "title": "Documents de fin de contrat", "body": "Les documents de fin de contrat (certificat de travail, attestation Pôle emploi, solde de tout compte) vous seront remis à l'issue de votre préavis."},
+    {"id": "formule_politesse", "title": "Formule de politesse", "body": "Nous vous prions d'agréer, Madame, Monsieur, l'expression de nos salutations distinguées.\n\nFait à [ville], le {{date_notification}}\n\n[Signature de l'employeur]"}
+  ]
+}
+

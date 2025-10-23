@@ -1,0 +1,623 @@
+[
+  {
+    "id": "attestation-de-fin-de-contrat-et-solde-de-tout-compte",
+    "title": "Attestation de fin de contrat et solde de tout compte",
+    "description": "Modèle de attestation de fin de contrat et solde de tout compte conforme au droit France.",
+    "category": "Travail",
+    "categorySlug": "travail",
+    "jurisdiction": "FR",
+    "lang": "fr",
+    "keywords": [
+      "attestation",
+      "de",
+      "fin",
+      "contrat",
+      "et",
+      "solde",
+      "tout",
+      "compte",
+      "fr",
+      "france"
+    ],
+    "path": "contracts/employment/attestation-de-fin-de-contrat-et-solde-de-tout-compte.json"
+  },
+  {
+    "id": "avenant-au-contrat-de-travail",
+    "title": "Avenant au contrat de travail",
+    "description": "Modèle de avenant au contrat de travail conforme au droit France.",
+    "category": "Travail",
+    "categorySlug": "travail",
+    "jurisdiction": "FR",
+    "lang": "fr",
+    "keywords": [
+      "avenant",
+      "au",
+      "contrat",
+      "de",
+      "travail",
+      "fr",
+      "france"
+    ],
+    "path": "contracts/employment/avenant-au-contrat-de-travail.json"
+  },
+  {
+    "id": "bail-commercial",
+    "title": "Bail commercial",
+    "description": "Modèle de bail commercial conforme au droit France.",
+    "category": "Baux",
+    "categorySlug": "baux",
+    "jurisdiction": "FR",
+    "lang": "fr",
+    "keywords": [
+      "bail",
+      "commercial",
+      "fr",
+      "france"
+    ],
+    "path": "contracts/property/bail-commercial.json"
+  },
+  {
+    "id": "bail-commercial-3-6-9",
+    "title": "Bail commercial (3-6-9)",
+    "description": "Modèle de bail commercial (3-6-9) conforme au droit France.",
+    "category": "Baux",
+    "categorySlug": "baux",
+    "jurisdiction": "FR",
+    "lang": "fr",
+    "keywords": [
+      "bail",
+      "commercial",
+      "3",
+      "6",
+      "9",
+      "fr",
+      "france"
+    ],
+    "path": "contracts/property/bail-commercial-3-6-9.json"
+  },
+  {
+    "id": "bail-d-habitation-non-meubl",
+    "title": "Bail d’habitation non meublé",
+    "description": "Modèle de bail d’habitation non meublé conforme au droit France.",
+    "category": "Baux",
+    "categorySlug": "baux",
+    "jurisdiction": "FR",
+    "lang": "fr",
+    "keywords": [
+      "bail",
+      "d",
+      "habitation",
+      "non",
+      "meublé",
+      "meubl",
+      "fr",
+      "france"
+    ],
+    "path": "contracts/property/bail-d-habitation-non-meubl.json"
+  },
+  {
+    "id": "bail-de-location-meubl-e",
+    "title": "Bail de location meublée",
+    "description": "Modèle de bail de location meublée conforme au droit France.",
+    "category": "Baux",
+    "categorySlug": "baux",
+    "jurisdiction": "FR",
+    "lang": "fr",
+    "keywords": [
+      "bail",
+      "de",
+      "location",
+      "meublée",
+      "meubl",
+      "e",
+      "fr",
+      "france"
+    ],
+    "path": "contracts/property/bail-de-location-meubl-e.json"
+  },
+  {
+    "id": "bail-professionnel",
+    "title": "Bail professionnel",
+    "description": "Modèle de bail professionnel conforme au droit France.",
+    "category": "Baux",
+    "categorySlug": "baux",
+    "jurisdiction": "FR",
+    "lang": "fr",
+    "keywords": [
+      "bail",
+      "professionnel",
+      "fr",
+      "france"
+    ],
+    "path": "contracts/property/bail-professionnel.json"
+  },
+  {
+    "id": "contrat-d-apprentissage",
+    "title": "Contrat d'apprentissage",
+    "description": "Modèle de contrat d'apprentissage conforme au droit France.",
+    "category": "Travail",
+    "categorySlug": "travail",
+    "jurisdiction": "FR",
+    "lang": "fr",
+    "keywords": [
+      "contrat",
+      "d",
+      "apprentissage",
+      "fr",
+      "france"
+    ],
+    "path": "contracts/employment/contrat-d-apprentissage.json"
+  },
+  {
+    "id": "contrat-de-cautionnement",
+    "title": "Contrat de cautionnement",
+    "description": "Modèle de contrat de cautionnement conforme au droit France.",
+    "category": "Baux",
+    "categorySlug": "baux",
+    "jurisdiction": "FR",
+    "lang": "fr",
+    "keywords": [
+      "contrat",
+      "de",
+      "cautionnement",
+      "fr",
+      "france"
+    ],
+    "path": "contracts/property/contrat-de-cautionnement.json"
+  },
+  {
+    "id": "contrat-de-colocation",
+    "title": "Contrat de colocation",
+    "description": "Modèle de contrat de colocation conforme au droit France.",
+    "category": "Baux",
+    "categorySlug": "baux",
+    "jurisdiction": "FR",
+    "lang": "fr",
+    "keywords": [
+      "contrat",
+      "de",
+      "colocation",
+      "fr",
+      "france"
+    ],
+    "path": "contracts/property/contrat-de-colocation.json"
+  },
+  {
+    "id": "contrat-de-location-d-habitation-bail-r-sidence-principale",
+    "title": "Contrat de location d’habitation (bail résidence principale)",
+    "description": "Modèle de contrat de location d’habitation (bail résidence principale) conforme au droit France.",
+    "category": "Baux",
+    "categorySlug": "baux",
+    "jurisdiction": "FR",
+    "lang": "fr",
+    "keywords": [
+      "contrat",
+      "de",
+      "location",
+      "d",
+      "habitation",
+      "bail",
+      "résidence",
+      "principale",
+      "r",
+      "sidence",
+      "fr",
+      "france"
+    ],
+    "path": "contracts/property/contrat-de-location-d-habitation-bail-r-sidence-principale.json"
+  },
+  {
+    "id": "contrat-de-location-meubl-e-de-courte-dur-e",
+    "title": "Contrat de location meublée de courte durée",
+    "description": "Modèle de contrat de location meublée de courte durée conforme au droit France.",
+    "category": "Baux",
+    "categorySlug": "baux",
+    "jurisdiction": "FR",
+    "lang": "fr",
+    "keywords": [
+      "contrat",
+      "de",
+      "location",
+      "meublée",
+      "courte",
+      "durée",
+      "meubl",
+      "e",
+      "dur",
+      "fr",
+      "france"
+    ],
+    "path": "contracts/property/contrat-de-location-meubl-e-de-courte-dur-e.json"
+  },
+  {
+    "id": "contrat-de-mariage-r-gime-de-s-paration-des-biens",
+    "title": "Contrat de mariage – régime de séparation des biens",
+    "description": "Modèle de contrat de mariage – régime de séparation des biens conforme au droit France.",
+    "category": "Personnel",
+    "categorySlug": "personnel",
+    "jurisdiction": "FR",
+    "lang": "fr",
+    "keywords": [
+      "contrat",
+      "de",
+      "mariage",
+      "régime",
+      "séparation",
+      "des",
+      "biens",
+      "r",
+      "gime",
+      "s",
+      "paration",
+      "fr",
+      "france"
+    ],
+    "path": "contracts/personal/contrat-de-mariage-r-gime-de-s-paration-des-biens.json"
+  },
+  {
+    "id": "contrat-de-prestation-de-services",
+    "title": "Contrat de prestation de services",
+    "description": "Modèle de contrat de prestation de services conforme au droit France.",
+    "category": "Commerce",
+    "categorySlug": "commerce",
+    "jurisdiction": "FR",
+    "lang": "fr",
+    "keywords": [
+      "contrat",
+      "de",
+      "prestation",
+      "services",
+      "fr",
+      "france"
+    ],
+    "path": "contracts/business/contrat-de-prestation-de-services.json"
+  },
+  {
+    "id": "contrat-de-pr-t-entre-particuliers",
+    "title": "Contrat de prêt entre particuliers",
+    "description": "Modèle de contrat de prêt entre particuliers conforme au droit France.",
+    "category": "Personnel",
+    "categorySlug": "personnel",
+    "jurisdiction": "FR",
+    "lang": "fr",
+    "keywords": [
+      "contrat",
+      "de",
+      "prêt",
+      "entre",
+      "particuliers",
+      "pr",
+      "t",
+      "fr",
+      "france"
+    ],
+    "path": "contracts/personal/contrat-de-pr-t-entre-particuliers.json"
+  },
+  {
+    "id": "contrat-de-travail-dur-e-d-termin-e-cdd",
+    "title": "Contrat de travail à durée déterminée (CDD)",
+    "description": "Modèle de contrat de travail à durée déterminée (cdd) conforme au droit France.",
+    "category": "Travail",
+    "categorySlug": "travail",
+    "jurisdiction": "FR",
+    "lang": "fr",
+    "keywords": [
+      "contrat",
+      "de",
+      "travail",
+      "à",
+      "durée",
+      "déterminée",
+      "cdd",
+      "dur",
+      "e",
+      "d",
+      "termin",
+      "fr",
+      "france"
+    ],
+    "path": "contracts/employment/contrat-de-travail-dur-e-d-termin-e-cdd.json"
+  },
+  {
+    "id": "contrat-de-travail-dur-e-ind-termin-e-cdi",
+    "title": "Contrat de travail à durée indéterminée (CDI)",
+    "description": "Modèle de contrat de travail à durée indéterminée (cdi) conforme au droit France.",
+    "category": "Travail",
+    "categorySlug": "travail",
+    "jurisdiction": "FR",
+    "lang": "fr",
+    "keywords": [
+      "contrat",
+      "de",
+      "travail",
+      "à",
+      "durée",
+      "indéterminée",
+      "cdi",
+      "dur",
+      "e",
+      "ind",
+      "termin",
+      "fr",
+      "france"
+    ],
+    "path": "contracts/employment/contrat-de-travail-dur-e-ind-termin-e-cdi.json"
+  },
+  {
+    "id": "contrat-de-travail-temporaire-int-rim",
+    "title": "Contrat de travail temporaire (intérim)",
+    "description": "Modèle de contrat de travail temporaire (intérim) conforme au droit France.",
+    "category": "Travail",
+    "categorySlug": "travail",
+    "jurisdiction": "FR",
+    "lang": "fr",
+    "keywords": [
+      "contrat",
+      "de",
+      "travail",
+      "temporaire",
+      "intérim",
+      "int",
+      "rim",
+      "fr",
+      "france"
+    ],
+    "path": "contracts/employment/contrat-de-travail-temporaire-int-rim.json"
+  },
+  {
+    "id": "convention-de-divorce-par-consentement-mutuel",
+    "title": "Convention de divorce par consentement mutuel",
+    "description": "Modèle de convention de divorce par consentement mutuel conforme au droit France.",
+    "category": "Personnel",
+    "categorySlug": "personnel",
+    "jurisdiction": "FR",
+    "lang": "fr",
+    "keywords": [
+      "convention",
+      "de",
+      "divorce",
+      "par",
+      "consentement",
+      "mutuel",
+      "fr",
+      "france"
+    ],
+    "path": "contracts/personal/convention-de-divorce-par-consentement-mutuel.json"
+  },
+  {
+    "id": "convention-de-garde-d-enfant",
+    "title": "Convention de garde d’enfant",
+    "description": "Modèle de convention de garde d’enfant conforme au droit France.",
+    "category": "Personnel",
+    "categorySlug": "personnel",
+    "jurisdiction": "FR",
+    "lang": "fr",
+    "keywords": [
+      "convention",
+      "de",
+      "garde",
+      "d",
+      "enfant",
+      "fr",
+      "france"
+    ],
+    "path": "contracts/personal/convention-de-garde-d-enfant.json"
+  },
+  {
+    "id": "convention-de-pacs-pacte-civil-de-solidarit",
+    "title": "Convention de PACS (Pacte civil de solidarité)",
+    "description": "Modèle de convention de pacs (pacte civil de solidarité) conforme au droit France.",
+    "category": "Personnel",
+    "categorySlug": "personnel",
+    "jurisdiction": "FR",
+    "lang": "fr",
+    "keywords": [
+      "convention",
+      "de",
+      "pacs",
+      "pacte",
+      "civil",
+      "solidarité",
+      "solidarit",
+      "fr",
+      "france"
+    ],
+    "path": "contracts/personal/convention-de-pacs-pacte-civil-de-solidarit.json"
+  },
+  {
+    "id": "convention-de-rupture-conventionnelle",
+    "title": "Convention de rupture conventionnelle",
+    "description": "Modèle de convention de rupture conventionnelle conforme au droit France.",
+    "category": "Travail",
+    "categorySlug": "travail",
+    "jurisdiction": "FR",
+    "lang": "fr",
+    "keywords": [
+      "convention",
+      "de",
+      "rupture",
+      "conventionnelle",
+      "fr",
+      "france"
+    ],
+    "path": "contracts/employment/convention-de-rupture-conventionnelle.json"
+  },
+  {
+    "id": "convention-de-s-paration-de-corps",
+    "title": "Convention de séparation de corps",
+    "description": "Modèle de convention de séparation de corps conforme au droit France.",
+    "category": "Personnel",
+    "categorySlug": "personnel",
+    "jurisdiction": "FR",
+    "lang": "fr",
+    "keywords": [
+      "convention",
+      "de",
+      "séparation",
+      "corps",
+      "s",
+      "paration",
+      "fr",
+      "france"
+    ],
+    "path": "contracts/personal/convention-de-s-paration-de-corps.json"
+  },
+  {
+    "id": "convention-de-stage",
+    "title": "Convention de stage",
+    "description": "Modèle de convention de stage conforme au droit France.",
+    "category": "Travail",
+    "categorySlug": "travail",
+    "jurisdiction": "FR",
+    "lang": "fr",
+    "keywords": [
+      "convention",
+      "de",
+      "stage",
+      "fr",
+      "france"
+    ],
+    "path": "contracts/employment/convention-de-stage.json"
+  },
+  {
+    "id": "tat-des-lieux-d-entr-e-et-de-sortie",
+    "title": "État des lieux d’entrée et de sortie",
+    "description": "Modèle de état des lieux d’entrée et de sortie conforme au droit France.",
+    "category": "Baux",
+    "categorySlug": "baux",
+    "jurisdiction": "FR",
+    "lang": "fr",
+    "keywords": [
+      "état",
+      "des",
+      "lieux",
+      "d",
+      "entrée",
+      "et",
+      "de",
+      "sortie",
+      "tat",
+      "entr",
+      "e",
+      "fr",
+      "france"
+    ],
+    "path": "contracts/property/tat-des-lieux-d-entr-e-et-de-sortie.json"
+  },
+  {
+    "id": "lettre-de-licenciement-pour-faute-grave",
+    "title": "Lettre de licenciement pour faute grave",
+    "description": "Modèle de lettre de licenciement pour faute grave conforme au droit France.",
+    "category": "Travail",
+    "categorySlug": "travail",
+    "jurisdiction": "FR",
+    "lang": "fr",
+    "keywords": [
+      "lettre",
+      "de",
+      "licenciement",
+      "pour",
+      "faute",
+      "grave",
+      "fr",
+      "france"
+    ],
+    "path": "contracts/employment/lettre-de-licenciement-pour-faute-grave.json"
+  },
+  {
+    "id": "lettre-de-licenciement-pour-motif-personnel",
+    "title": "Lettre de licenciement pour motif personnel",
+    "description": "Modèle de lettre de licenciement pour motif personnel conforme au droit France.",
+    "category": "Travail",
+    "categorySlug": "travail",
+    "jurisdiction": "FR",
+    "lang": "fr",
+    "keywords": [
+      "lettre",
+      "de",
+      "licenciement",
+      "pour",
+      "motif",
+      "personnel",
+      "fr",
+      "france"
+    ],
+    "path": "contracts/employment/lettre-de-licenciement-pour-motif-personnel.json"
+  },
+  {
+    "id": "mandat-de-gestion-locative",
+    "title": "Mandat de gestion locative",
+    "description": "Modèle de mandat de gestion locative conforme au droit France.",
+    "category": "Baux",
+    "categorySlug": "baux",
+    "jurisdiction": "FR",
+    "lang": "fr",
+    "keywords": [
+      "mandat",
+      "de",
+      "gestion",
+      "locative",
+      "fr",
+      "france"
+    ],
+    "path": "contracts/property/mandat-de-gestion-locative.json"
+  },
+  {
+    "id": "mandat-de-vente-immobili-re",
+    "title": "Mandat de vente immobilière",
+    "description": "Modèle de mandat de vente immobilière conforme au droit France.",
+    "category": "Baux",
+    "categorySlug": "baux",
+    "jurisdiction": "FR",
+    "lang": "fr",
+    "keywords": [
+      "mandat",
+      "de",
+      "vente",
+      "immobilière",
+      "immobili",
+      "re",
+      "fr",
+      "france"
+    ],
+    "path": "contracts/property/mandat-de-vente-immobili-re.json"
+  },
+  {
+    "id": "promesse-synallagmatique-de-vente-immobili-re",
+    "title": "Promesse synallagmatique de vente immobilière",
+    "description": "Modèle de promesse synallagmatique de vente immobilière conforme au droit France.",
+    "category": "Baux",
+    "categorySlug": "baux",
+    "jurisdiction": "FR",
+    "lang": "fr",
+    "keywords": [
+      "promesse",
+      "synallagmatique",
+      "de",
+      "vente",
+      "immobilière",
+      "immobili",
+      "re",
+      "fr",
+      "france"
+    ],
+    "path": "contracts/property/promesse-synallagmatique-de-vente-immobili-re.json"
+  },
+  {
+    "id": "reconnaissance-de-dette",
+    "title": "Reconnaissance de dette",
+    "description": "Modèle de reconnaissance de dette conforme au droit France.",
+    "category": "Personnel",
+    "categorySlug": "personnel",
+    "jurisdiction": "FR",
+    "lang": "fr",
+    "keywords": [
+      "reconnaissance",
+      "de",
+      "dette",
+      "fr",
+      "france"
+    ],
+    "path": "contracts/personal/reconnaissance-de-dette.json"
+  }
+]

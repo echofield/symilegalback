@@ -1,0 +1,23 @@
+{
+  "metadata": {
+    "title": "Bail professionnel",
+    "jurisdiction": "FR",
+    "governing_law": "France",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {"key": "bailleur_nom", "label": "Nom du bailleur", "type": "text", "required": true},
+    {"key": "preneur_nom", "label": "Nom du preneur", "type": "text", "required": true},
+    {"key": "adresse_local", "label": "Adresse du local", "type": "text", "required": true},
+    {"key": "loyer_mensuel", "label": "Loyer mensuel (€)", "type": "number", "required": true},
+    {"key": "duree_annees", "label": "Durée du bail (années)", "type": "number", "required": true}
+  ],
+  "clauses": [
+    {"id": "objet", "title": "Objet du bail", "body": "Le présent bail a pour objet la location de locaux professionnels situés à {{adresse_local}} appartenant à {{bailleur_nom}}."},
+    {"id": "usage", "title": "Usage des locaux", "body": "Les locaux loués ne peuvent être utilisés qu’à des fins professionnelles, à l’exclusion de toute activité commerciale."},
+    {"id": "duree", "title": "Durée", "body": "Le bail est conclu pour une durée de {{duree_annees}} ans à compter de sa signature."},
+    {"id": "loyer", "title": "Loyer et charges", "body": "Le loyer est fixé à {{loyer_mensuel}} € par mois, payable d’avance le premier jour du mois."},
+    {"id": "resiliation", "title": "Résiliation", "body": "Le preneur peut résilier le bail à tout moment avec un préavis de six mois notifié par lettre recommandée."}
+  ]
+}
+

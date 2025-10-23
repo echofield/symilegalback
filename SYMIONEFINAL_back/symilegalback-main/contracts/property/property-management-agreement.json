@@ -1,0 +1,78 @@
+{
+  "metadata": {
+    "title": "Property Management Agreement",
+    "jurisdiction": "US",
+    "governing_law": "California",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {
+      "key": "party_a_name",
+      "label": "Party A (Owner/Client)",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "party_b_name",
+      "label": "Party B (Tenant/Provider)",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "service_or_property",
+      "label": "Property or Service Description",
+      "type": "textarea",
+      "required": true
+    },
+    {
+      "key": "fee",
+      "label": "Fee or Rent",
+      "type": "currency",
+      "required": true
+    },
+    {
+      "key": "term",
+      "label": "Duration",
+      "type": "text",
+      "required": true
+    }
+  ],
+  "clauses": [
+    {
+      "id": "scope",
+      "title": "Management Services",
+      "body": "The Owner appoints the Manager as exclusive agent to manage the property described as: [service_or_property]. Management services include tenant sourcing, rent collection, property maintenance coordination, and enforcement of lease terms. The Manager shall exercise due care in performing these services."
+    },
+    {
+      "id": "payment",
+      "title": "Management Fee",
+      "body": "The Owner shall pay the Manager [percentage]% of gross rents collected, payable monthly. Additional fees may apply for leasing services, eviction proceedings, or major rehabilitation projects. The Manager shall maintain separate accounts for owner funds and provide monthly financial statements."
+    },
+    {
+      "id": "responsibility",
+      "title": "Manager Duties",
+      "body": "The Manager shall: market the property; screen tenants using reasonable criteria; prepare and sign leases; collect rents; arrange repairs under [amount] without prior approval; enforce lease terms; and maintain property compliance with housing codes. Major decisions require Owner consultation."
+    },
+    {
+      "id": "liability",
+      "title": "Limitation of Liability",
+      "body": "The Manager carries errors and omissions insurance and shall not be liable for losses beyond their control or resulting from Owner's instructions. The Owner maintains adequate property and liability insurance. Both parties agree to indemnify the other for losses caused by their negligence."
+    },
+    {
+      "id": "termination",
+      "title": "Term and Termination",
+      "body": "This agreement runs for [term] and automatically renews for successive one-year terms unless terminated with [number] days written notice. Either party may terminate for material breach with [number] days to cure. Upon termination, the Manager shall deliver all records and funds to the Owner."
+    },
+    {
+      "id": "law",
+      "title": "Governing Law",
+      "body": "This agreement is governed by the laws of the State of California."
+    }
+  ],
+  "annotations": [
+    {
+      "clause_id": "liability",
+      "tooltip": "Clarifies insurance requirements and limits of manager's financial responsibility."
+    }
+  ]
+}

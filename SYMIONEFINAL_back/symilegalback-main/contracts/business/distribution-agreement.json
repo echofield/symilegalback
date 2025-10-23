@@ -1,0 +1,52 @@
+{
+  "metadata": {
+    "title": "Distribution Agreement",
+    "jurisdiction": "UK | US",
+    "governing_law": "England & Wales | California",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {
+      "key": "supplier",
+      "label": "Supplier",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "distributor",
+      "label": "Distributor",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "territory",
+      "label": "Territory",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "term_years",
+      "label": "Term (Years)",
+      "type": "number",
+      "required": true
+    }
+  ],
+  "clauses": [
+    {
+      "id": "grant",
+      "title": "Appointment",
+      "body": "Supplier appoints Distributor as non-exclusive distributor in {{territory}}."
+    },
+    {
+      "id": "obligations",
+      "title": "Obligations",
+      "body": "Distributor uses reasonable efforts to promote products."
+    },
+    {
+      "id": "term",
+      "title": "Term",
+      "body": "Agreement runs for {{term_years}} years unless terminated earlier."
+    }
+  ],
+  "annotations": []
+}

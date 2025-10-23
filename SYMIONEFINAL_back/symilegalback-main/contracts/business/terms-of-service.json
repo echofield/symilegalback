@@ -1,0 +1,56 @@
+{
+  "metadata": {
+    "title": "Terms of Service",
+    "jurisdiction": "UK | US",
+    "governing_law": "England & Wales | California",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {
+      "key": "company_name",
+      "label": "Company Name",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "service_name",
+      "label": "Website or App Name",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "contact_email",
+      "label": "Contact Email",
+      "type": "text",
+      "required": true
+    }
+  ],
+  "clauses": [
+    {
+      "id": "acceptance",
+      "title": "Acceptance of Terms",
+      "body": "By using {{service_name}}, users agree to these Terms by {{company_name}}."
+    },
+    {
+      "id": "use",
+      "title": "Permitted Use",
+      "body": "Users must not abuse or reverse-engineer the service."
+    },
+    {
+      "id": "privacy",
+      "title": "Privacy",
+      "body": "Data handled per separate Privacy Policy."
+    },
+    {
+      "id": "liability",
+      "title": "Disclaimer & Liability",
+      "body": "Service provided ‘as is’; liability limited to fees paid."
+    },
+    {
+      "id": "law",
+      "title": "Governing Law",
+      "body": "These Terms follow {{governing_law}} law."
+    }
+  ],
+  "annotations": []
+}

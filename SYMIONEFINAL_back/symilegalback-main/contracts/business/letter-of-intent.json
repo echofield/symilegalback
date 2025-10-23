@@ -1,0 +1,52 @@
+{
+  "metadata": {
+    "title": "Letter of Intent",
+    "jurisdiction": "UK | US",
+    "governing_law": "England & Wales | Delaware",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {
+      "key": "buyer",
+      "label": "Buyer",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "seller",
+      "label": "Seller",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "subject_matter",
+      "label": "Subject (what deal concerns)",
+      "type": "textarea",
+      "required": true
+    },
+    {
+      "key": "expected_close_date",
+      "label": "Expected Close Date",
+      "type": "date",
+      "required": true
+    }
+  ],
+  "clauses": [
+    {
+      "id": "purpose",
+      "title": "Purpose",
+      "body": "This LOI outlines main terms for {{subject_matter}} between {{buyer}} and {{seller}}."
+    },
+    {
+      "id": "intent",
+      "title": "Intent",
+      "body": "Both parties express genuine interest in negotiating a definitive agreement by {{expected_close_date}}."
+    },
+    {
+      "id": "nonbinding",
+      "title": "Non-Binding",
+      "body": "Except for confidentiality and exclusivity, this LOI is non-binding."
+    }
+  ],
+  "annotations": []
+}

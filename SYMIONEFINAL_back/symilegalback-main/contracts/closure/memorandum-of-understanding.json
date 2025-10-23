@@ -1,0 +1,46 @@
+{
+  "metadata": {
+    "title": "Memorandum of Understanding",
+    "jurisdiction": "UK | US",
+    "governing_law": "England & Wales | New York",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {
+      "key": "party_a",
+      "label": "Party A",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "party_b",
+      "label": "Party B",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "purpose",
+      "label": "Purpose",
+      "type": "textarea",
+      "required": true
+    }
+  ],
+  "clauses": [
+    {
+      "id": "intent",
+      "title": "Purpose",
+      "body": "Parties intend to collaborate on {{purpose}}."
+    },
+    {
+      "id": "nonbinding",
+      "title": "Non-Binding Nature",
+      "body": "This MOU is not legally binding except for confidentiality and governing law clauses."
+    },
+    {
+      "id": "law",
+      "title": "Governing Law",
+      "body": "Under {{governing_law}} law."
+    }
+  ],
+  "annotations": []
+}

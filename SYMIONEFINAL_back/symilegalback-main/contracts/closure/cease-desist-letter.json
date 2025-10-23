@@ -1,0 +1,52 @@
+{
+  "metadata": {
+    "title": "Cease & Desist Letter",
+    "jurisdiction": "UK | US",
+    "governing_law": "England & Wales | California",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {
+      "key": "sender",
+      "label": "Sender Name",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "recipient",
+      "label": "Recipient Name",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "issue",
+      "label": "Describe the issue (e.g., copyright, harassment)",
+      "type": "textarea",
+      "required": true
+    },
+    {
+      "key": "deadline",
+      "label": "Deadline to stop (days)",
+      "type": "number",
+      "required": true
+    }
+  ],
+  "clauses": [
+    {
+      "id": "notice",
+      "title": "Notice",
+      "body": "This letter demands that {{recipient}} immediately cease and desist all actions described: {{issue}}."
+    },
+    {
+      "id": "deadline",
+      "title": "Deadline",
+      "body": "If the behavior continues beyond {{deadline}} days, further legal steps may be taken."
+    },
+    {
+      "id": "law",
+      "title": "Governing Law",
+      "body": "Issued under {{governing_law}} jurisdiction."
+    }
+  ],
+  "annotations": []
+}

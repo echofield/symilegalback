@@ -1,0 +1,78 @@
+{
+  "metadata": {
+    "title": "Pet Care / Pet Sitting Agreement",
+    "jurisdiction": "US",
+    "governing_law": "New York",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {
+      "key": "party_a_name",
+      "label": "Party A (Owner/Client)",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "party_b_name",
+      "label": "Party B (Tenant/Provider)",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "service_or_property",
+      "label": "Property or Service Description",
+      "type": "textarea",
+      "required": true
+    },
+    {
+      "key": "fee",
+      "label": "Fee or Rent",
+      "type": "currency",
+      "required": true
+    },
+    {
+      "key": "term",
+      "label": "Duration",
+      "type": "text",
+      "required": true
+    }
+  ],
+  "clauses": [
+    {
+      "id": "scope",
+      "title": "Pet Care Services",
+      "body": "The Pet Sitter agrees to provide care for the following pets: [service_or_property] during the period of [term]. Services include: [feeding schedule, exercise, medication administration if needed]. The Pet Sitter shall follow the Owner's care instructions and maintain the pet's routine."
+    },
+    {
+      "id": "payment",
+      "title": "Compensation",
+      "body": "The Owner shall pay $[fee] for the pet care services, payable [payment terms—e.g., 50% deposit, balance before service]. Additional charges may apply for extra services, last-minute bookings, or holiday periods. Payment is due in full before service commencement unless otherwise agreed."
+    },
+    {
+      "id": "responsibility",
+      "title": "Care Instructions",
+      "body": "The Owner shall provide: detailed care instructions; adequate food/supplies; veterinary contact; and emergency authorization. The Pet Sitter shall: follow care instructions; maintain pet safety; provide updates; and contact Owner for authorization before non-emergency veterinary care."
+    },
+    {
+      "id": "liability",
+      "title": "Emergency Care and Liability",
+      "body": "In emergency, the Pet Sitter may seek veterinary care, with costs borne by Owner. The Pet Sitter carries pet care insurance but is not liable for incidents beyond reasonable control, pre-existing conditions, or pet behavioral issues. The Owner is responsible for veterinary costs and should ensure pets are properly vaccinated."
+    },
+    {
+      "id": "termination",
+      "title": "Cancellation",
+      "body": "Cancellations with [number] days notice receive full refund; [number-7] days receive 50% refund; later cancellations receive no refund. The Pet Sitter may terminate if pets pose safety risks. The Owner may terminate for poor service with refund for unused days."
+    },
+    {
+      "id": "law",
+      "title": "Governing Law",
+      "body": "This agreement is governed by the laws of the State of New York."
+    }
+  ],
+  "annotations": [
+    {
+      "clause_id": "liability",
+      "tooltip": "Emergency veterinary care authorization and responsibility for veterinary costs."
+    }
+  ]
+}

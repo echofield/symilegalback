@@ -1,0 +1,26 @@
+{
+  "metadata": {
+    "title": "Contrat de prêt entre particuliers",
+    "jurisdiction": "FR",
+    "governing_law": "France",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {"key": "preteur", "label": "Nom du prêteur", "type": "text", "required": true},
+    {"key": "emprunteur", "label": "Nom de l'emprunteur", "type": "text", "required": true},
+    {"key": "montant", "label": "Montant du prêt (€)", "type": "number", "required": true},
+    {"key": "date_versement", "label": "Date de versement des fonds", "type": "date", "required": true},
+    {"key": "taux_interet", "label": "Taux d'intérêt (%)", "type": "number", "required": false},
+    {"key": "date_remboursement", "label": "Date de remboursement prévue", "type": "date", "required": true}
+  ],
+  "clauses": [
+    {"id": "parties", "title": "Parties", "body": "Le présent contrat de prêt est conclu entre {{preteur}}, ci-après dénommé « le Prêteur », et {{emprunteur}}, ci-après dénommé « l'Emprunteur »."},
+    {"id": "objet", "title": "Objet du prêt", "body": "Le Prêteur consent à l’Emprunteur un prêt d’un montant de {{montant}} euros, versé le {{date_versement}}."},
+    {"id": "remboursement", "title": "Remboursement", "body": "L’Emprunteur s’engage à rembourser la somme prêtée intégralement au plus tard le {{date_remboursement}}."},
+    {"id": "interets", "title": "Intérêts", "body": "Le prêt porte intérêt au taux de {{taux_interet}}% l’an, sauf mention contraire (prêt à taux zéro)."},
+    {"id": "modalites", "title": "Modalités de paiement", "body": "Le remboursement interviendra en une ou plusieurs fois selon un échéancier convenu entre les parties."},
+    {"id": "preuve", "title": "Preuve du prêt", "body": "Le présent contrat vaut reconnaissance de dette au sens de l’article 1326 du Code civil et fait foi entre les parties."},
+    {"id": "defaut", "title": "Défaut de paiement", "body": "En cas de non-remboursement à la date prévue, le Prêteur pourra exiger le paiement immédiat du capital restant dû, augmenté des intérêts et éventuels frais de recouvrement."},
+    {"id": "loi_applicable", "title": "Loi applicable", "body": "Le présent contrat est soumis au droit français."}
+  ]
+}
