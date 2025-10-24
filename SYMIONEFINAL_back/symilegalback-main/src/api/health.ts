@@ -5,5 +5,5 @@ async function handler(_req: NextApiRequest, res: NextApiResponse) {
   return res.status(200).json({ status: 'ok', timestamp: new Date().toISOString() });
 }
 
-export default withCors({}, handler);
+export default withCors(handler);
 

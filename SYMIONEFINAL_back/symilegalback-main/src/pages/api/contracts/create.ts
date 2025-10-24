@@ -97,6 +97,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse<ContractCreateR
   }
 }
 
-export default withCors({}, withValidation(schema, ResponseSchema, handler));
+export default withCors(withValidation(schema, ResponseSchema, handler));
 
 

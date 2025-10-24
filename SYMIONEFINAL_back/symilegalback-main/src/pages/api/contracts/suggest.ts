@@ -45,6 +45,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-export default withCors({}, withValidation(schema, ResponseSchema, handler));
+export default withCors(withValidation(schema, ResponseSchema, handler));
 
 
