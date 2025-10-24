@@ -14,12 +14,14 @@ export enum ErrorCode {
 export class AppError extends Error {
   public readonly code: ErrorCode;
   public readonly statusCode: number;
+  public readonly details?: unknown;
 
-  constructor(message: string, statusCode: number = 500, code: ErrorCode = ErrorCode.INTERNAL_ERROR) {
+  constructor(message: string, statusCode: number = 500, code: ErrorCode = ErrorCode.INTERNAL_ERROR, details?: unknown) {
     super(message);
     this.name = 'AppError';
     this.code = code;
     this.statusCode = statusCode;
+    this.details = details;
     Error.captureStackTrace(this, AppError);
   }
 
@@ -28,6 +30,8 @@ export class AppError extends Error {
       error: true,
       message: this.message,
       code: this.code,
+      statusCode: this.statusCode,
+      ...(this.details !== undefined ? { details: this.details } : {}),
     };
   }
 }
