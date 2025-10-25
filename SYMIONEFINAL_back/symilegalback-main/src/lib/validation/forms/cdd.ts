@@ -1,8 +1,3 @@
-import { z as zod } from 'zod';
-
-// Permissive CDD form schema; accepts any object payload
-export const cddSchema = zod.object({}).passthrough();
-
 import { z } from 'zod';
 
 export const cddSchema = z.object({
@@ -16,5 +11,4 @@ export const cddSchema = z.object({
 });
 
 export type CDDInputs = z.infer<typeof cddSchema>;
-
 

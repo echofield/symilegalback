@@ -1,7 +1,3 @@
-import { z as zod } from 'zod';
-
-export const stageSchema = zod.object({}).passthrough();
-
 import { z } from 'zod';
 
 export const stageSchema = z.object({
@@ -15,5 +11,4 @@ export const stageSchema = z.object({
 });
 
 export type StageInputs = z.infer<typeof stageSchema>;
-
 

@@ -1,7 +1,3 @@
-import { z as zod } from 'zod';
-
-export const ndaMutuelSchema = zod.object({}).passthrough();
-
 import { z } from 'zod';
 
 export const ndaMutuelSchema = z.object({
@@ -12,5 +8,4 @@ export const ndaMutuelSchema = z.object({
 });
 
 export type NDAMutuelInputs = z.infer<typeof ndaMutuelSchema>;
-
 
