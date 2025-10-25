@@ -1,4 +1,4 @@
-import { Contract, Milestone, Proof, EscrowBatch, User } from '@prisma/client';
+import { Contract, Milestone, Proof, EscrowBatch } from '@prisma/client';
 
 // Base API Response Types
 export interface ApiResponse<T = unknown> {

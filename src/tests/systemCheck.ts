@@ -11,7 +11,7 @@ async function main() {
     console.log('Connecting to Supabase...');
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
     const anon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
-    const supabase = createClient(supabaseUrl, anon);
+    const _supabase = createClient(supabaseUrl, anon);
 
     // Network health: call auth health endpoint
     const healthRes = await fetch(`${supabaseUrl}/auth/v1/health`, {

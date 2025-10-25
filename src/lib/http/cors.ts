@@ -38,7 +38,14 @@ export interface CorsOptions {
   maxAge?: number;
 }
 
-export function withCors(options: CorsOptions = {}, handler?: any) {
+// Overloads: support withCors(handler) and withCors(options, handler)
+export function withCors(handler: (req: NextApiRequest, res: NextApiResponse) => any): (req: NextApiRequest, res: NextApiResponse) => any;
+export function withCors(options?: CorsOptions, handler?: (req: NextApiRequest, res: NextApiResponse) => any): (req: NextApiRequest, res: NextApiResponse, next?: () => void) => any;
+export function withCors(arg1?: any, arg2?: any) {
+  const hasHandlerFirst = typeof arg1 === 'function';
+  const options: CorsOptions = hasHandlerFirst ? {} : (arg1 || {});
+  const handler = hasHandlerFirst ? arg1 : arg2;
+
   return function corsMiddleware(req: NextApiRequest, res: NextApiResponse, next?: () => void) {
     const {
       origins = DEFAULT_ALLOWED_ORIGINS,
