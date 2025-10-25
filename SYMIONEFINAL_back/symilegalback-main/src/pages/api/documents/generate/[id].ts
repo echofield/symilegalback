@@ -3,15 +3,41 @@ import { withApiMiddleware } from '@/lib/http/cors';
 import { loadContractTemplate } from '@/services/templates/loader';
 import { buildPrompt } from '@/services/ai/generate';
 import { getAIClient } from '@/services/ai/adapter';
-import { cddSchema } from '@/lib/validation/forms/cdd';
-import { stageSchema } from '@/lib/validation/forms/stage';
-import { ndaMutuelSchema } from '@/lib/validation/forms/nda-mutuel';
+import { z } from 'zod';
 
 const TEMPLATE_ID_MAP: Record<string, string> = {
   cdd: 'contrat-de-travail-dur-e-d-termin-e-cdd',
   stage: 'convention-de-stage',
   nda_mutuel: 'mutual-non-disclosure-agreement',
 };
+
+// Inline schemas to avoid module resolution issues
+const cddSchema = z.object({
+  employeur_nom: z.string().min(2, 'Nom employeur requis'),
+  salarie_nom: z.string().min(2, 'Nom salarié requis'),
+  motif: z.string().min(3, 'Motif requis'),
+  poste: z.string().min(2, 'Poste requis'),
+  date_debut: z.string().regex(/^\d{4}-\d{2}-\d{2}$/u, 'Format AAAA-MM-JJ'),
+  date_fin: z.string().regex(/^\d{4}-\d{2}-\d{2}$/u, 'Format AAAA-MM-JJ'),
+  remuneration: z.number({ invalid_type_error: 'Montant numérique requis' }).positive('Doit être > 0'),
+});
+
+const stageSchema = z.object({
+  organisme_accueil: z.string().min(2),
+  etablissement_enseignement: z.string().min(2),
+  stagiaire_nom: z.string().min(2),
+  formation_suivie: z.string().min(2),
+  date_debut: z.string().regex(/^\d{4}-\d{2}-\d{2}$/u),
+  date_fin: z.string().regex(/^\d{4}-\d{2}-\d{2}$/u),
+  gratification: z.number().nonnegative().optional(),
+});
+
+const ndaMutuelSchema = z.object({
+  party_a: z.string().min(2),
+  party_b: z.string().min(2),
+  purpose: z.string().min(3),
+  term_months: z.number().int().positive(),
+});
 
 const SCHEMAS: Record<string, any> = {
   cdd: cddSchema,
