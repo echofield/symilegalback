@@ -1,0 +1,24 @@
+{
+  "metadata": {
+    "title": "Contrat de location meublée de courte durée",
+    "jurisdiction": "FR",
+    "governing_law": "France",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {"key": "proprietaire_nom", "label": "Nom du propriétaire", "type": "text", "required": true},
+    {"key": "locataire_nom", "label": "Nom du locataire", "type": "text", "required": true},
+    {"key": "adresse_bien", "label": "Adresse du bien", "type": "text", "required": true},
+    {"key": "prix_nuitee", "label": "Prix par nuit (€)", "type": "number", "required": true},
+    {"key": "date_debut", "label": "Date d’arrivée", "type": "date", "required": true},
+    {"key": "date_fin", "label": "Date de départ", "type": "date", "required": true}
+  ],
+  "clauses": [
+    {"id": "objet", "title": "Objet", "body": "Le présent contrat concerne la location meublée du logement sis {{adresse_bien}} appartenant à {{proprietaire_nom}}."},
+    {"id": "duree", "title": "Durée", "body": "La location est conclue du {{date_debut}} au {{date_fin}} inclus."},
+    {"id": "loyer", "title": "Prix et paiement", "body": "Le prix est fixé à {{prix_nuitee}} € par nuitée. Le paiement intégral doit intervenir avant l’arrivée."},
+    {"id": "caution", "title": "Dépôt de garantie", "body": "Un dépôt équivalent à 25 % du montant total sera versé à la réservation."},
+    {"id": "etat", "title": "État des lieux", "body": "Un état des lieux sera établi à l’entrée et à la sortie du locataire."}
+  ]
+}
+

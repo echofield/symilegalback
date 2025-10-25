@@ -1,0 +1,112 @@
+{
+  "metadata": {
+    "title": "Non-Compete / Non-Solicit Agreement",
+    "jurisdiction": "UK",
+    "governing_law": "England & Wales",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {
+      "key": "company_name",
+      "label": "Company Name",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "employee_name",
+      "label": "Employee Name",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "job_title",
+      "label": "Job Title",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "restricted_period",
+      "label": "Restricted Period (e.g., 6 months, 12 months)",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "restricted_territory",
+      "label": "Restricted Territory (e.g., UK, London, 50-mile radius)",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "effective_date",
+      "label": "Effective Date",
+      "type": "date",
+      "required": true
+    }
+  ],
+  "clauses": [
+    {
+      "id": "purpose",
+      "title": "Purpose",
+      "body": "This Agreement is entered into between {{company_name}} (the 'Company') and {{employee_name}} (the 'Employee') on {{effective_date}}. Due to the Employee's senior role as {{job_title}} and access to confidential information and client relationships, reasonable post-employment restrictions are necessary to protect the Company's legitimate business interests."
+    },
+    {
+      "id": "non_compete",
+      "title": "Non-Compete Restriction",
+      "body": "For {{restricted_period}} following termination of employment, the Employee agrees not to work for, own, or operate any business that directly competes with the Company within {{restricted_territory}}. This restriction applies only to businesses offering substantially similar products or services to the Company's main business activities."
+    },
+    {
+      "id": "non_solicit_clients",
+      "title": "Non-Solicitation of Clients",
+      "body": "For {{restricted_period}} after employment ends, the Employee will not solicit, contact, or accept business from any client or customer the Employee worked with or learned about during employment. This protects the Company's valuable client relationships from unfair exploitation."
+    },
+    {
+      "id": "non_solicit_employees",
+      "title": "Non-Solicitation of Employees",
+      "body": "For {{restricted_period}} after employment ends, the Employee will not recruit, solicit, or encourage any Company employee to leave their employment or join another business. This includes both direct and indirect solicitation efforts."
+    },
+    {
+      "id": "reasonableness",
+      "title": "Reasonableness & Enforceability",
+      "body": "The parties agree these restrictions are reasonable in scope, duration, and territory, and necessary to protect legitimate business interests. If any restriction is found unenforceable, it should be modified to the minimum extent necessary to make it enforceable, rather than void entirely. The restrictions are independent and severable."
+    },
+    {
+      "id": "jurisdiction",
+      "title": "Subject to Jurisdiction Legality",
+      "body": "These restrictions are subject to applicable law in England & Wales. Non-compete clauses must be reasonable and necessary to protect legitimate business interests. Courts will assess the specific circumstances to determine enforceability. The Employee has had the opportunity to seek legal advice before signing."
+    },
+    {
+      "id": "consideration",
+      "title": "Consideration",
+      "body": "In exchange for these restrictions, the Company provides: (1) continued employment, (2) access to confidential information and training, (3) client relationships, and (4) remuneration including any contractual payments. The Employee acknowledges this consideration is adequate."
+    },
+    {
+      "id": "remedies",
+      "title": "Remedies",
+      "body": "The Employee acknowledges that breach of this Agreement may cause irreparable harm that cannot be adequately compensated by damages alone. The Company may seek injunctive relief, specific performance, and damages. The Employee will be responsible for the Company's legal costs if the Company successfully enforces this Agreement."
+    },
+    {
+      "id": "law",
+      "title": "Governing Law",
+      "body": "This Agreement is governed by the laws of England & Wales. Both parties submit to the exclusive jurisdiction of the courts of England & Wales for any disputes."
+    },
+    {
+      "id": "signatures",
+      "title": "Signatures",
+      "body": "By signing below, the Employee acknowledges understanding these restrictions and agrees to be bound by them.\n\nEmployee: _________________ Date: _______\n\nCompany Representative: _________________ Date: _______"
+    }
+  ],
+  "annotations": [
+    {
+      "clause_id": "non_compete",
+      "tooltip": "Non-compete clauses must be reasonable in duration, scope, and geography to be enforceable."
+    },
+    {
+      "clause_id": "jurisdiction",
+      "tooltip": "UK courts carefully scrutinize restrictive covenants - they must protect legitimate interests only."
+    },
+    {
+      "clause_id": "consideration",
+      "tooltip": "Adequate consideration is essential for enforceability of post-employment restrictions."
+    }
+  ]
+}

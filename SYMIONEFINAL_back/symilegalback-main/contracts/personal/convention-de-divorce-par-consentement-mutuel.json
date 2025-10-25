@@ -1,0 +1,23 @@
+{
+  "metadata": {
+    "title": "Convention de divorce par consentement mutuel",
+    "jurisdiction": "FR",
+    "governing_law": "France",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {"key": "epoux1_nom", "label": "Nom du premier époux", "type": "text", "required": true},
+    {"key": "epoux2_nom", "label": "Nom du second époux", "type": "text", "required": true},
+    {"key": "avocat1_nom", "label": "Nom de l’avocat du premier époux", "type": "text", "required": true},
+    {"key": "avocat2_nom", "label": "Nom de l’avocat du second époux", "type": "text", "required": true},
+    {"key": "date_signature", "label": "Date de signature", "type": "date", "required": true}
+  ],
+  "clauses": [
+    {"id": "accord", "title": "Accord des époux", "body": "Les époux {{epoux1_nom}} et {{epoux2_nom}} déclarent leur volonté commune de divorcer et de fixer les effets du divorce à l’amiable."},
+    {"id": "patrimoine", "title": "Liquidation du patrimoine", "body": "Les époux s’accordent sur la répartition de leurs biens selon le projet notarié annexé."},
+    {"id": "enfants", "title": "Autorité parentale", "body": "Les époux conviennent de l’exercice conjoint de l’autorité parentale et fixent la résidence des enfants."},
+    {"id": "pension", "title": "Pension alimentaire", "body": "Une pension alimentaire pourra être versée selon les besoins et ressources respectifs des parties."},
+    {"id": "avocats", "title": "Assistance par avocats", "body": "La convention a été établie par Me {{avocat1_nom}} et Me {{avocat2_nom}}, chacun représentant un époux."}
+  ]
+}
+

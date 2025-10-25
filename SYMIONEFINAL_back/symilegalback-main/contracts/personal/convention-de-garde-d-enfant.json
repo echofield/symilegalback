@@ -1,0 +1,21 @@
+{
+  "metadata": {
+    "title": "Convention de garde d’enfant",
+    "jurisdiction": "FR",
+    "governing_law": "France",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {"key": "parent1_nom", "label": "Nom du premier parent", "type": "text", "required": true},
+    {"key": "parent2_nom", "label": "Nom du second parent", "type": "text", "required": true},
+    {"key": "enfants", "label": "Noms et âges des enfants", "type": "textarea", "required": true},
+    {"key": "type_garde", "label": "Type de garde (alternée ou principale)", "type": "select", "required": true}
+  ],
+  "clauses": [
+    {"id": "objet", "title": "Objet", "body": "Les parents {{parent1_nom}} et {{parent2_nom}} conviennent des modalités de garde pour leurs enfants {{enfants}}."},
+    {"id": "garde", "title": "Organisation de la garde", "body": "La garde sera {{type_garde}}, selon un calendrier fixé d’un commun accord."},
+    {"id": "pension", "title": "Contribution à l’entretien", "body": "Chaque parent contribuera aux dépenses selon ses ressources et les besoins des enfants."},
+    {"id": "communication", "title": "Communication entre parents", "body": "Les parents s’engagent à une communication respectueuse et régulière pour le bien des enfants."}
+  ]
+}
+

@@ -1,0 +1,52 @@
+{
+  "metadata": {
+    "title": "Intellectual Property Assignment",
+    "jurisdiction": "UK | US",
+    "governing_law": "England & Wales | New York",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {
+      "key": "assignor",
+      "label": "Assignor (current owner)",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "assignee",
+      "label": "Assignee (new owner)",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "work_description",
+      "label": "Describe the work/IP",
+      "type": "textarea",
+      "required": true
+    },
+    {
+      "key": "consideration",
+      "label": "Consideration amount",
+      "type": "currency",
+      "required": true
+    }
+  ],
+  "clauses": [
+    {
+      "id": "assignment",
+      "title": "Assignment",
+      "body": "{{assignor}} assigns all rights, title, and interest in {{work_description}} to {{assignee}}."
+    },
+    {
+      "id": "payment",
+      "title": "Consideration",
+      "body": "{{assignee}} pays {{consideration}} as full consideration."
+    },
+    {
+      "id": "warranty",
+      "title": "Warranty",
+      "body": "Assignor confirms ownership and right to transfer."
+    }
+  ],
+  "annotations": []
+}

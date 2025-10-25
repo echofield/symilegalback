@@ -1,0 +1,1058 @@
+[
+  {
+    "id": "acknowledgment-of-debt-iou",
+    "title": "Acknowledgment of Debt (IOU)",
+    "description": "Template for Acknowledgment of Debt (IOU) compliant with England & Wales law.",
+    "category": "Business",
+    "categorySlug": "business",
+    "jurisdiction": "UK",
+    "lang": "en",
+    "keywords": [
+      "acknowledgment",
+      "of",
+      "debt",
+      "iou",
+      "uk",
+      "england",
+      "wales"
+    ],
+    "path": "contracts/business/acknowledgment-of-debt-iou.json"
+  },
+  {
+    "id": "cease-desist-letter",
+    "title": "Cease & Desist Letter",
+    "description": "Template for Cease & Desist Letter compliant with England & Wales | California law.",
+    "category": "Business Closure",
+    "categorySlug": "closure",
+    "jurisdiction": "UK | US",
+    "lang": "en",
+    "keywords": [
+      "cease",
+      "desist",
+      "letter",
+      "uk",
+      "us",
+      "england",
+      "wales",
+      "california"
+    ],
+    "path": "contracts/closure/cease-desist-letter.json"
+  },
+  {
+    "id": "cleaning-services-agreement",
+    "title": "Cleaning Services Agreement",
+    "description": "Template for Cleaning Services Agreement compliant with California law.",
+    "category": "Real Estate",
+    "categorySlug": "real-estate",
+    "jurisdiction": "US",
+    "lang": "en",
+    "keywords": [
+      "cleaning",
+      "services",
+      "agreement",
+      "us",
+      "california"
+    ],
+    "path": "contracts/property/cleaning-services-agreement.json"
+  },
+  {
+    "id": "collaboration-agreement-creators",
+    "title": "Collaboration Agreement (Creators)",
+    "description": "Template for Collaboration Agreement (Creators) compliant with England & Wales | New York law.",
+    "category": "Business",
+    "categorySlug": "business",
+    "jurisdiction": "UK | US",
+    "lang": "en",
+    "keywords": [
+      "collaboration",
+      "agreement",
+      "creators",
+      "uk",
+      "us",
+      "england",
+      "wales",
+      "new",
+      "york"
+    ],
+    "path": "contracts/business/collaboration-agreement-creators.json"
+  },
+  {
+    "id": "commission-agreement",
+    "title": "Commission Agreement",
+    "description": "Template for Commission Agreement compliant with England & Wales | New York law.",
+    "category": "Business",
+    "categorySlug": "business",
+    "jurisdiction": "UK | US",
+    "lang": "en",
+    "keywords": [
+      "commission",
+      "agreement",
+      "uk",
+      "us",
+      "england",
+      "wales",
+      "new",
+      "york"
+    ],
+    "path": "contracts/business/commission-agreement.json"
+  },
+  {
+    "id": "commission-agreement-sales",
+    "title": "Commission Agreement (Sales)",
+    "description": "Template for Commission Agreement (Sales) compliant with New York law.",
+    "category": "Business",
+    "categorySlug": "business",
+    "jurisdiction": "US",
+    "lang": "en",
+    "keywords": [
+      "commission",
+      "agreement",
+      "sales",
+      "us",
+      "new",
+      "york"
+    ],
+    "path": "contracts/business/commission-agreement-sales.json"
+  },
+  {
+    "id": "confidentiality-agreement-employee",
+    "title": "Confidentiality Agreement (Employee)",
+    "description": "Template for Confidentiality Agreement (Employee) compliant with New York law.",
+    "category": "Employment",
+    "categorySlug": "employment",
+    "jurisdiction": "US",
+    "lang": "en",
+    "keywords": [
+      "confidentiality",
+      "agreement",
+      "employee",
+      "us",
+      "new",
+      "york"
+    ],
+    "path": "contracts/employment/confidentiality-agreement-employee.json"
+  },
+  {
+    "id": "consulting-agreement",
+    "title": "Consulting Agreement",
+    "description": "Template for Consulting Agreement compliant with England & Wales | California law.",
+    "category": "Business",
+    "categorySlug": "business",
+    "jurisdiction": "UK | US",
+    "lang": "en",
+    "keywords": [
+      "consulting",
+      "agreement",
+      "uk",
+      "us",
+      "england",
+      "wales",
+      "california"
+    ],
+    "path": "contracts/business/consulting-agreement.json"
+  },
+  {
+    "id": "content-music-licensing-agreement",
+    "title": "Content / Music Licensing Agreement",
+    "description": "Template for Content / Music Licensing Agreement compliant with England & Wales | California law.",
+    "category": "Business",
+    "categorySlug": "business",
+    "jurisdiction": "UK | US",
+    "lang": "en",
+    "keywords": [
+      "content",
+      "music",
+      "licensing",
+      "agreement",
+      "uk",
+      "us",
+      "england",
+      "wales",
+      "california"
+    ],
+    "path": "contracts/business/content-music-licensing-agreement.json"
+  },
+  {
+    "id": "contract-amendment-addendum",
+    "title": "Contract Amendment / Addendum",
+    "description": "Template for Contract Amendment / Addendum compliant with England & Wales | California law.",
+    "category": "Business Closure",
+    "categorySlug": "closure",
+    "jurisdiction": "UK | US",
+    "lang": "en",
+    "keywords": [
+      "contract",
+      "amendment",
+      "addendum",
+      "uk",
+      "us",
+      "england",
+      "wales",
+      "california"
+    ],
+    "path": "contracts/closure/contract-amendment-addendum.json"
+  },
+  {
+    "id": "contract-termination-notice",
+    "title": "Contract Termination Notice",
+    "description": "Template for Contract Termination Notice compliant with England & Wales | New York law.",
+    "category": "Employment",
+    "categorySlug": "employment",
+    "jurisdiction": "UK | US",
+    "lang": "en",
+    "keywords": [
+      "contract",
+      "termination",
+      "notice",
+      "uk",
+      "us",
+      "england",
+      "wales",
+      "new",
+      "york"
+    ],
+    "path": "contracts/employment/contract-termination-notice.json"
+  },
+  {
+    "id": "contractor-to-employee-transition-addendum",
+    "title": "Contractor to Employee Transition Addendum",
+    "description": "Template for Contractor to Employee Transition Addendum compliant with New York law.",
+    "category": "Employment",
+    "categorySlug": "employment",
+    "jurisdiction": "US",
+    "lang": "en",
+    "keywords": [
+      "contractor",
+      "to",
+      "employee",
+      "transition",
+      "addendum",
+      "us",
+      "new",
+      "york"
+    ],
+    "path": "contracts/employment/contractor-to-employee-transition-addendum.json"
+  },
+  {
+    "id": "debt-repayment-plan",
+    "title": "Debt Repayment Plan",
+    "description": "Template for Debt Repayment Plan compliant with England & Wales | Delaware law.",
+    "category": "Business",
+    "categorySlug": "business",
+    "jurisdiction": "UK | US",
+    "lang": "en",
+    "keywords": [
+      "debt",
+      "repayment",
+      "plan",
+      "uk",
+      "us",
+      "england",
+      "wales",
+      "delaware"
+    ],
+    "path": "contracts/business/debt-repayment-plan.json"
+  },
+  {
+    "id": "distribution-agreement",
+    "title": "Distribution Agreement",
+    "description": "Template for Distribution Agreement compliant with England & Wales | California law.",
+    "category": "Business",
+    "categorySlug": "business",
+    "jurisdiction": "UK | US",
+    "lang": "en",
+    "keywords": [
+      "distribution",
+      "agreement",
+      "uk",
+      "us",
+      "england",
+      "wales",
+      "california"
+    ],
+    "path": "contracts/business/distribution-agreement.json"
+  },
+  {
+    "id": "donation-agreement",
+    "title": "Donation Agreement",
+    "description": "Template for Donation Agreement compliant with England & Wales | California law.",
+    "category": "Business Closure",
+    "categorySlug": "closure",
+    "jurisdiction": "UK | US",
+    "lang": "en",
+    "keywords": [
+      "donation",
+      "agreement",
+      "uk",
+      "us",
+      "england",
+      "wales",
+      "california"
+    ],
+    "path": "contracts/closure/donation-agreement.json"
+  },
+  {
+    "id": "employment-contract-fixed-term",
+    "title": "Employment Contract (Fixed-Term)",
+    "description": "Template for Employment Contract (Fixed-Term) compliant with California law.",
+    "category": "Employment",
+    "categorySlug": "employment",
+    "jurisdiction": "US",
+    "lang": "en",
+    "keywords": [
+      "employment",
+      "contract",
+      "fixed",
+      "term",
+      "us",
+      "california"
+    ],
+    "path": "contracts/employment/employment-contract-fixed-term.json"
+  },
+  {
+    "id": "employment-offer-letter",
+    "title": "Employment Offer Letter",
+    "description": "Template for Employment Offer Letter compliant with England & Wales law.",
+    "category": "Employment",
+    "categorySlug": "employment",
+    "jurisdiction": "UK",
+    "lang": "en",
+    "keywords": [
+      "employment",
+      "offer",
+      "letter",
+      "uk",
+      "england",
+      "wales"
+    ],
+    "path": "contracts/employment/employment-offer-letter.json"
+  },
+  {
+    "id": "equipment-rental-agreement",
+    "title": "Equipment Rental Agreement",
+    "description": "Template for Equipment Rental Agreement compliant with California law.",
+    "category": "Real Estate",
+    "categorySlug": "real-estate",
+    "jurisdiction": "US",
+    "lang": "en",
+    "keywords": [
+      "equipment",
+      "rental",
+      "agreement",
+      "us",
+      "california"
+    ],
+    "path": "contracts/property/equipment-rental-agreement.json"
+  },
+  {
+    "id": "event-space-rental-agreement",
+    "title": "Event Space Rental Agreement",
+    "description": "Template for Event Space Rental Agreement compliant with England & Wales law.",
+    "category": "Real Estate",
+    "categorySlug": "real-estate",
+    "jurisdiction": "UK",
+    "lang": "en",
+    "keywords": [
+      "event",
+      "space",
+      "rental",
+      "agreement",
+      "uk",
+      "england",
+      "wales"
+    ],
+    "path": "contracts/property/event-space-rental-agreement.json"
+  },
+  {
+    "id": "freelance-services-agreement",
+    "title": "Freelance Services Agreement",
+    "description": "Template for Freelance Services Agreement compliant with England & Wales | California law.",
+    "category": "Business",
+    "categorySlug": "business",
+    "jurisdiction": "UK | US",
+    "lang": "en",
+    "keywords": [
+      "freelance",
+      "services",
+      "agreement",
+      "uk",
+      "us",
+      "england",
+      "wales",
+      "california"
+    ],
+    "path": "contracts/business/freelance-services-agreement.json"
+  },
+  {
+    "id": "handyman-trades-services-agreement",
+    "title": "Handyman / Trades Services Agreement",
+    "description": "Template for Handyman / Trades Services Agreement compliant with England & Wales law.",
+    "category": "Real Estate",
+    "categorySlug": "real-estate",
+    "jurisdiction": "UK",
+    "lang": "en",
+    "keywords": [
+      "handyman",
+      "trades",
+      "services",
+      "agreement",
+      "uk",
+      "england",
+      "wales"
+    ],
+    "path": "contracts/property/handyman-trades-services-agreement.json"
+  },
+  {
+    "id": "intellectual-property-assignment",
+    "title": "Intellectual Property Assignment",
+    "description": "Template for Intellectual Property Assignment compliant with England & Wales | New York law.",
+    "category": "Real Estate",
+    "categorySlug": "real-estate",
+    "jurisdiction": "UK | US",
+    "lang": "en",
+    "keywords": [
+      "intellectual",
+      "property",
+      "assignment",
+      "uk",
+      "us",
+      "england",
+      "wales",
+      "new",
+      "york"
+    ],
+    "path": "contracts/property/intellectual-property-assignment.json"
+  },
+  {
+    "id": "internship-agreement",
+    "title": "Internship Agreement",
+    "description": "Template for Internship Agreement compliant with England & Wales law.",
+    "category": "Employment",
+    "categorySlug": "employment",
+    "jurisdiction": "UK",
+    "lang": "en",
+    "keywords": [
+      "internship",
+      "agreement",
+      "uk",
+      "england",
+      "wales"
+    ],
+    "path": "contracts/employment/internship-agreement.json"
+  },
+  {
+    "id": "ip-invention-assignment-employee",
+    "title": "IP & Invention Assignment (Employee)",
+    "description": "Template for IP & Invention Assignment (Employee) compliant with California law.",
+    "category": "Employment",
+    "categorySlug": "employment",
+    "jurisdiction": "US",
+    "lang": "en",
+    "keywords": [
+      "ip",
+      "invention",
+      "assignment",
+      "employee",
+      "us",
+      "california"
+    ],
+    "path": "contracts/employment/ip-invention-assignment-employee.json"
+  },
+  {
+    "id": "joint-venture-term-sheet",
+    "title": "Joint Venture Term Sheet",
+    "description": "Template for Joint Venture Term Sheet compliant with England & Wales | New York law.",
+    "category": "Business",
+    "categorySlug": "business",
+    "jurisdiction": "UK | US",
+    "lang": "en",
+    "keywords": [
+      "joint",
+      "venture",
+      "term",
+      "sheet",
+      "uk",
+      "us",
+      "england",
+      "wales",
+      "new",
+      "york"
+    ],
+    "path": "contracts/business/joint-venture-term-sheet.json"
+  },
+  {
+    "id": "letter-of-intent",
+    "title": "Letter of Intent",
+    "description": "Template for Letter of Intent compliant with England & Wales | Delaware law.",
+    "category": "Business",
+    "categorySlug": "business",
+    "jurisdiction": "UK | US",
+    "lang": "en",
+    "keywords": [
+      "letter",
+      "of",
+      "intent",
+      "uk",
+      "us",
+      "england",
+      "wales",
+      "delaware"
+    ],
+    "path": "contracts/business/letter-of-intent.json"
+  },
+  {
+    "id": "loan-agreement-between-friends",
+    "title": "Loan Agreement (Between Friends)",
+    "description": "Template for Loan Agreement (Between Friends) compliant with California law.",
+    "category": "Business",
+    "categorySlug": "business",
+    "jurisdiction": "US",
+    "lang": "en",
+    "keywords": [
+      "loan",
+      "agreement",
+      "between",
+      "friends",
+      "us",
+      "california"
+    ],
+    "path": "contracts/business/loan-agreement-between-friends.json"
+  },
+  {
+    "id": "maintenance-service-agreement-home-office",
+    "title": "Maintenance / Service Agreement (Home/Office)",
+    "description": "Template for Maintenance / Service Agreement (Home/Office) compliant with New York law.",
+    "category": "Real Estate",
+    "categorySlug": "real-estate",
+    "jurisdiction": "US",
+    "lang": "en",
+    "keywords": [
+      "maintenance",
+      "service",
+      "agreement",
+      "home",
+      "office",
+      "us",
+      "new",
+      "york"
+    ],
+    "path": "contracts/property/maintenance-service-agreement-home-office.json"
+  },
+  {
+    "id": "master-services-agreement",
+    "title": "Master Services Agreement",
+    "description": "Template for Master Services Agreement compliant with England & Wales | New York law.",
+    "category": "Business",
+    "categorySlug": "business",
+    "jurisdiction": "UK | US",
+    "lang": "en",
+    "keywords": [
+      "master",
+      "services",
+      "agreement",
+      "uk",
+      "us",
+      "england",
+      "wales",
+      "new",
+      "york"
+    ],
+    "path": "contracts/business/master-services-agreement.json"
+  },
+  {
+    "id": "master-services-agreement-msa",
+    "title": "Master Services Agreement (MSA)",
+    "description": "Template for Master Services Agreement (MSA) compliant with England & Wales law.",
+    "category": "Business",
+    "categorySlug": "business",
+    "jurisdiction": "UK",
+    "lang": "en",
+    "keywords": [
+      "master",
+      "services",
+      "agreement",
+      "msa",
+      "uk",
+      "england",
+      "wales"
+    ],
+    "path": "contracts/business/master-services-agreement-msa.json"
+  },
+  {
+    "id": "memorandum-of-understanding",
+    "title": "Memorandum of Understanding",
+    "description": "Template for Memorandum of Understanding compliant with England & Wales | New York law.",
+    "category": "Business Closure",
+    "categorySlug": "closure",
+    "jurisdiction": "UK | US",
+    "lang": "en",
+    "keywords": [
+      "memorandum",
+      "of",
+      "understanding",
+      "uk",
+      "us",
+      "england",
+      "wales",
+      "new",
+      "york"
+    ],
+    "path": "contracts/closure/memorandum-of-understanding.json"
+  },
+  {
+    "id": "mutual-non-disclosure-agreement",
+    "title": "Mutual Non-Disclosure Agreement",
+    "description": "Template for Mutual Non-Disclosure Agreement compliant with England & Wales | Delaware law.",
+    "category": "Business",
+    "categorySlug": "business",
+    "jurisdiction": "UK | US",
+    "lang": "en",
+    "keywords": [
+      "mutual",
+      "non",
+      "disclosure",
+      "agreement",
+      "uk",
+      "us",
+      "england",
+      "wales",
+      "delaware"
+    ],
+    "path": "contracts/business/mutual-non-disclosure-agreement.json"
+  },
+  {
+    "id": "non-compete-non-solicit-agreement",
+    "title": "Non-Compete / Non-Solicit Agreement",
+    "description": "Template for Non-Compete / Non-Solicit Agreement compliant with England & Wales law.",
+    "category": "Employment",
+    "categorySlug": "employment",
+    "jurisdiction": "UK",
+    "lang": "en",
+    "keywords": [
+      "non",
+      "compete",
+      "solicit",
+      "agreement",
+      "uk",
+      "england",
+      "wales"
+    ],
+    "path": "contracts/employment/non-compete-non-solicit-agreement.json"
+  },
+  {
+    "id": "one-way-non-disclosure-agreement",
+    "title": "One-Way Non-Disclosure Agreement",
+    "description": "Template for One-Way Non-Disclosure Agreement compliant with England & Wales | Delaware law.",
+    "category": "Business",
+    "categorySlug": "business",
+    "jurisdiction": "UK | US",
+    "lang": "en",
+    "keywords": [
+      "one",
+      "way",
+      "non",
+      "disclosure",
+      "agreement",
+      "uk",
+      "us",
+      "england",
+      "wales",
+      "delaware"
+    ],
+    "path": "contracts/business/one-way-non-disclosure-agreement.json"
+  },
+  {
+    "id": "partnership-agreement",
+    "title": "Partnership Agreement",
+    "description": "Template for Partnership Agreement compliant with England & Wales | Delaware law.",
+    "category": "Business",
+    "categorySlug": "business",
+    "jurisdiction": "UK | US",
+    "lang": "en",
+    "keywords": [
+      "partnership",
+      "agreement",
+      "uk",
+      "us",
+      "england",
+      "wales",
+      "delaware"
+    ],
+    "path": "contracts/business/partnership-agreement.json"
+  },
+  {
+    "id": "partnership-agreement-simple",
+    "title": "Partnership Agreement (Simple)",
+    "description": "Template for Partnership Agreement (Simple) compliant with England & Wales law.",
+    "category": "Business",
+    "categorySlug": "business",
+    "jurisdiction": "UK",
+    "lang": "en",
+    "keywords": [
+      "partnership",
+      "agreement",
+      "simple",
+      "uk",
+      "england",
+      "wales"
+    ],
+    "path": "contracts/business/partnership-agreement-simple.json"
+  },
+  {
+    "id": "pet-care-pet-sitting-agreement",
+    "title": "Pet Care / Pet Sitting Agreement",
+    "description": "Template for Pet Care / Pet Sitting Agreement compliant with New York law.",
+    "category": "Business",
+    "categorySlug": "business",
+    "jurisdiction": "US",
+    "lang": "en",
+    "keywords": [
+      "pet",
+      "care",
+      "sitting",
+      "agreement",
+      "us",
+      "new",
+      "york"
+    ],
+    "path": "contracts/business/pet-care-pet-sitting-agreement.json"
+  },
+  {
+    "id": "portfolio-test-use-license",
+    "title": "Portfolio / Test-Use License",
+    "description": "Template for Portfolio / Test-Use License compliant with England & Wales | California law.",
+    "category": "Business",
+    "categorySlug": "business",
+    "jurisdiction": "UK | US",
+    "lang": "en",
+    "keywords": [
+      "portfolio",
+      "test",
+      "use",
+      "license",
+      "uk",
+      "us",
+      "england",
+      "wales",
+      "california"
+    ],
+    "path": "contracts/business/portfolio-test-use-license.json"
+  },
+  {
+    "id": "property-management-agreement",
+    "title": "Property Management Agreement",
+    "description": "Template for Property Management Agreement compliant with California law.",
+    "category": "Real Estate",
+    "categorySlug": "real-estate",
+    "jurisdiction": "US",
+    "lang": "en",
+    "keywords": [
+      "property",
+      "management",
+      "agreement",
+      "us",
+      "california"
+    ],
+    "path": "contracts/property/property-management-agreement.json"
+  },
+  {
+    "id": "referral-affiliate-agreement",
+    "title": "Referral / Affiliate Agreement",
+    "description": "Template for Referral / Affiliate Agreement compliant with England & Wales | Delaware law.",
+    "category": "Business",
+    "categorySlug": "business",
+    "jurisdiction": "UK | US",
+    "lang": "en",
+    "keywords": [
+      "referral",
+      "affiliate",
+      "agreement",
+      "uk",
+      "us",
+      "england",
+      "wales",
+      "delaware"
+    ],
+    "path": "contracts/business/referral-affiliate-agreement.json"
+  },
+  {
+    "id": "refund-chargeback-resolution-letter",
+    "title": "Refund / Chargeback Resolution Letter",
+    "description": "Template for Refund / Chargeback Resolution Letter compliant with England & Wales | New York law.",
+    "category": "Business Closure",
+    "categorySlug": "closure",
+    "jurisdiction": "UK | US",
+    "lang": "en",
+    "keywords": [
+      "refund",
+      "chargeback",
+      "resolution",
+      "letter",
+      "uk",
+      "us",
+      "england",
+      "wales",
+      "new",
+      "york"
+    ],
+    "path": "contracts/closure/refund-chargeback-resolution-letter.json"
+  },
+  {
+    "id": "release-of-claims",
+    "title": "Release of Claims",
+    "description": "Template for Release of Claims compliant with England & Wales | California law.",
+    "category": "Business Closure",
+    "categorySlug": "closure",
+    "jurisdiction": "UK | US",
+    "lang": "en",
+    "keywords": [
+      "release",
+      "of",
+      "claims",
+      "uk",
+      "us",
+      "england",
+      "wales",
+      "california"
+    ],
+    "path": "contracts/closure/release-of-claims.json"
+  },
+  {
+    "id": "residential-tenancy-agreement-basic",
+    "title": "Residential Tenancy Agreement (Basic)",
+    "description": "Template for Residential Tenancy Agreement (Basic) compliant with England & Wales law.",
+    "category": "Real Estate",
+    "categorySlug": "real-estate",
+    "jurisdiction": "UK",
+    "lang": "en",
+    "keywords": [
+      "residential",
+      "tenancy",
+      "agreement",
+      "basic",
+      "uk",
+      "england",
+      "wales"
+    ],
+    "path": "contracts/property/residential-tenancy-agreement-basic.json"
+  },
+  {
+    "id": "retainer-agreement",
+    "title": "Retainer Agreement",
+    "description": "Template for Retainer Agreement compliant with England & Wales | New York law.",
+    "category": "Business",
+    "categorySlug": "business",
+    "jurisdiction": "UK | US",
+    "lang": "en",
+    "keywords": [
+      "retainer",
+      "agreement",
+      "uk",
+      "us",
+      "england",
+      "wales",
+      "new",
+      "york"
+    ],
+    "path": "contracts/business/retainer-agreement.json"
+  },
+  {
+    "id": "room-rental-lodger-agreement",
+    "title": "Room Rental / Lodger Agreement",
+    "description": "Template for Room Rental / Lodger Agreement compliant with England & Wales law.",
+    "category": "Real Estate",
+    "categorySlug": "real-estate",
+    "jurisdiction": "UK",
+    "lang": "en",
+    "keywords": [
+      "room",
+      "rental",
+      "lodger",
+      "agreement",
+      "uk",
+      "england",
+      "wales"
+    ],
+    "path": "contracts/property/room-rental-lodger-agreement.json"
+  },
+  {
+    "id": "settlement-agreement",
+    "title": "Settlement Agreement",
+    "description": "Template for Settlement Agreement compliant with England & Wales | New York law.",
+    "category": "Business Closure",
+    "categorySlug": "closure",
+    "jurisdiction": "UK | US",
+    "lang": "en",
+    "keywords": [
+      "settlement",
+      "agreement",
+      "uk",
+      "us",
+      "england",
+      "wales",
+      "new",
+      "york"
+    ],
+    "path": "contracts/closure/settlement-agreement.json"
+  },
+  {
+    "id": "short-term-rental-terms-host-guest",
+    "title": "Short-Term Rental Terms (Host ↔ Guest)",
+    "description": "Template for Short-Term Rental Terms (Host ↔ Guest) compliant with New York law.",
+    "category": "Real Estate",
+    "categorySlug": "real-estate",
+    "jurisdiction": "US",
+    "lang": "en",
+    "keywords": [
+      "short",
+      "term",
+      "rental",
+      "terms",
+      "host",
+      "guest",
+      "us",
+      "new",
+      "york"
+    ],
+    "path": "contracts/property/short-term-rental-terms-host-guest.json"
+  },
+  {
+    "id": "statement-of-work",
+    "title": "Statement of Work",
+    "description": "Template for Statement of Work compliant with England & Wales | California law.",
+    "category": "Business",
+    "categorySlug": "business",
+    "jurisdiction": "UK | US",
+    "lang": "en",
+    "keywords": [
+      "statement",
+      "of",
+      "work",
+      "uk",
+      "us",
+      "england",
+      "wales",
+      "california"
+    ],
+    "path": "contracts/business/statement-of-work.json"
+  },
+  {
+    "id": "subcontractor-agreement",
+    "title": "Subcontractor Agreement",
+    "description": "Template for Subcontractor Agreement compliant with England & Wales | Texas law.",
+    "category": "Business",
+    "categorySlug": "business",
+    "jurisdiction": "UK | US",
+    "lang": "en",
+    "keywords": [
+      "subcontractor",
+      "agreement",
+      "uk",
+      "us",
+      "england",
+      "wales",
+      "texas"
+    ],
+    "path": "contracts/business/subcontractor-agreement.json"
+  },
+  {
+    "id": "termination-letter-employee-contractor",
+    "title": "Termination Letter (Employee/Contractor)",
+    "description": "Template for Termination Letter (Employee/Contractor) compliant with England & Wales law.",
+    "category": "Employment",
+    "categorySlug": "employment",
+    "jurisdiction": "UK",
+    "lang": "en",
+    "keywords": [
+      "termination",
+      "letter",
+      "employee",
+      "contractor",
+      "uk",
+      "england",
+      "wales"
+    ],
+    "path": "contracts/employment/termination-letter-employee-contractor.json"
+  },
+  {
+    "id": "terms-of-service",
+    "title": "Terms of Service",
+    "description": "Template for Terms of Service compliant with England & Wales | California law.",
+    "category": "Business",
+    "categorySlug": "business",
+    "jurisdiction": "UK | US",
+    "lang": "en",
+    "keywords": [
+      "terms",
+      "of",
+      "service",
+      "uk",
+      "us",
+      "england",
+      "wales",
+      "california"
+    ],
+    "path": "contracts/business/terms-of-service.json"
+  },
+  {
+    "id": "terms-of-service-basic-website-app",
+    "title": "Terms of Service (Basic Website/App)",
+    "description": "Template for Terms of Service (Basic Website/App) compliant with California law.",
+    "category": "Business",
+    "categorySlug": "business",
+    "jurisdiction": "US",
+    "lang": "en",
+    "keywords": [
+      "terms",
+      "of",
+      "service",
+      "basic",
+      "website",
+      "app",
+      "us",
+      "california"
+    ],
+    "path": "contracts/business/terms-of-service-basic-website-app.json"
+  },
+  {
+    "id": "vendor-supplier-agreement",
+    "title": "Vendor / Supplier Agreement",
+    "description": "Template for Vendor / Supplier Agreement compliant with England & Wales | Illinois law.",
+    "category": "Business",
+    "categorySlug": "business",
+    "jurisdiction": "UK | US",
+    "lang": "en",
+    "keywords": [
+      "vendor",
+      "supplier",
+      "agreement",
+      "uk",
+      "us",
+      "england",
+      "wales",
+      "illinois"
+    ],
+    "path": "contracts/business/vendor-supplier-agreement.json"
+  },
+  {
+    "id": "work-for-hire-agreement",
+    "title": "Work-for-Hire Agreement",
+    "description": "Template for Work-for-Hire Agreement compliant with England & Wales | California law.",
+    "category": "Business",
+    "categorySlug": "business",
+    "jurisdiction": "UK | US",
+    "lang": "en",
+    "keywords": [
+      "work",
+      "for",
+      "hire",
+      "agreement",
+      "uk",
+      "us",
+      "england",
+      "wales",
+      "california"
+    ],
+    "path": "contracts/business/work-for-hire-agreement.json"
+  }
+]

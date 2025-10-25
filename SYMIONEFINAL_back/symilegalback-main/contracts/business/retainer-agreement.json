@@ -1,0 +1,79 @@
+{
+  "metadata": {
+    "title": "Retainer Agreement",
+    "jurisdiction": "UK | US",
+    "governing_law": "England & Wales | New York",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {
+      "key": "client_name",
+      "label": "Client Name",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "provider_name",
+      "label": "Service Provider",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "monthly_fee",
+      "label": "Monthly Retainer Fee",
+      "type": "currency",
+      "required": true
+    },
+    {
+      "key": "scope",
+      "label": "Scope of ongoing work",
+      "type": "textarea",
+      "required": true
+    },
+    {
+      "key": "start_date",
+      "label": "Start Date",
+      "type": "date",
+      "required": true
+    },
+    {
+      "key": "notice_period",
+      "label": "Notice period (days)",
+      "type": "number",
+      "required": true
+    }
+  ],
+  "clauses": [
+    {
+      "id": "scope",
+      "title": "Scope",
+      "body": "Provider supplies ongoing services: {{scope}}."
+    },
+    {
+      "id": "retainer",
+      "title": "Retainer Fee",
+      "body": "Client pays {{monthly_fee}} monthly in advance."
+    },
+    {
+      "id": "changes",
+      "title": "Change Requests",
+      "body": "Additional work requires written approval."
+    },
+    {
+      "id": "termination",
+      "title": "Termination",
+      "body": "Either party may terminate with {{notice_period}} days’ notice."
+    },
+    {
+      "id": "law",
+      "title": "Governing Law",
+      "body": "Subject to {{governing_law}}."
+    }
+  ],
+  "annotations": [
+    {
+      "clause_id": "retainer",
+      "tooltip": "Specify renewal cycle and billing method."
+    }
+  ]
+}

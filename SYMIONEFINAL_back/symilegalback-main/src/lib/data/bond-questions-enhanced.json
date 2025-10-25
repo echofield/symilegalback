@@ -1,0 +1,636 @@
+{
+  "service": [
+    {
+      "id": "client_type",
+      "question": "Le client est-il un particulier ou un professionnel ?",
+      "type": "select",
+      "options": ["Particulier", "Professionnel", "Association", "Administration"],
+      "validation": { "required": true },
+      "legalImplication": "Détermine le droit applicable (B2C ou B2B) et les obligations légales"
+    },
+    {
+      "id": "client_name",
+      "question": "Nom complet du client (ou raison sociale)",
+      "type": "text",
+      "validation": { "required": true, "pattern": "^[A-Za-zÀ-ÿ\\s\\-\\.]+$" }
+    },
+    {
+      "id": "client_id",
+      "question": "SIRET/SIREN du client (si professionnel)",
+      "type": "text",
+      "conditions": { "dependsOn": "client_type", "showIf": ["Professionnel", "Association"] },
+      "validation": { "pattern": "^\\d{14}$" },
+      "help": "Format: 14 chiffres sans espaces"
+    },
+    {
+      "id": "provider_name",
+      "question": "Nom du prestataire (ou raison sociale)",
+      "type": "text",
+      "validation": { "required": true }
+    },
+    {
+      "id": "service_nature",
+      "question": "Nature précise de la prestation",
+      "type": "select",
+      "options": [
+        "Développement logiciel",
+        "Consulting/Conseil",
+        "Design/Création graphique",
+        "Marketing/Communication",
+        "Formation",
+        "Maintenance/Support",
+        "Audit/Expertise",
+        "Autre prestation intellectuelle"
+      ],
+      "validation": { "required": true }
+    },
+    {
+      "id": "service_description",
+      "question": "Description détaillée des livrables attendus",
+      "type": "text",
+      "validation": { "required": true, "min": 50 },
+      "help": "Minimum 50 caractères. Soyez précis sur ce qui sera livré."
+    },
+    {
+      "id": "total_amount",
+      "question": "Montant total HT de la prestation (en €)",
+      "type": "number",
+      "validation": { "required": true, "min": 1 },
+      "help": "Montant hors taxes en euros"
+    },
+    {
+      "id": "milestone_type",
+      "question": "Organisation des jalons de paiement",
+      "type": "select",
+      "options": [
+        "Paiement unique à la livraison",
+        "2 jalons (50% début, 50% fin)",
+        "3 jalons (30% début, 40% milieu, 30% fin)",
+        "Jalons personnalisés",
+        "Paiement mensuel régulier"
+      ],
+      "validation": { "required": true }
+    },
+    {
+      "id": "start_date",
+      "question": "Date de début de la prestation",
+      "type": "date",
+      "validation": { "required": true },
+      "defaultValue": "today"
+    },
+    {
+      "id": "end_date",
+      "question": "Date de fin prévisionnelle",
+      "type": "date",
+      "validation": { "required": true }
+    },
+    {
+      "id": "ip_ownership",
+      "question": "Propriété des droits sur les livrables",
+      "type": "select",
+      "options": [
+        "Cession totale au client",
+        "Licence d'utilisation au client",
+        "Copropriété",
+        "Propriété prestataire avec licence",
+        "Selon la nature des livrables"
+      ],
+      "validation": { "required": true },
+      "legalImplication": "Art. L131-3 CPI - La cession doit être explicite et délimitée"
+    },
+    {
+      "id": "confidentiality_level",
+      "question": "Niveau de confidentialité requis",
+      "type": "select",
+      "options": [
+        "Standard (informations commerciales)",
+        "Élevé (secrets d'affaires)",
+        "Très élevé (données sensibles)",
+        "Aucun"
+      ],
+      "validation": { "required": true }
+    },
+    {
+      "id": "warranty_duration",
+      "question": "Durée de garantie sur les livrables",
+      "type": "select",
+      "options": ["3 mois", "6 mois", "1 an", "2 ans", "Garantie légale uniquement"],
+      "validation": { "required": true }
+    },
+    {
+      "id": "termination_notice",
+      "question": "Préavis de résiliation anticipée",
+      "type": "select",
+      "options": ["Impossible", "7 jours", "15 jours", "30 jours", "60 jours"],
+      "validation": { "required": true }
+    },
+    {
+      "id": "applicable_law",
+      "question": "Droit applicable",
+      "type": "select",
+      "options": ["Droit français", "Droit du pays du client", "Droit du pays du prestataire"],
+      "defaultValue": "Droit français"
+    }
+  ],
+  "travaux": [
+    {
+      "id": "client_type",
+      "question": "Type de client",
+      "type": "select",
+      "options": ["Particulier", "Professionnel", "Copropriété", "Collectivité"],
+      "validation": { "required": true }
+    },
+    {
+      "id": "work_nature",
+      "question": "Nature des travaux",
+      "type": "select",
+      "options": [
+        "Rénovation complète",
+        "Extension",
+        "Aménagement",
+        "Construction neuve",
+        "Réparation/Entretien",
+        "Isolation thermique"
+      ],
+      "validation": { "required": true }
+    },
+    {
+      "id": "work_description",
+      "question": "Description détaillée des travaux",
+      "type": "text",
+      "validation": { "required": true, "min": 100 },
+      "help": "Décrivez précisément les travaux à effectuer"
+    },
+    {
+      "id": "total_amount",
+      "question": "Montant total HT des travaux (en €)",
+      "type": "number",
+      "validation": { "required": true, "min": 1000 },
+      "help": "Montant hors taxes en euros"
+    },
+    {
+      "id": "devis_exists",
+      "question": "Y a-t-il un devis signé ?",
+      "type": "select",
+      "options": ["Oui", "Non", "En cours"],
+      "validation": { "required": true }
+    },
+    {
+      "id": "planning_phases",
+      "question": "Nombre de phases de travaux",
+      "type": "select",
+      "options": ["1 phase", "2 phases", "3 phases", "4 phases", "5+ phases"],
+      "validation": { "required": true }
+    },
+    {
+      "id": "insurance_required",
+      "question": "Assurance décennale requise ?",
+      "type": "select",
+      "options": [
+        "Oui obligatoire",
+        "Oui recommandée",
+        "Non nécessaire",
+        "À vérifier"
+      ],
+      "legalImplication": "Obligatoire pour travaux de construction"
+    },
+    {
+      "id": "reception_clause",
+      "question": "Inclure clause de réception des travaux ?",
+      "type": "select",
+      "options": ["Oui", "Non", "Réception tacite"],
+      "validation": { "required": true }
+    },
+    {
+      "id": "penalties_delay",
+      "question": "Prévoir des pénalités de retard ?",
+      "type": "select",
+      "options": ["Non", "Oui - 0.5% par jour", "Oui - 1% par jour", "Oui - montant fixe"],
+      "legalImplication": "Article 1231-5 Code civil - Les pénalités doivent être proportionnées"
+    },
+    {
+      "id": "start_date",
+      "question": "Date de début des travaux",
+      "type": "date",
+      "validation": { "required": true }
+    },
+    {
+      "id": "end_date",
+      "question": "Date de fin prévisionnelle",
+      "type": "date",
+      "validation": { "required": true }
+    },
+    {
+      "id": "weather_clause",
+      "question": "Inclure clause météo/intempéries ?",
+      "type": "select",
+      "options": ["Oui", "Non", "Clause standard"],
+      "help": "Important pour les travaux extérieurs"
+    },
+    {
+      "id": "material_supply",
+      "question": "Qui fournit les matériaux ?",
+      "type": "select",
+      "options": [
+        "Entrepreneur",
+        "Client",
+        "Mixte",
+        "À définir"
+      ],
+      "validation": { "required": true }
+    },
+    {
+      "id": "warranty_duration",
+      "question": "Durée de garantie travaux",
+      "type": "select",
+      "options": ["1 an", "2 ans", "Garantie légale", "Garantie décennale"],
+      "validation": { "required": true }
+    },
+    {
+      "id": "applicable_law",
+      "question": "Droit applicable",
+      "type": "select",
+      "options": ["Droit français", "Droit local"],
+      "defaultValue": "Droit français"
+    }
+  ],
+  "creation": [
+    {
+      "id": "client_type",
+      "question": "Type de client",
+      "type": "select",
+      "options": ["Particulier", "Entreprise", "Association", "Institution"],
+      "validation": { "required": true }
+    },
+    {
+      "id": "creation_type",
+      "question": "Type de création",
+      "type": "select",
+      "options": [
+        "Musique/Composition",
+        "Design graphique",
+        "Vidéo/Cinéma",
+        "Littérature/Écriture",
+        "Photographie",
+        "Art numérique",
+        "Autre création artistique"
+      ],
+      "validation": { "required": true }
+    },
+    {
+      "id": "brief_description",
+      "question": "Description du brief créatif",
+      "type": "text",
+      "validation": { "required": true, "min": 100 },
+      "help": "Décrivez le projet créatif en détail"
+    },
+    {
+      "id": "total_amount",
+      "question": "Budget total du projet (en €)",
+      "type": "number",
+      "validation": { "required": true, "min": 100 },
+      "help": "Budget hors taxes en euros"
+    },
+    {
+      "id": "deliverables_count",
+      "question": "Nombre de livrables attendus",
+      "type": "select",
+      "options": ["1 livrable", "2-3 livrables", "4-5 livrables", "Plus de 5"],
+      "validation": { "required": true }
+    },
+    {
+      "id": "revisions_included",
+      "question": "Nombre de révisions incluses",
+      "type": "select",
+      "options": ["1 révision", "2 révisions", "3 révisions", "Illimitées"],
+      "validation": { "required": true }
+    },
+    {
+      "id": "usage_rights",
+      "question": "Droits d'usage accordés",
+      "type": "select",
+      "options": [
+        "Usage personnel uniquement",
+        "Usage commercial limité",
+        "Usage commercial étendu",
+        "Tous droits cédés",
+        "Licence exclusive"
+      ],
+      "validation": { "required": true },
+      "legalImplication": "Détermine la portée des droits accordés"
+    },
+    {
+      "id": "moral_rights",
+      "question": "Mention du nom du créateur (droit moral) ?",
+      "type": "select",
+      "options": ["Oui obligatoire", "Oui si possible", "Non", "À discuter"],
+      "legalImplication": "Le droit moral est inaliénable en France (Art. L121-1 CPI)"
+    },
+    {
+      "id": "deadline_type",
+      "question": "Type de délai",
+      "type": "select",
+      "options": ["Délai fixe", "Délai indicatif", "Pas de délai", "Délai échelonné"],
+      "validation": { "required": true }
+    },
+    {
+      "id": "start_date",
+      "question": "Date de début du projet",
+      "type": "date",
+      "validation": { "required": true }
+    },
+    {
+      "id": "end_date",
+      "question": "Date de livraison prévue",
+      "type": "date",
+      "validation": { "required": true }
+    },
+    {
+      "id": "milestone_type",
+      "question": "Organisation des jalons",
+      "type": "select",
+      "options": [
+        "Paiement unique à la livraison",
+        "2 jalons (50% début, 50% fin)",
+        "3 jalons (30% début, 40% milieu, 30% fin)",
+        "Jalons créatifs personnalisés"
+      ],
+      "validation": { "required": true }
+    },
+    {
+      "id": "confidentiality_level",
+      "question": "Niveau de confidentialité",
+      "type": "select",
+      "options": [
+        "Standard",
+        "Élevé",
+        "Très élevé",
+        "Non requis"
+      ],
+      "validation": { "required": true }
+    },
+    {
+      "id": "portfolio_usage",
+      "question": "Utilisation dans le portfolio du créateur ?",
+      "type": "select",
+      "options": ["Oui", "Non", "Avec accord", "À discuter"],
+      "help": "Droit du créateur de montrer ses œuvres"
+    },
+    {
+      "id": "applicable_law",
+      "question": "Droit applicable",
+      "type": "select",
+      "options": ["Droit français", "Droit international"],
+      "defaultValue": "Droit français"
+    }
+  ],
+  "challenge": [
+    {
+      "id": "participants_count",
+      "question": "Nombre de participants",
+      "type": "select",
+      "options": ["2 personnes", "3-5 personnes", "6-10 personnes", "Plus de 10"],
+      "validation": { "required": true }
+    },
+    {
+      "id": "challenge_type",
+      "question": "Type de défi",
+      "type": "select",
+      "options": [
+        "Défi sportif",
+        "Défi créatif",
+        "Défi professionnel",
+        "Défi personnel",
+        "Défi ludique",
+        "Autre"
+      ],
+      "validation": { "required": true }
+    },
+    {
+      "id": "challenge_description",
+      "question": "Description du défi",
+      "type": "text",
+      "validation": { "required": true, "min": 50 },
+      "help": "Décrivez précisément le défi à relever"
+    },
+    {
+      "id": "duration",
+      "question": "Durée du défi",
+      "type": "select",
+      "options": ["1 semaine", "1 mois", "3 mois", "6 mois", "1 an"],
+      "validation": { "required": true }
+    },
+    {
+      "id": "stake_amount",
+      "question": "Montant de la mise (en €)",
+      "type": "number",
+      "validation": { "min": 0 },
+      "help": "Montant symbolique ou réel mis en jeu"
+    },
+    {
+      "id": "rules_clarity",
+      "question": "Règles du défi",
+      "type": "text",
+      "validation": { "required": true, "min": 100 },
+      "help": "Définissez clairement les règles et critères de réussite"
+    },
+    {
+      "id": "verification_method",
+      "question": "Méthode de vérification",
+      "type": "select",
+      "options": [
+        "Auto-déclaration",
+        "Preuve photo/vidéo",
+        "Témoin neutre",
+        "Jury",
+        "Mesure objective"
+      ],
+      "validation": { "required": true }
+    },
+    {
+      "id": "penalties",
+      "question": "Sanctions en cas d'échec",
+      "type": "select",
+      "options": [
+        "Aucune",
+        "Perte de la mise",
+        "Action symbolique",
+        "Défi supplémentaire"
+      ],
+      "validation": { "required": true }
+    },
+    {
+      "id": "start_date",
+      "question": "Date de début du défi",
+      "type": "date",
+      "validation": { "required": true }
+    },
+    {
+      "id": "end_date",
+      "question": "Date de fin du défi",
+      "type": "date",
+      "validation": { "required": true }
+    },
+    {
+      "id": "milestone_type",
+      "question": "Organisation des jalons",
+      "type": "select",
+      "options": [
+        "Paiement unique à la fin",
+        "2 jalons (50% début, 50% fin)",
+        "3 jalons (30% début, 40% milieu, 30% fin)",
+        "Jalons personnalisés"
+      ],
+      "validation": { "required": true }
+    },
+    {
+      "id": "arbitration",
+      "question": "Arbitrage en cas de litige",
+      "type": "select",
+      "options": [
+        "Arbitrage amical",
+        "Tiers neutre",
+        "Vote majoritaire",
+        "Pas d'arbitrage"
+      ],
+      "validation": { "required": true }
+    },
+    {
+      "id": "confidentiality_level",
+      "question": "Niveau de confidentialité",
+      "type": "select",
+      "options": [
+        "Public",
+        "Privé entre participants",
+        "Confidentiel",
+        "Secret"
+      ],
+      "validation": { "required": true }
+    },
+    {
+      "id": "applicable_law",
+      "question": "Droit applicable",
+      "type": "select",
+      "options": ["Droit français", "Droit coutumier", "Règles internes"],
+      "defaultValue": "Règles internes"
+    }
+  ],
+  "hybrid": [
+    {
+      "id": "project_description",
+      "question": "Description complète du projet",
+      "type": "text",
+      "validation": { "required": true, "min": 200 },
+      "help": "Décrivez votre projet en détail pour que l'IA puisse générer un contrat adapté"
+    },
+    {
+      "id": "project_type",
+      "question": "Type de projet",
+      "type": "select",
+      "options": [
+        "Prestation de service",
+        "Travaux/Construction",
+        "Création artistique",
+        "Défi/Challenge",
+        "Mixte",
+        "Autre"
+      ],
+      "validation": { "required": true }
+    },
+    {
+      "id": "total_amount",
+      "question": "Budget estimé (en €)",
+      "type": "number",
+      "validation": { "required": true, "min": 1 },
+      "help": "Budget total du projet"
+    },
+    {
+      "id": "complexity_level",
+      "question": "Complexité souhaitée du contrat",
+      "type": "select",
+      "options": [
+        "Simple (essentiel)",
+        "Standard (complet)",
+        "Détaillé (professionnel)",
+        "Très détaillé (expert)"
+      ],
+      "validation": { "required": true }
+    },
+    {
+      "id": "legal_clauses",
+      "question": "Clauses légales à inclure",
+      "type": "multiselect",
+      "options": [
+        "Confidentialité",
+        "Propriété intellectuelle",
+        "Responsabilité limitée",
+        "Force majeure",
+        "Résiliation",
+        "Litiges",
+        "Garanties",
+        "Pénalités de retard"
+      ],
+      "validation": { "required": true }
+    },
+    {
+      "id": "milestone_preference",
+      "question": "Préférence pour les jalons",
+      "type": "select",
+      "options": [
+        "Paiement unique",
+        "2 jalons",
+        "3 jalons",
+        "4+ jalons",
+        "Jalons personnalisés",
+        "Laissez l'IA décider"
+      ],
+      "validation": { "required": true }
+    },
+    {
+      "id": "start_date",
+      "question": "Date de début souhaitée",
+      "type": "date",
+      "validation": { "required": true }
+    },
+    {
+      "id": "end_date",
+      "question": "Date de fin souhaitée",
+      "type": "date",
+      "validation": { "required": true }
+    },
+    {
+      "id": "parties_count",
+      "question": "Nombre de parties impliquées",
+      "type": "select",
+      "options": ["2 parties", "3 parties", "4 parties", "Plus de 4"],
+      "validation": { "required": true }
+    },
+    {
+      "id": "jurisdiction_preference",
+      "question": "Juridiction préférée",
+      "type": "select",
+      "options": [
+        "Tribunal du défendeur",
+        "Tribunal du demandeur",
+        "Tribunal du lieu d'exécution",
+        "Arbitrage",
+        "Médiation"
+      ],
+      "validation": { "required": true }
+    },
+    {
+      "id": "language_preference",
+      "question": "Langue du contrat",
+      "type": "select",
+      "options": ["Français", "Anglais", "Bilingue"],
+      "defaultValue": "Français"
+    },
+    {
+      "id": "governing_law",
+      "question": "Droit applicable",
+      "type": "select",
+      "options": ["Droit français", "Droit international", "Droit local"],
+      "defaultValue": "Droit français"
+    }
+  ]
+}

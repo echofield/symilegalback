@@ -1,0 +1,52 @@
+{
+  "metadata": {
+    "title": "Joint Venture Term Sheet",
+    "jurisdiction": "UK | US",
+    "governing_law": "England & Wales | New York",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {
+      "key": "party_a",
+      "label": "Party A",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "party_b",
+      "label": "Party B",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "purpose",
+      "label": "Purpose",
+      "type": "textarea",
+      "required": true
+    },
+    {
+      "key": "ownership",
+      "label": "Ownership Split",
+      "type": "text",
+      "required": true
+    }
+  ],
+  "clauses": [
+    {
+      "id": "intent",
+      "title": "Intent",
+      "body": "This term sheet summarizes key terms for a joint venture between the Parties for {{purpose}}."
+    },
+    {
+      "id": "capital",
+      "title": "Capital Contributions",
+      "body": "Each party contributes resources in proportion to {{ownership}}."
+    },
+    {
+      "id": "nonbinding",
+      "title": "Non-Binding",
+      "body": "Except for confidentiality and governing law, this term sheet is non-binding."
+    }
+  ],
+  "annotations": []
+}

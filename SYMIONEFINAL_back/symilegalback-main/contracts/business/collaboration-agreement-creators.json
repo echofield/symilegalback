@@ -1,0 +1,57 @@
+{
+  "metadata": {
+    "title": "Collaboration Agreement (Creators)",
+    "jurisdiction": "UK | US",
+    "governing_law": "England & Wales | New York",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {
+      "key": "creator_a",
+      "label": "Creator A",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "creator_b",
+      "label": "Creator B",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "project",
+      "label": "Project Title",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "split",
+      "label": "Revenue Split (e.g., 50/50)",
+      "type": "text",
+      "required": true
+    }
+  ],
+  "clauses": [
+    {
+      "id": "purpose",
+      "title": "Purpose",
+      "body": "Creators collaborate on {{project}}."
+    },
+    {
+      "id": "ownership",
+      "title": "Ownership",
+      "body": "Each party owns its contribution; revenue split {{split}}."
+    },
+    {
+      "id": "decisions",
+      "title": "Decisions",
+      "body": "Major decisions require mutual consent."
+    },
+    {
+      "id": "law",
+      "title": "Governing Law",
+      "body": "Under {{governing_law}}."
+    }
+  ],
+  "annotations": []
+}

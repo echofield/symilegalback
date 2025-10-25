@@ -1,0 +1,78 @@
+{
+  "metadata": {
+    "title": "Event Space Rental Agreement",
+    "jurisdiction": "UK",
+    "governing_law": "England & Wales",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {
+      "key": "party_a_name",
+      "label": "Party A (Owner/Client)",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "party_b_name",
+      "label": "Party B (Tenant/Provider)",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "service_or_property",
+      "label": "Property or Service Description",
+      "type": "textarea",
+      "required": true
+    },
+    {
+      "key": "fee",
+      "label": "Fee or Rent",
+      "type": "currency",
+      "required": true
+    },
+    {
+      "key": "term",
+      "label": "Duration",
+      "type": "text",
+      "required": true
+    }
+  ],
+  "clauses": [
+    {
+      "id": "scope",
+      "title": "Event Space Hire",
+      "body": "The Owner agrees to hire the event space described as: [service_or_property] to the Renter for the purpose of [event_type] on [date(s)] during [hours]. The Renter shall use the space only for the agreed purpose and comply with all venue rules and capacity limits."
+    },
+    {
+      "id": "payment",
+      "title": "Fees and Deposit",
+      "body": "The total hire fee is £[fee], payable as follows: [payment schedule]. A security deposit of £[amount] is required against damages or additional cleaning, refundable within [number] days after the event provided no damage occurs and terms are met."
+    },
+    {
+      "id": "responsibility",
+      "title": "Renter Obligations",
+      "body": "The Renter shall: obtain any necessary licenses or permits; provide adequate supervision; ensure guest behavior remains appropriate; leave the space clean and undamaged; and remove all decorations and items brought in. The Renter is responsible for their guests' conduct."
+    },
+    {
+      "id": "liability",
+      "title": "Insurance and Liability",
+      "body": "The Renter should obtain event liability insurance. The Owner is not liable for injury, loss, or damage to Renter's property. The Renter indemnifies the Owner against claims arising from their use of the space. Damage to the venue or equipment will be charged to the Renter."
+    },
+    {
+      "id": "termination",
+      "title": "Cancellation",
+      "body": "Cancellations [number] days before the event receive full refund; [number-30] days receive 50% refund; later cancellations receive no refund. The Owner may cancel for emergency reasons with full refund. The Owner may terminate the event for breach of terms with no refund."
+    },
+    {
+      "id": "law",
+      "title": "Governing Law",
+      "body": "This agreement is governed by the laws of England and Wales."
+    }
+  ],
+  "annotations": [
+    {
+      "clause_id": "liability",
+      "tooltip": "Importance of event insurance and responsibility for guest behavior and venue damages."
+    }
+  ]
+}

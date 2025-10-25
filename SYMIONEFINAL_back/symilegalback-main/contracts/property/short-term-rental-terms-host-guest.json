@@ -1,0 +1,78 @@
+{
+  "metadata": {
+    "title": "Short-Term Rental Terms (Host ↔ Guest)",
+    "jurisdiction": "US",
+    "governing_law": "New York",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {
+      "key": "party_a_name",
+      "label": "Party A (Owner/Client)",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "party_b_name",
+      "label": "Party B (Tenant/Provider)",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "service_or_property",
+      "label": "Property or Service Description",
+      "type": "textarea",
+      "required": true
+    },
+    {
+      "key": "fee",
+      "label": "Fee or Rent",
+      "type": "currency",
+      "required": true
+    },
+    {
+      "key": "term",
+      "label": "Duration",
+      "type": "text",
+      "required": true
+    }
+  ],
+  "clauses": [
+    {
+      "id": "scope",
+      "title": "Short-Term Rental",
+      "body": "The Host grants the Guest a limited license to use the vacation rental property described as: [service_or_property] for the period of [term] beginning [check-in_date] and ending [check-out_date]. This agreement is for temporary vacation accommodation only and does not create a tenancy."
+    },
+    {
+      "id": "payment",
+      "title": "Fees and Security Deposit",
+      "body": "The total rental fee is $[fee], payable as follows: [payment schedule]. A security deposit of $[amount] is held against damages and will be refunded within [number] days after checkout, less any deductions for damage, excessive cleaning, or violation of house rules."
+    },
+    {
+      "id": "responsibility",
+      "title": "Guest Responsibilities",
+      "body": "The Guest shall: comply with check-in/check-out times; not exceed the maximum number of occupants; not host events without permission; keep the property secure; follow building rules if applicable; and leave the property in good condition. Pets and smoking are [allowed/prohibited]."
+    },
+    {
+      "id": "liability",
+      "title": "Cancellation and Liability",
+      "body": "Cancellations [number] days before arrival receive full refund; [number-14] days receive 50% refund; later cancellations receive no refund. The Host is not liable for personal injury, property loss, or circumstances beyond their control. The Guest is responsible for damage they cause."
+    },
+    {
+      "id": "termination",
+      "title": "Early Termination",
+      "body": "The Host may terminate this agreement if the Guest violates material terms, with no refund. In case of property damage or disturbance, the Guest may be required to vacate immediately. The Guest may terminate according to the cancellation policy above."
+    },
+    {
+      "id": "law",
+      "title": "Governing Law",
+      "body": "This agreement is governed by the laws of the State of New York."
+    }
+  ],
+  "annotations": [
+    {
+      "clause_id": "liability",
+      "tooltip": "Clear cancellation policy and security deposit handling for short-term stays."
+    }
+  ]
+}

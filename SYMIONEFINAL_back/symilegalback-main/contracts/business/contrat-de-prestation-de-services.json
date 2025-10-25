@@ -1,0 +1,27 @@
+{
+  "metadata": {
+    "title": "Contrat de prestation de services",
+    "jurisdiction": "FR",
+    "governing_law": "France",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {"key": "prestataire_nom", "label": "Nom ou raison sociale du prestataire", "type": "text", "required": true},
+    {"key": "client_nom", "label": "Nom ou raison sociale du client", "type": "text", "required": true},
+    {"key": "objet", "label": "Objet de la prestation", "type": "textarea", "required": true},
+    {"key": "duree", "label": "Durée de la prestation", "type": "text", "required": true},
+    {"key": "montant", "label": "Montant de la prestation (€)", "type": "number", "required": true},
+    {"key": "delai_paiement", "label": "Délai de paiement (en jours)", "type": "number", "required": true}
+  ],
+  "clauses": [
+    {"id": "parties", "title": "Parties", "body": "Le présent contrat de prestation de services est conclu entre {{prestataire_nom}}, ci-après dénommé « le Prestataire », et {{client_nom}}, ci-après dénommé « le Client »."},
+    {"id": "objet", "title": "Objet du contrat", "body": "Le Prestataire s'engage à fournir au Client la prestation suivante : {{objet}}."},
+    {"id": "duree", "title": "Durée", "body": "La prestation sera réalisée sur une période de {{duree}}."},
+    {"id": "prix", "title": "Prix et modalités de paiement", "body": "Le prix de la prestation est fixé à {{montant}} euros HT. Le paiement interviendra dans un délai de {{delai_paiement}} jours suivant l'émission de la facture."},
+    {"id": "obligations_prestataire", "title": "Obligations du prestataire", "body": "Le Prestataire s'engage à exécuter la prestation avec diligence et professionnalisme, conformément aux règles de l'art."},
+    {"id": "obligations_client", "title": "Obligations du client", "body": "Le Client s'engage à fournir au Prestataire toutes les informations et documents nécessaires à la bonne exécution de la prestation."},
+    {"id": "responsabilite", "title": "Responsabilité", "body": "Le Prestataire est responsable de la bonne exécution de ses obligations contractuelles. Sa responsabilité ne saurait être engagée en cas de force majeure."},
+    {"id": "loi_applicable", "title": "Loi applicable et juridiction", "body": "Le présent contrat est soumis au droit français. Tout litige sera soumis à la compétence exclusive des tribunaux français."}
+  ]
+}
+

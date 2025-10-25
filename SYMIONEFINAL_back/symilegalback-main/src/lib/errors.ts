@@ -23,14 +23,14 @@ export enum ErrorCode {
 export class AppError extends Error {
   public readonly code: ErrorCode;
   public readonly statusCode: number;
-  public readonly details?: unknown;
+  public readonly details?: any;
   public readonly timestamp: string;
 
   constructor(
-    message: string,
-    statusCode: number = 500,
+    message: string, 
+    statusCode: number = 500, 
     code: ErrorCode = ErrorCode.INTERNAL_ERROR,
-    details?: unknown,
+    details?: any
   ) {
     super(message);
     this.name = 'AppError';
@@ -47,7 +47,7 @@ export class AppError extends Error {
       message: this.message,
       code: this.code,
       statusCode: this.statusCode,
-      ...(this.details !== undefined ? { details: this.details } : {}),
+      details: this.details,
       timestamp: this.timestamp,
     };
   }

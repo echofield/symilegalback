@@ -1,0 +1,52 @@
+{
+  "metadata": {
+    "title": "Vendor / Supplier Agreement",
+    "jurisdiction": "UK | US",
+    "governing_law": "England & Wales | Illinois",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {
+      "key": "vendor",
+      "label": "Vendor Name",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "buyer",
+      "label": "Buyer Name",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "goods",
+      "label": "Goods or Services Description",
+      "type": "textarea",
+      "required": true
+    },
+    {
+      "key": "price",
+      "label": "Total Price",
+      "type": "currency",
+      "required": true
+    }
+  ],
+  "clauses": [
+    {
+      "id": "supply",
+      "title": "Supply of Goods",
+      "body": "Vendor will supply {{goods}} to Buyer for {{price}}."
+    },
+    {
+      "id": "delivery",
+      "title": "Delivery",
+      "body": "Delivery dates mutually agreed; risk passes on delivery."
+    },
+    {
+      "id": "quality",
+      "title": "Quality",
+      "body": "Goods shall meet reasonable industry standards."
+    }
+  ],
+  "annotations": []
+}

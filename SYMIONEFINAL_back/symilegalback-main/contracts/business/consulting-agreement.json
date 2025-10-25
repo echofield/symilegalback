@@ -1,0 +1,68 @@
+{
+  "metadata": {
+    "title": "Consulting Agreement",
+    "jurisdiction": "UK | US",
+    "governing_law": "England & Wales | California",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {
+      "key": "consultant",
+      "label": "Consultant Name",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "client",
+      "label": "Client Name",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "services",
+      "label": "Services Description",
+      "type": "textarea",
+      "required": true
+    },
+    {
+      "key": "rate",
+      "label": "Rate or Fee",
+      "type": "currency",
+      "required": true
+    },
+    {
+      "key": "term",
+      "label": "Duration",
+      "type": "text",
+      "required": true
+    }
+  ],
+  "clauses": [
+    {
+      "id": "services",
+      "title": "Services",
+      "body": "Consultant provides {{services}} for the client during {{term}}."
+    },
+    {
+      "id": "fees",
+      "title": "Fees",
+      "body": "Client pays {{rate}} per agreed schedule."
+    },
+    {
+      "id": "independent",
+      "title": "Independent Contractor",
+      "body": "Consultant acts as independent contractor and not as employee."
+    },
+    {
+      "id": "confidentiality",
+      "title": "Confidentiality",
+      "body": "Information shared during the engagement remains confidential."
+    },
+    {
+      "id": "law",
+      "title": "Governing Law",
+      "body": "Subject to {{governing_law}}."
+    }
+  ],
+  "annotations": []
+}

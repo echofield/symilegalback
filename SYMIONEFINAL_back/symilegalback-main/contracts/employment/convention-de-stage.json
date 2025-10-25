@@ -1,0 +1,28 @@
+{
+  "metadata": {
+    "title": "Convention de stage",
+    "jurisdiction": "FR",
+    "governing_law": "France",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {"key": "organisme_accueil", "label": "Nom de l'organisme d'accueil", "type": "text", "required": true},
+    {"key": "etablissement_enseignement", "label": "Nom de l'établissement d'enseignement", "type": "text", "required": true},
+    {"key": "stagiaire_nom", "label": "Nom et prénom du stagiaire", "type": "text", "required": true},
+    {"key": "formation_suivie", "label": "Formation ou cursus suivi", "type": "text", "required": true},
+    {"key": "date_debut", "label": "Date de début du stage", "type": "date", "required": true},
+    {"key": "date_fin", "label": "Date de fin du stage", "type": "date", "required": true},
+    {"key": "gratification", "label": "Montant de la gratification mensuelle (€)", "type": "number", "required": false}
+  ],
+  "clauses": [
+    {"id": "parties", "title": "Parties", "body": "La présente convention de stage est conclue entre {{organisme_accueil}}, ci-après dénommé « l'Organisme d'accueil », {{etablissement_enseignement}}, ci-après dénommé « l'Établissement d'enseignement », et {{stagiaire_nom}}, ci-après dénommé « le Stagiaire »."},
+    {"id": "objet", "title": "Objet du stage", "body": "Le stage a pour objet de permettre au Stagiaire, inscrit en {{formation_suivie}}, d'acquérir des compétences professionnelles en lien avec sa formation."},
+    {"id": "duree", "title": "Durée du stage", "body": "Le stage se déroulera du {{date_debut}} au {{date_fin}}."},
+    {"id": "gratification_clause", "title": "Gratification", "body": "Le Stagiaire percevra une gratification mensuelle de {{gratification}} euros, versée mensuellement, conformément aux dispositions légales en vigueur."},
+    {"id": "encadrement", "title": "Encadrement", "body": "Le Stagiaire sera encadré par un tuteur au sein de l'Organisme d'accueil et par un enseignant référent de l'Établissement d'enseignement."},
+    {"id": "obligations", "title": "Obligations du stagiaire", "body": "Le Stagiaire s'engage à respecter le règlement intérieur de l'Organisme d'accueil et à se conformer aux instructions qui lui seront données."},
+    {"id": "assurance", "title": "Assurance et responsabilité", "body": "L'Établissement d'enseignement atteste que le Stagiaire bénéficie d'une assurance couvrant sa responsabilité civile. L'Organisme d'accueil s'engage à assurer le Stagiaire contre les risques accidents du travail."},
+    {"id": "loi_applicable", "title": "Loi applicable", "body": "La présente convention est régie par les dispositions du Code de l'éducation relatives aux stages en entreprise."}
+  ]
+}
+

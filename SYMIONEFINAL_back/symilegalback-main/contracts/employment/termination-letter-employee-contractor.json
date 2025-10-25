@@ -1,0 +1,113 @@
+{
+  "metadata": {
+    "title": "Termination Letter (Employee/Contractor)",
+    "jurisdiction": "UK",
+    "governing_law": "England & Wales",
+    "version": "1.0.0"
+  },
+  "inputs": [
+    {
+      "key": "company_name",
+      "label": "Company Name",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "person_name",
+      "label": "Employee/Contractor Name",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "relationship_type",
+      "label": "Relationship Type (Employee/Contractor)",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "termination_date",
+      "label": "Termination Date",
+      "type": "date",
+      "required": true
+    },
+    {
+      "key": "termination_reason",
+      "label": "Termination Reason (with cause/no cause/redundancy)",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "notice_period",
+      "label": "Notice Period Given",
+      "type": "text",
+      "required": true
+    },
+    {
+      "key": "final_payment_date",
+      "label": "Final Payment Date",
+      "type": "date",
+      "required": true
+    }
+  ],
+  "clauses": [
+    {
+      "id": "notice",
+      "title": "Notice of Termination",
+      "body": "Dear {{person_name}},\n\nThis letter confirms that your {{relationship_type}} relationship with {{company_name}} will end on {{termination_date}}. This decision has been made {{termination_reason}} and follows the {{notice_period}} notice period required under your agreement."
+    },
+    {
+      "id": "reason",
+      "title": "Reason for Termination",
+      "body": "{{#if termination_reason == 'with cause'}}This termination is due to [specific reasons such as performance issues, policy violations, or misconduct]. We have previously discussed these concerns with you on [dates], and unfortunately, sufficient improvement has not been achieved.{{else if termination_reason == 'redundancy'}}This termination is due to redundancy as your role is no longer required due to business reorganization. This is not a reflection of your performance.{{else}}This termination is without cause as permitted under your agreement. We appreciate your contributions during your time with us.{{/if}}"
+    },
+    {
+      "id": "final_day",
+      "title": "Final Day & Transition",
+      "body": "Your last working day will be {{termination_date}}. {{#if relationship_type == 'Employee'}}You may be placed on garden leave during the notice period at the Company's discretion.{{/if}} Please ensure all ongoing work is documented and transitioned appropriately. We will arrange handover meetings as needed."
+    },
+    {
+      "id": "payment",
+      "title": "Final Payment & Benefits",
+      "body": "Your final payment, including {{#if relationship_type == 'Employee'}}salary, accrued holiday pay, and any applicable statutory payments{{else}}payment for work completed{{/if}}, will be processed on {{final_payment_date}}. {{#if relationship_type == 'Employee'}}Details of your P45 and pension arrangements will be provided separately.{{/if}}"
+    },
+    {
+      "id": "return",
+      "title": "Return of Company Property",
+      "body": "Please return all Company property by {{termination_date}}, including: laptop, mobile phone, access cards, keys, documents, and any other Company materials. Failure to return items may result in deductions from your final payment where legally permitted."
+    },
+    {
+      "id": "obligations",
+      "title": "Continuing Obligations",
+      "body": "Your obligations regarding confidentiality{{#if relationship_type == 'Employee'}}, non-competition, and non-solicitation{{/if}} continue after termination as specified in your agreement. Please ensure you comply with these obligations to avoid legal action."
+    },
+    {
+      "id": "reference",
+      "title": "Reference",
+      "body": "{{#if termination_reason != 'with cause'}}Upon request, we will provide a factual reference confirming your dates of employment and job title. For detailed references, please contact [HR contact].{{else}}References will be provided on a factual basis only, confirming dates and role.{{/if}}"
+    },
+    {
+      "id": "questions",
+      "title": "Questions & Support",
+      "body": "If you have any questions about this termination or the process, please contact [HR contact name] at [email/phone]. {{#if termination_reason == 'redundancy'}}We will provide support including [outplacement services/reference assistance] during this transition.{{/if}}"
+    },
+    {
+      "id": "closing",
+      "title": "Closing",
+      "body": "{{#if termination_reason != 'with cause'}}We thank you for your contributions to {{company_name}} and wish you success in your future endeavors.{{else}}We wish you well in your future career.{{/if}}\n\nSincerely,\n\n[Manager Name]\n[Title]\n{{company_name}}"
+    }
+  ],
+  "annotations": [
+    {
+      "clause_id": "reason",
+      "tooltip": "Be clear and factual about termination reasons to minimize legal risk."
+    },
+    {
+      "clause_id": "payment",
+      "tooltip": "Ensure all final payments comply with employment law and contract terms."
+    },
+    {
+      "clause_id": "obligations",
+      "tooltip": "Remind departing workers of post-termination obligations like confidentiality."
+    }
+  ]
+}
