@@ -1,5 +1,9 @@
 import { z } from 'zod';
 
+export const stageSchema = z.object({}).passthrough();
+
+import { z } from 'zod';
+
 export const stageSchema = z.object({
   organisme_accueil: z.string().min(2),
   etablissement_enseignement: z.string().min(2),

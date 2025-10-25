@@ -1,5 +1,10 @@
 import { z } from 'zod';
 
+// Permissive CDD form schema; accepts any object payload
+export const cddSchema = z.object({}).passthrough();
+
+import { z } from 'zod';
+
 export const cddSchema = z.object({
   employeur_nom: z.string().min(2, 'Nom employeur requis'),
   salarie_nom: z.string().min(2, 'Nom salarié requis'),

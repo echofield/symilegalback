@@ -1,5 +1,9 @@
 import { z } from 'zod';
 
+export const ndaMutuelSchema = z.object({}).passthrough();
+
+import { z } from 'zod';
+
 export const ndaMutuelSchema = z.object({
   party_a: z.string().min(2),
   party_b: z.string().min(2),
