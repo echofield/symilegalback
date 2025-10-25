@@ -1,6 +1,6 @@
-import { z } from 'zod';
+import { z as zod } from 'zod';
 
-export const stageSchema = z.object({}).passthrough();
+export const stageSchema = zod.object({}).passthrough();
 
 import { z } from 'zod';
 

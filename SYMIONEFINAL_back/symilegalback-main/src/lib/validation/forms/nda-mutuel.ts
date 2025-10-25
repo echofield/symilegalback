@@ -1,6 +1,6 @@
-import { z } from 'zod';
+import { z as zod } from 'zod';
 
-export const ndaMutuelSchema = z.object({}).passthrough();
+export const ndaMutuelSchema = zod.object({}).passthrough();
 
 import { z } from 'zod';
 

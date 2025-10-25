@@ -1,7 +1,7 @@
-import { z } from 'zod';
+import { z as zod } from 'zod';
 
 // Permissive CDD form schema; accepts any object payload
-export const cddSchema = z.object({}).passthrough();
+export const cddSchema = zod.object({}).passthrough();
 
 import { z } from 'zod';
 
