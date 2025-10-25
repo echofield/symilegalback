@@ -1,6 +1,6 @@
 // lib/api/response.ts - Standardized API response formats
 import type { NextApiResponse } from 'next';
-import { AppError } from '@/lib/errors';
+import { AppError, ErrorCode } from '@/lib/errors';
 
 export interface ApiResponse<T = any> {
   success: boolean;
@@ -162,7 +162,13 @@ export function sendValidationError(
   errors: any[],
   meta?: Partial<ApiResponse['meta']>
 ) {
-  const error = AppError.validation('Validation failed', errors);
+  // Construct an explicit validation error instance rather than relying on a static helper.
+  const error = new AppError(
+    'Validation failed',
+    400,
+    ErrorCode.VALIDATION_ERROR,
+    errors
+  );
   return sendError(res, error, 400, meta);
 }
 
