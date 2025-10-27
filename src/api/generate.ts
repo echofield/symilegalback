@@ -25,7 +25,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     const userId = user?.id;
     const now = new Date();
     const monthKey = `${now.getFullYear()}-${now.getMonth() + 1}`;
-    if (userId) {
+    // TESTING MODE: Open access for end-to-end validation (no monthly limits)
+    const OPEN_TESTING_MODE = true; // set to false to re-enable limits after review
+    if (!OPEN_TESTING_MODE && userId) {
       const { data: profile } = await supabaseAdmin
         .from('users')
         .select('plan')
@@ -33,7 +35,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         .maybeSingle();
       const plan = (profile?.plan as 'free' | 'pro' | 'cabinet' | 'entreprise' | undefined) || 'free';
       if (plan !== 'cabinet' && plan !== 'entreprise') {
-        const limit = plan === 'pro' ? 20 : 10; // temporarily allow 10 for free plan
+        const limit = plan === 'pro' ? 20 : 2;
         const { data: row } = await supabaseAdmin
           .from('contracts_generated')
           .select('count')

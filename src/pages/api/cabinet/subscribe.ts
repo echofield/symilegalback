@@ -8,6 +8,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   try {
     const { email, cabinetName, siret } = req.body as { email: string; cabinetName?: string; siret?: string };
 
+    // TESTING MODE: bypass Stripe for end-to-end review
+    if (process.env.TESTING_MODE === 'true') {
+      const successUrl = `${process.env.FRONTEND_URL || 'https://symione-silk.vercel.app'}/cabinet/success?session_id=test_session`;
+      return res.status(200).json({ checkoutUrl: successUrl, testing: true });
+    }
+
     if (!process.env.STRIPE_SECRET_KEY) {
       return res.status(503).json({ error: 'Stripe not configured' });
     }
