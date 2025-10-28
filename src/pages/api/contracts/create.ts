@@ -9,18 +9,18 @@ import { withValidation } from '@/lib/validation/middleware';
 const msSchema = z.object({
   title: z.string().min(2),
   description: z.string().min(2),
-  amount: z.number().int().positive(),
+  amount: z.coerce.number().int().positive(),
   dueAt: z.string().datetime().optional(),
 });
 
 const schema = z.object({
   title: z.string().min(3),
-  payerId: z.string(),
-  payeeId: z.string(),
-  currency: z.string().min(3),
-  termsJson: z.record(z.unknown()),
+  payerId: z.string().optional(),
+  payeeId: z.string().optional(),
+  currency: z.string().min(3).optional().default('eur'),
+  termsJson: z.record(z.unknown()).optional().default({}),
   milestones: z.array(msSchema).min(1),
-  totalAmount: z.number().int().positive().optional(),
+  totalAmount: z.coerce.number().int().positive().optional(),
 });
 
 const ResponseSchema = z.object({
@@ -42,22 +42,26 @@ const ResponseSchema = z.object({
 });
 
 async function handler(req: NextApiRequest, res: NextApiResponse<ContractCreateResponse | { error: true; message: string; timestamp: string }>) {
-  const body = req.body;
+  const body = req.body as z.infer<typeof schema>;
   
   try {
-    const total = body.totalAmount ?? body.milestones.reduce((s: any, m: any) => s + m.amount, 0);
+    const total = body.totalAmount ?? body.milestones.reduce((s: any, m: any) => s + Number(m.amount || 0), 0);
     const slug = `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 6)}`;
+    const payerId = body.payerId || `anon_${slug}`;
+    const payeeId = body.payeeId || `anon_${Math.random().toString(36).slice(2, 8)}`;
+    const currency = (body.currency || 'eur').toUpperCase();
+    const termsJson = body.termsJson || {};
     
     const created = await prisma.contract.create({
       data: {
         slug,
         title: body.title,
-        creatorId: body.payerId,
-        payerId: body.payerId,
-        payeeId: body.payeeId,
-        currency: body.currency,
+        creatorId: payerId,
+        payerId,
+        payeeId,
+        currency,
         totalAmount: total,
-        termsJson: body.termsJson,
+        termsJson: termsJson as any,
         status: ContractStatus.ACTIVE,
         milestones: {
           create: body.milestones.map((m: any) => ({ 
