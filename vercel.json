@@ -3,11 +3,6 @@
   "version": 2,
   "env": {
     "AI_PROVIDER": "openai"
-  },
-  "functions": {
-    "src/pages/api/**/*.ts": {
-      "maxDuration": 10
-    }
   }
 }
 

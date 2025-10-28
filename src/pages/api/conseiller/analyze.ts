@@ -398,6 +398,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     hasProofs?: string; 
   };
 
+<<<<<<< HEAD
   // Validation
   if (!problem || problem.length < 20) {
     return res.status(400).json({
@@ -423,6 +424,55 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       city
     });
     // Get recommended template if specified
+=======
+  // Timeout strict de 8 secondes avec garde globale
+  const TIMEOUT_MS = 8000;
+  const startTime = Date.now();
+
+  const withTimeoutGuard = async <T>(
+    promise: Promise<T>,
+    fallback: T,
+    label: string
+  ): Promise<T> => {
+    const elapsed = Date.now() - startTime;
+    const remaining = TIMEOUT_MS - elapsed;
+    if (remaining <= 1000) {
+      console.log(`[${label}] skipped - insufficient time`);
+      return fallback;
+    }
+    try {
+      const result = await Promise.race<T>([
+        promise,
+        new Promise<T>((_, reject) => setTimeout(() => reject(new Error('timeout')), remaining)),
+      ]);
+      return result;
+    } catch (err) {
+      console.log(`[${label}] failed, using fallback`);
+      return fallback;
+    }
+  };
+
+  try {
+    const audit = await withTimeoutGuard(
+      callOpenAIAudit(problem, situationType, urgence, hasProofs),
+      {
+        summary: problem.slice(0, 280),
+        category: situationType || 'Non spécifié',
+        specialty: 'droit général',
+        risks: [],
+        points: [],
+        actions: ['Consolider les éléments factuels', 'Lister les pièces disponibles'],
+        urgency: urgence || '5',
+        complexity: 'Moyenne',
+        recommendedTemplateId: null,
+        needsLawyer: false,
+        lawyerSpecialty: null,
+        followupQuestions: ['Préciser les dates clés', 'Détailler les preuves disponibles']
+      },
+      'OPENAI'
+    );
+    
+>>>>>>> 544ff1e (back: analyze cap + create schema + config)
     let recommendedTemplate: any = null;
     if (audit?.recommendedTemplateId) {
       try {
@@ -436,9 +486,45 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
             reason: `Ce modèle correspond à votre situation`
           };
         }
+<<<<<<< HEAD
       } catch (err) {
         console.warn('[CONSEILLER] Template not found:', audit.recommendedTemplateId);
       }
+=======
+      } catch {}
+    }
+
+    let recommendedLawyers: any[] = [];
+    if (city && (audit as any)?.specialty) {
+      const baseLawyers: any[] = [];
+      const lawyers = await withTimeoutGuard(
+        callPerplexityLawyers(city, (audit as any).specialty),
+        baseLawyers,
+        'PERPLEXITY'
+      );
+      recommendedLawyers = (lawyers || []).map((lawyer: any) => ({
+        ...lawyer,
+        google_maps_url: lawyer.google_maps_url || `https://maps.google.com/?q=${encodeURIComponent(lawyer.adresse || lawyer.address || '')}`
+      }));
+    }
+
+    // Si on dépasse la fenêtre, renvoyer une analyse partielle
+    if (Date.now() - startTime > TIMEOUT_MS) {
+      console.log('[CONSEILLER] Exceeded 8s, returning partial analysis');
+      return res.status(200).json({
+        audit: {
+          summary: (audit as any)?.summary || problem.slice(0, 280),
+          category: (audit as any)?.category || (situationType || 'Non spécifié'),
+          urgency: (audit as any)?.urgency || (urgence || '5'),
+          complexity: (audit as any)?.complexity || 'Moyenne'
+        },
+        recommendedTemplate: null,
+        needsLawyer: Boolean((audit as any)?.needsLawyer),
+        lawyerSpecialty: (audit as any)?.lawyerSpecialty || null,
+        recommendedLawyers: [],
+        timestamp: new Date().toISOString(),
+      });
+>>>>>>> 544ff1e (back: analyze cap + create schema + config)
     }
 
     // Search for lawyers if city provided
