@@ -490,8 +490,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       } catch (err) {
         console.warn('[CONSEILLER] Template not found:', audit.recommendedTemplateId);
       }
-=======
-      } catch {}
     }
 
     let recommendedLawyers: any[] = [];
@@ -524,23 +522,10 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         recommendedLawyers: [],
         timestamp: new Date().toISOString(),
       });
->>>>>>> 544ff1e (back: analyze cap + create schema + config)
+    }
     }
 
-    // Search for lawyers if city provided
-    let recommendedLawyers: any[] = [];
-    if (city && audit?.recommandation?.strategiePrincipale) {
-      const specialty = audit.recommandation.lawyerSpecialty || 
-                       mapCategoryToSpecialty(audit.category || category || 'Autre');
-      
-      recommendedLawyers = await callPerplexityLawyers(city, specialty);
-      
-      // Add Google Maps URLs
-      recommendedLawyers = recommendedLawyers.map((lawyer: any) => ({
-        ...lawyer,
-        google_maps_url: `https://maps.google.com/?q=${encodeURIComponent(lawyer.adresse || '')}`
-      }));
-    }
+    // (Lawyers already fetched above with timeout guard if applicable)
 
     // Build enriched response
     const enrichedAnalysis = {
