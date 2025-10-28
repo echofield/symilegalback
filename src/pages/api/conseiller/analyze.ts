@@ -523,7 +523,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         timestamp: new Date().toISOString(),
       });
     }
-    }
 
     // (Lawyers already fetched above with timeout guard if applicable)
 
