@@ -21,7 +21,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   let audit: any = null;
   try {
-    const prompt = `Tu es un conseiller juridique français. À partir des réponses structurées ci-dessous, produis une analyse JSON courte avec:
+    const prompt = `Tu es un conseiller juridique français. À partir des réponses structurées ci-dessous, produis une analyse JSON courte avec DES CHAMPS NON VIDES. Réponds UNIQUEMENT avec ce JSON:
 {
   "summary": string,
   "category": string,
@@ -57,6 +57,32 @@ Réponses: ${JSON.stringify(answers).slice(0, 4000)}`;
       lawyerSpecialty: null,
       recommendedTemplateId: null,
     };
+  }
+
+  // Coalesce defaults to guarantee non-empty fields
+  audit = audit || {};
+  const cat = audit.category || answers.category || 'Droit général';
+  const urg = Number(audit.urgency ?? answers.urgency ?? 5) || 5;
+  audit.summary = typeof audit.summary === 'string' && audit.summary.trim().length
+    ? audit.summary
+    : (answers.situation ? String(answers.situation).slice(0, 280) : `Affaire ${cat}`);
+  audit.category = cat;
+  audit.urgency = urg;
+  audit.complexity = ['Faible', 'Moyenne', 'Élevée'].includes(audit.complexity) ? audit.complexity : (urg >= 7 ? 'Élevée' : 'Moyenne');
+  audit.risks = Array.isArray(audit.risks) && audit.risks.length ? audit.risks : ['Risque de prescription', 'Insuffisance de preuves'];
+  audit.actions = Array.isArray(audit.actions) && audit.actions.length ? audit.actions : [
+    'Rassembler les documents (contrats, échanges, preuves)',
+    'Établir une chronologie des faits',
+    'Envisager une mise en demeure ou consulter un avocat'
+  ];
+  audit.needsLawyer = typeof audit.needsLawyer === 'boolean' ? audit.needsLawyer : (urg >= 7 || audit.complexity === 'Élevée');
+  audit.lawyerSpecialty = audit.lawyerSpecialty || (cat.toLowerCase().includes('travail') ? 'Travail' : cat.toLowerCase().includes('immobilier') ? 'Immobilier' : null);
+  if (!audit.recommendedTemplateId) {
+    const lc = cat.toLowerCase();
+    audit.recommendedTemplateId = lc.includes('travail') ? 'contestation-licenciement'
+      : lc.includes('immobilier') ? 'mise-en-demeure-bailleur'
+      : lc.includes('consommation') ? 'reclamation-consommateur'
+      : 'mise-en-demeure-generale';
   }
 
   return res.status(200).json({

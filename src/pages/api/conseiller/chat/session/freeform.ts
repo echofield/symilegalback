@@ -23,17 +23,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
   }
 
-  // Small LLM pass with strict limits
+  // Small LLM pass with strict limits (1s budget)
   try {
     const prompt = `Tu extrais des champs structurés si présents. Réponds STRICTEMENT en JSON { city?: string, urgency?: number, budget?: number, amount?: number, category?: string } sans texte.
 Texte: ${message}`;
-    const completion = await openai.chat.completions.create({
-      model: process.env.OPENAI_MODEL || 'gpt-4o-mini',
-      temperature: 0,
-      max_tokens: 120,
-      messages: [{ role: 'user', content: prompt }],
-    });
-    const raw = completion.choices[0]?.message?.content || '{}';
+    const completion = await Promise.race([
+      openai.chat.completions.create({
+        model: process.env.OPENAI_MODEL || 'gpt-4o-mini',
+        temperature: 0,
+        max_tokens: 120,
+        messages: [{ role: 'user', content: prompt }],
+      }),
+      new Promise(resolve => setTimeout(() => resolve({ choices: [{ message: { content: '{}' } }] } as any), 1000))
+    ]) as any;
+    const raw = completion.choices?.[0]?.message?.content || '{}';
     const parsed = JSON.parse(raw);
     const mapping: Record<string, string> = { city: 'city', urgency: 'urgency', budget: 'budget', amount: 'amount', category: 'category' };
     for (const k of Object.keys(mapping)) {

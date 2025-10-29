@@ -420,13 +420,42 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 8000);
 
-    const audit = await callOpenAIAudit({
+    let audit: any = await callOpenAIAudit({
       description: problem,
       category: category || situationType || 'Non spécifié',
       urgency: urgency || (urgence ? parseInt(urgence) : 5),
       hasEvidence: hasEvidence || hasProofs === 'true',
       city
     }, controller.signal);
+
+    // Coalesce defaults to avoid weak/empty responses
+    const cat = audit?.category || category || situationType || 'Conseil général';
+    const urg = Number(audit?.urgency ?? urgency ?? (urgence ? parseInt(urgence) : 5)) || 5;
+    audit = audit || {};
+    audit.summary = typeof audit.summary === 'string' && audit.summary.trim().length
+      ? audit.summary
+      : `Analyse juridique: ${problem.slice(0, 100)}...`;
+    audit.category = cat;
+    audit.urgency = urg;
+    audit.complexity = ['Faible', 'Moyenne', 'Élevée'].includes(audit.complexity) ? audit.complexity : (urg >= 7 ? 'Élevée' : 'Moyenne');
+    audit.risks = Array.isArray(audit.risks) && audit.risks.length ? audit.risks : [
+      'Risque de prescription des délais',
+      'Insuffisance de preuves documentaires'
+    ];
+    audit.actions = Array.isArray(audit.actions) && audit.actions.length ? audit.actions : [
+      'Constituer un dossier complet (contrats, échanges, preuves)',
+      'Établir une chronologie précise des faits',
+      'Identifier les parties et leurs responsabilités',
+      'Consulter un professionnel du droit'
+    ];
+    audit.needsLawyer = typeof audit.needsLawyer === 'boolean' ? audit.needsLawyer : (urg >= 7 || audit.complexity === 'Élevée');
+    if (!audit.recommendedTemplateId) {
+      const lc = String(cat).toLowerCase();
+      audit.recommendedTemplateId = lc.includes('travail') ? 'contrat-travail'
+        : lc.includes('immobilier') ? 'mise-en-demeure-bailleur'
+        : lc.includes('consommation') ? 'reclamation-consommateur'
+        : 'mise-en-demeure-generale';
+    }
     // Get recommended template if specified
     let recommendedTemplate: any = null;
     if (audit?.recommendedTemplateId) {
@@ -448,9 +477,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
     // Search for lawyers if city provided
     let recommendedLawyers: any[] = [];
-    if (city && audit?.recommandation?.strategiePrincipale) {
-      const specialty = audit.recommandation.lawyerSpecialty || 
-                       mapCategoryToSpecialty(audit.category || category || 'Autre');
+    if (city) {
+      const specialty = audit.lawyerSpecialty || mapCategoryToSpecialty(cat || 'Autre');
       
       try {
         recommendedLawyers = await callPerplexityLawyers(city, specialty, controller.signal);
