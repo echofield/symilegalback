@@ -6,7 +6,7 @@ import { suggestContractFR } from '@/services/ai/generate';
 
 const schema = z.object({
   description: z.string().min(10),
-  budget: z.number().int().positive().optional(),
+  budget: z.coerce.number().int().positive().optional(),
   roleA: z.string().optional(),
   roleB: z.string().optional(),
   answers: z.record(z.unknown()).optional(),

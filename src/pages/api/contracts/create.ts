@@ -10,15 +10,15 @@ const msSchema = z.object({
   title: z.string().min(2),
   description: z.string().min(2),
   amount: z.coerce.number().int().positive(),
-  dueAt: z.string().datetime().optional(),
+  dueAt: z.coerce.string().datetime().optional(),
 });
 
 const schema = z.object({
   title: z.string().min(3),
   payerId: z.string().optional(),
   payeeId: z.string().optional(),
-  currency: z.string().min(3).optional().default('eur'),
-  termsJson: z.record(z.unknown()).optional().default({}),
+  currency: z.string().min(3).default('EUR'),
+  termsJson: z.record(z.unknown()).default({}),
   milestones: z.array(msSchema).min(1),
   totalAmount: z.coerce.number().int().positive().optional(),
 });
@@ -42,15 +42,14 @@ const ResponseSchema = z.object({
 });
 
 async function handler(req: NextApiRequest, res: NextApiResponse<ContractCreateResponse | { error: true; message: string; timestamp: string }>) {
-  const body = req.body as z.infer<typeof schema>;
+  const body = req.body;
   
   try {
-    const total = body.totalAmount ?? body.milestones.reduce((s: any, m: any) => s + Number(m.amount || 0), 0);
+    const payerId = body.payerId || `anon_${Math.random().toString(36).slice(2,10)}`;
+    const payeeId = body.payeeId || `anon_${Math.random().toString(36).slice(2,10)}`;
+    const currency = body.currency || 'EUR';
+    const total = body.totalAmount ?? body.milestones.reduce((s: any, m: any) => s + Number(m.amount), 0);
     const slug = `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 6)}`;
-    const payerId = body.payerId || `anon_${slug}`;
-    const payeeId = body.payeeId || `anon_${Math.random().toString(36).slice(2, 8)}`;
-    const currency = (body.currency || 'eur').toUpperCase();
-    const termsJson = body.termsJson || {};
     
     const created = await prisma.contract.create({
       data: {
@@ -61,7 +60,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse<ContractCreateR
         payeeId,
         currency,
         totalAmount: total,
-        termsJson: termsJson as any,
+        termsJson: body.termsJson,
         status: ContractStatus.ACTIVE,
         milestones: {
           create: body.milestones.map((m: any) => ({ 

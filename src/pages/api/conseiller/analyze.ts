@@ -8,7 +8,7 @@ import { rateLimit } from '@/middleware/rateLimit';
 export const runtime = 'nodejs';
 
 const RequestSchema = z.object({
-  problem: z.string().min(50),
+  problem: z.string().min(20, 'Veuillez décrire votre situation (≥ 20 caractères).'),
   city: z.string().optional(),
   category: z.string().optional(),
   urgency: z.number().optional(),
@@ -27,7 +27,7 @@ async function callOpenAIAudit(params: {
   urgency: number;
   hasEvidence: boolean;
   city?: string;
-}) {
+}, signal?: AbortSignal) {
   const { description, category, urgency, hasEvidence, city } = params;
   const apiKey = process.env.OPENAI_API_KEY;
   const model = process.env.OPENAI_MODEL || 'gpt-4o-mini';
@@ -49,52 +49,152 @@ ${description}
 
 # MISSION: ANALYSE JURIDIQUE COMPLÈTE
 
-Fournis une analyse juridique professionnelle selon cette structure JSON EXACTE:
+Tu dois produire une analyse professionnelle en 6 sections:
+
+## 1. RÉSUMÉ EXÉCUTIF (3-4 phrases)
+- Synthèse factuelle de la situation
+- Parties impliquées et leurs positions
+- Enjeu principal du litige
+- Gravité de la situation
+
+## 2. QUALIFICATION JURIDIQUE PRÉCISE
+
+**Fondement légal:**
+- Article(s) de loi applicable(s) (Code Civil, Pénal, Travail, Commerce selon cas)
+- Texte exact de l'article principal
+- Décrets/arrêtés pertinents si applicable
+
+**Jurisprudence de référence:**
+- Au moins 1 décision de justice similaire récente (2020-2024)
+- Format: [Juridiction, date, numéro]
+- Principe dégagé par la décision
+
+**Doctrine:**
+- Position majoritaire des juristes
+- Interprétation dominante
+
+## 3. ANALYSE DES FORCES & FAIBLESSES
+
+**Points forts du dossier (✓):**
+- [Liste 3-5 éléments favorables]
+- Pour chaque point: pourquoi c'est un atout
+
+**Points faibles / Risques (✗):**
+- [Liste 3-5 vulnérabilités]
+- Pour chaque point: comment mitiger
+
+**Preuves à constituer ABSOLUMENT:**
+- [Liste précise avec format]
+- Exemple: "Constat d'huissier (€150-300, délai obtention 48h-1 semaine)"
+- Exemple: "Témoignages écrits signés (gratuit, obtention immédiate)"
+
+## 4. PLAN D'ACTION CHRONOLOGIQUE
+
+### Phase 1: IMMÉDIAT (0-48h)
+1. [Action précise] - Coût: €X - Durée: Xh - Objectif: [résultat attendu]
+2. [Action précise] - Coût: €X - Durée: Xh - Objectif: [résultat attendu]
+
+### Phase 2: COURT TERME (3-15 jours)
+1. [Action précise] - Coût: €X - Durée: X jours - Objectif: [résultat attendu]
+2. [Action précise] - Coût: €X - Durée: X jours - Objectif: [résultat attendu]
+
+### Phase 3: MOYEN TERME (1-3 mois)
+1. [Action précise] - Coût: €X - Durée: X semaines - Objectif: [résultat attendu]
+
+**Alternatives à la procédure:**
+- Médiation (coût: €X, durée: X semaines, taux succès: X%)
+- Transaction amiable (modèle de lettre fourni)
+- Autre solution (préciser)
+
+## 5. ESTIMATION FINANCIÈRE DÉTAILLÉE
+
+**Scénario A: Résolution amiable**
+- Lettre recommandée: €5-10
+- Constat huissier (si besoin): €150-300
+- Médiation: €200-800
+- Total: €355-1110
+- Durée: 2-8 semaines
+
+**Scénario B: Procédure judiciaire**
+- Honoraires avocat: €1500-3500 (selon complexité)
+- Frais de justice: €150-500
+- Expert si nécessaire: €500-2000
+- Total: €2150-6000
+- Durée: 6-18 mois
+
+**Aide juridictionnelle:**
+- Éligible si revenus < €1500/mois (personne seule)
+- Couvre 25-100% des frais selon revenus
+
+## 6. SCORING & RECOMMANDATION FINALE
+
+**Urgence recalculée (IA):** X/10
+- Justification: [Pourquoi ce score]
+
+**Complexité juridique:** Faible / Moyenne / Élevée
+- Justification: [Pourquoi ce niveau]
+
+**Pronostic de réussite:** X%
+- Basé sur: [Facteurs clés]
+
+**Risque financier:** Faible / Moyen / Élevé
+- Pire scénario: [Décrire]
+- Meilleur scénario: [Décrire]
+
+**RECOMMANDATION STRATÉGIQUE:**
+[Conseil principal: tenter amiable d'abord? Aller direct procédure? Abandonner?]
+
+**PROCHAINE ÉTAPE CRITIQUE:**
+[L'action #1 à faire dans les 48h]
+
+---
+
+# FORMAT DE RÉPONSE
+
+Réponds en JSON structuré UNIQUEMENT, format exact:
 
 {
-  "resume": {
-    "titre": "string (max 80 car)",
-    "problematiquePrincipale": "string",
-    "tagsJuridiques": ["tag1", "tag2", "tag3"]
+  "resume": "string (max 300 caractères)",
+  "category": "string",
+  "qualificationJuridique": {
+    "fondementLegal": ["Article X du Code Y: texte complet"],
+    "jurisprudence": ["Cass. date, détails"],
+    "doctrine": "string"
   },
-  "scoring": {
-    "urgence": number (1-10),
-    "complexite": "Faible|Moyenne|Élevée",
-    "risqueJuridique": number (1-10),
-    "estimation_cout_min_eur": number,
-    "estimation_cout_max_eur": number,
-    "duree_estimee_mois": number
-  },
-  "analyseDetaillee": {
-    "faits": ["fait1", "fait2", "..."],
-    "cadreJuridique": {
-      "textes": ["Code X art. Y", "..."],
-      "jurisprudence": [
-        {
-          "reference": "Cass. civ. 1re, DATE, n° XX-XX.XXX",
-          "principe": "string"
-        }
-      ]
-    },
-    "risquesIdentifies": [
-      {
-        "type": "string",
-        "gravite": "Faible|Moyen|Élevé",
-        "description": "string"
-      }
-    ],
-    "pointsForts": ["point1", "point2"],
-    "pointsFaibles": ["point1", "point2"]
+  "analyse": {
+    "forcesdossier": ["point 1", "point 2", "point 3"],
+    "faiblesses": ["risque 1", "risque 2", "risque 3"],
+    "preuvesAConstituer": [
+      { "type": "Constat huissier", "cout": "€150-300", "delai": "48h-1 semaine", "priorite": "haute" }
+    ]
   },
   "planAction": {
-    "etapesImmediates": [
-      {
-        "action": "string",
-        "delai": "string",
-        "priorite": "Haute|Moyenne|Basse"
-      }
+    "immediat": [
+      { "action": "Envoyer lettre recommandée", "cout": "€5", "duree": "1h", "objectif": "Constituer preuve tentative amiable" }
     ],
-    "questionsComplementaires": ["question1", "question2"]
+    "courtTerme": [
+      { "action": "Commander constat huissier", "cout": "€200", "duree": "3 jours", "objectif": "Documenter les nuisances" }
+    ],
+    "moyenTerme": [
+      { "action": "Consulter avocat spécialisé", "cout": "€150-300", "duree": "2 semaines", "objectif": "Préparer procédure si échec amiable" }
+    ],
+    "alternatives": ["Médiation via conciliateur justice (gratuit, 2 mois)", "Transaction amiable avec dédit (modèle fourni)"]
+  },
+  "estimationFinanciere": {
+    "amiable": { "cout": "€355-800", "duree": "2-8 semaines", "details": ["Lettre AR: €5", "Constat: €200", "Médiation: €150-595"] },
+    "judiciaire": { "cout": "€2150-6000", "duree": "6-18 mois", "details": ["Avocat: €1500-3500", "Frais justice: €150-500", "Expert: €500-2000"] },
+    "aideJuridictionnelle": "Éligible si revenus < €1500/mois (personne seule) - Couvre 25-100% selon barème"
+  },
+  "scoring": {
+    "urgenceIA": 8,
+    "urgenceJustification": "string",
+    "complexite": "Moyenne",
+    "complexiteJustification": "string",
+    "pronosticReussite": 75,
+    "pronosticFacteurs": "string",
+    "risqueFinancier": "Moyen",
+    "pireScenario": "string",
+    "meilleurScenario": "string"
   },
   "recommandation": {
     "strategiePrincipale": "string",
@@ -140,6 +240,7 @@ Tu es un expert. Montre ton expertise.`;
       ],
       response_format: { type: "json_object" }
     }),
+    signal,
   });
   
   if (!r.ok) {
@@ -172,7 +273,7 @@ Tu es un expert. Montre ton expertise.`;
   return analysis;
 }
 
-async function callPerplexityLawyers(city: string, specialty: string) {
+async function callPerplexityLawyers(city: string, specialty: string, signal?: AbortSignal) {
   try {
     const apiKey = process.env.PERPLEXITY_API_KEY;
     if (!apiKey) {
@@ -203,8 +304,9 @@ années expérience, avis clients si disponibles. Format JSON: [{nom, cabinet, a
           }
         ],
         temperature: 0.2,
-        max_tokens: 1000,
+        max_tokens: 400,
       }),
+      signal,
     });
 
     if (!response.ok) {
@@ -313,85 +415,18 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     urgency: urgency || urgence
   });
 
-  // Timeout strict de 8 secondes avec garde globale
-  const TIMEOUT_MS = 8000;
-  const startTime = Date.now();
-
-  const withTimeoutGuard = async <T>(
-    promise: Promise<T>,
-    fallback: T,
-    label: string
-  ): Promise<T> => {
-    const elapsed = Date.now() - startTime;
-    const remaining = TIMEOUT_MS - elapsed;
-    if (remaining <= 1000) {
-      console.log(`[${label}] skipped - insufficient time`);
-      return fallback;
-    }
-    try {
-      const result = await Promise.race<T>([
-        promise,
-        new Promise<T>((_, reject) => setTimeout(() => reject(new Error('timeout')), remaining)),
-      ]);
-      return result;
-    } catch (err) {
-      console.log(`[${label}] failed, using fallback`);
-      return fallback;
-    }
-  };
-
   try {
-    // Call enhanced OpenAI audit with timeout guard
-    const audit = await withTimeoutGuard(
-      callOpenAIAudit({
-        description: problem,
-        category: category || situationType || 'Non spécifié',
-        urgency: urgency || (urgence ? parseInt(urgence) : 5),
-        hasEvidence: hasEvidence || hasProofs === 'true',
-        city
-      }),
-      {
-        resume: {
-          titre: 'Analyse en cours',
-          problematiquePrincipale: problem.slice(0, 280),
-          tagsJuridiques: ['droit général']
-        },
-        scoring: {
-          urgence: urgency || (urgence ? parseInt(urgence) : 5),
-          complexite: 'Moyenne',
-          risqueJuridique: 5,
-          estimation_cout_min_eur: 500,
-          estimation_cout_max_eur: 2000,
-          duree_estimee_mois: 3
-        },
-        analyseDetaillee: {
-          faits: ['Situation décrite nécessite un approfondissement'],
-          cadreJuridique: {
-            textes: [],
-            jurisprudence: []
-          },
-          risquesIdentifies: [],
-          pointsForts: [],
-          pointsFaibles: []
-        },
-        planAction: {
-          etapesImmediates: [
-            { action: 'Consolider les éléments factuels', delai: 'Immédiat', priorite: 'Haute' }
-          ],
-          questionsComplementaires: ['Préciser les dates clés']
-        },
-        recommandation: {
-          strategiePrincipale: 'Consulter un avocat spécialisé',
-          prochaineEtapeCritique: 'Rassembler tous les documents',
-          needsLawyer: true,
-          lawyerSpecialty: mapCategoryToSpecialty(category || situationType || 'Autre')
-        },
-        templates: [],
-        recommendedTemplateId: null
-      },
-      'OPENAI'
-    );
+    // Call enhanced OpenAI audit with timeout controller
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 8000);
 
+    const audit = await callOpenAIAudit({
+      description: problem,
+      category: category || situationType || 'Non spécifié',
+      urgency: urgency || (urgence ? parseInt(urgence) : 5),
+      hasEvidence: hasEvidence || hasProofs === 'true',
+      city
+    }, controller.signal);
     // Get recommended template if specified
     let recommendedTemplate: any = null;
     if (audit?.recommendedTemplateId) {
@@ -411,45 +446,23 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       }
     }
 
-    // Fetch lawyers with timeout guard if city provided
+    // Search for lawyers if city provided
     let recommendedLawyers: any[] = [];
-    if (city && audit?.recommandation?.lawyerSpecialty) {
+    if (city && audit?.recommandation?.strategiePrincipale) {
       const specialty = audit.recommandation.lawyerSpecialty || 
-                       mapCategoryToSpecialty(category || situationType || 'Autre');
+                       mapCategoryToSpecialty(audit.category || category || 'Autre');
       
-      const baseLawyers: any[] = [];
-      const lawyers = await withTimeoutGuard(
-        callPerplexityLawyers(city, specialty),
-        baseLawyers,
-        'PERPLEXITY'
-      );
+      try {
+        recommendedLawyers = await callPerplexityLawyers(city, specialty, controller.signal);
+      } catch (e) {
+        recommendedLawyers = [];
+      }
       
-      recommendedLawyers = (lawyers || []).map((lawyer: any) => ({
+      // Add Google Maps URLs
+      recommendedLawyers = recommendedLawyers.map((lawyer: any) => ({
         ...lawyer,
-        google_maps_url: lawyer.google_maps_url || `https://maps.google.com/?q=${encodeURIComponent(lawyer.adresse || lawyer.address || '')}`
+        google_maps_url: `https://maps.google.com/?q=${encodeURIComponent(lawyer.adresse || '')}`
       }));
-    }
-
-    // Si on dépasse la fenêtre, renvoyer une analyse partielle
-    if (Date.now() - startTime > TIMEOUT_MS) {
-      console.log('[CONSEILLER] Exceeded 8s, returning partial analysis');
-      return res.status(200).json({
-        success: true,
-        analysis: {
-          ...audit,
-          recommendedLawyers: [],
-          recommendedTemplate: null,
-          metadata: {
-            generatedAt: new Date().toISOString(),
-            model: 'gpt-4o-mini + perplexity-sonar',
-            category: category || situationType,
-            urgencyUser: urgency || urgence,
-            city,
-            hasEvidence: hasEvidence || hasProofs === 'true',
-            partial: true
-          }
-        }
-      });
     }
 
     // Build enriched response
@@ -473,6 +486,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       }
     };
 
+    clearTimeout(timeoutId);
     console.log('[CONSEILLER] Analysis completed successfully');
 
     return res.status(200).json({
@@ -480,9 +494,14 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       analysis: enrichedAnalysis
     });
   } catch (err: any) {
+    if (err?.name === 'AbortError') {
+      return res.status(200).json({ success: false, error: "L'analyse prend trop de temps. Veuillez réessayer avec une description plus courte.", timeout: true } as any);
+    }
     console.error('conseiller:analyze error', err);
-    return res.status(500).json({ error: true, message: err?.message || 'Analyse failed' });
+    return res.status(200).json({ success: false, error: 'Une erreur est survenue lors de l\'analyse. Veuillez réessayer.' } as any);
   }
 }
 
 export default withCors(withValidation(RequestSchema, ResponseSchema, handler));
+
+
