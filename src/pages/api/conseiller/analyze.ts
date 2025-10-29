@@ -1,4 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { parseJsonLoose, coalesceAuditDefaultsV2 } from '@/lib/auditV2';
 import { withValidation } from '@/lib/validation/middleware';
 import { withCors } from '@/lib/http/cors';
 import { z } from 'zod';
@@ -416,45 +417,43 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
   });
 
   try {
-    // Call enhanced OpenAI audit with timeout controller
+    // Call V2 prompt with strict JSON; keep 8s cap
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 8000);
 
-    let audit: any = await callOpenAIAudit({
-      description: problem,
-      category: category || situationType || 'Non spécifié',
-      urgency: urgency || (urgence ? parseInt(urgence) : 5),
-      hasEvidence: hasEvidence || hasProofs === 'true',
-      city
-    }, controller.signal);
-
-    // Coalesce defaults to avoid weak/empty responses
-    const cat = audit?.category || category || situationType || 'Conseil général';
-    const urg = Number(audit?.urgency ?? urgency ?? (urgence ? parseInt(urgence) : 5)) || 5;
-    audit = audit || {};
-    audit.summary = typeof audit.summary === 'string' && audit.summary.trim().length
-      ? audit.summary
-      : `Analyse juridique: ${problem.slice(0, 100)}...`;
-    audit.category = cat;
-    audit.urgency = urg;
-    audit.complexity = ['Faible', 'Moyenne', 'Élevée'].includes(audit.complexity) ? audit.complexity : (urg >= 7 ? 'Élevée' : 'Moyenne');
-    audit.risks = Array.isArray(audit.risks) && audit.risks.length ? audit.risks : [
-      'Risque de prescription des délais',
-      'Insuffisance de preuves documentaires'
-    ];
-    audit.actions = Array.isArray(audit.actions) && audit.actions.length ? audit.actions : [
-      'Constituer un dossier complet (contrats, échanges, preuves)',
-      'Établir une chronologie précise des faits',
-      'Identifier les parties et leurs responsabilités',
-      'Consulter un professionnel du droit'
-    ];
-    audit.needsLawyer = typeof audit.needsLawyer === 'boolean' ? audit.needsLawyer : (urg >= 7 || audit.complexity === 'Élevée');
-    if (!audit.recommendedTemplateId) {
-      const lc = String(cat).toLowerCase();
-      audit.recommendedTemplateId = lc.includes('travail') ? 'contrat-travail'
-        : lc.includes('immobilier') ? 'mise-en-demeure-bailleur'
-        : lc.includes('consommation') ? 'reclamation-consommateur'
-        : 'mise-en-demeure-generale';
+    const useV2 = String(process.env.LEGAL_AUDIT_V2 || 'true') === 'true';
+    let audit: any = {};
+    if (useV2) {
+      const SYSTEM_PROMPT = `Tu es Maître Analyse — expert en diagnostic juridique stratégique. Réponds UNIQUEMENT en JSON valide selon le schéma fourni.`;
+      const r = await fetch('https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`, 'Content-Type': 'application/json' },
+        signal: controller.signal,
+        body: JSON.stringify({
+          model: process.env.OPENAI_MODEL || 'gpt-4o-mini',
+          temperature: 0.2,
+          max_tokens: 1400,
+          response_format: { type: 'json_object' },
+          messages: [
+            { role: 'system', content: SYSTEM_PROMPT },
+            { role: 'user', content: `Dossier:\nDescription: ${problem}\nVille: ${city || 'Non précisée'}\nCatégorie: ${category || situationType || 'Non spécifié'}\nUrgence: ${urgency || urgence || '5'}\nPreuves: ${hasEvidence || hasProofs === 'true' ? 'Oui' : 'Non'}` }
+          ]
+        })
+      });
+      const data = await r.json();
+      const content = data?.choices?.[0]?.message?.content || '{}';
+      const parsed = parseJsonLoose(content);
+      audit = coalesceAuditDefaultsV2(parsed, { category, urgency, situation: problem });
+    } else {
+      // Legacy path
+      const legacy = await callOpenAIAudit({
+        description: problem,
+        category: category || situationType || 'Non spécifié',
+        urgency: urgency || (urgence ? parseInt(urgence) : 5),
+        hasEvidence: hasEvidence || hasProofs === 'true',
+        city
+      }, controller.signal);
+      audit = coalesceAuditDefaultsV2(legacy, { category, urgency, situation: problem });
     }
     // Get recommended template if specified
     let recommendedTemplate: any = null;

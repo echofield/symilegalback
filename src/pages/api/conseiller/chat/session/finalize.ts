@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import OpenAI from 'openai';
 import { QUESTIONS_18 } from '@/lib/conseiller/questions';
+import { parseJsonLoose, coalesceAuditDefaultsV2 } from '@/lib/auditV2';
 
 type SessionData = { answers: Record<string, any>; order: string[]; createdAt: number };
 const sessions: Map<string, SessionData> = (global as any).__SYMI_CHAT_SESSIONS__ || new Map();
@@ -27,68 +28,75 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   let audit: any = null;
   try {
-    const prompt = `Tu es un conseiller juridique français. À partir des réponses structurées ci-dessous, produis une analyse JSON courte avec DES CHAMPS NON VIDES. Réponds UNIQUEMENT avec ce JSON:
+    const useV2 = String(process.env.LEGAL_AUDIT_V2 || 'true') === 'true';
+    if (useV2) {
+      const SYSTEM_PROMPT = `Tu es Maître Analyse — expert en diagnostic juridique stratégique.
+Réponds UNIQUEMENT en JSON valide selon le schéma ci-dessous, sans texte hors JSON.
+Schéma:
 {
-  "summary": string,
-  "category": string,
-  "urgency": number,
+  "diagnostic": {
+    "probleme_principal": "...",
+    "schema_recurrent": "...",
+    "risque_critique": "...",
+    "niveau_urgence": "Critique|Élevé|Modéré|Faible"
+  },
+  "analyse_strategique": "...",
+  "pieges_juridiques": ["..."],
+  "predictions_echec": ["..."],
+  "recommandation_choc": "...",
+  "protocole_solution": { "nom": "...", "mécanisme": "...", "jalons": "...", "metriques_succes": "..." },
+  "risk_matrix": { "severity": "Faible|Moyen|Élevé", "urgency": 1, "proof_strength": "Faible|Moyen|Élevé", "main_risks": ["..."] },
+  "estimated_costs": { "amiable": "€min-€max", "judiciaire": "€min-€max" },
+  "prognosis_if_no_action": "...",
+  "next_critical_step": "...",
+  "summary": "≤4 phrases",
+  "category": "...",
+  "urgency": 5,
   "complexity": "Faible|Moyenne|Élevée",
-  "risks": string[],
-  "actions": string[],
-  "needsLawyer": boolean,
-  "lawyerSpecialty": string | null,
-  "recommendedTemplateId": string | null
-}
-Réponses: ${JSON.stringify(answers).slice(0, 4000)}`;
-    const completion = await Promise.race([
-      openai.chat.completions.create({
-        model: process.env.OPENAI_MODEL || 'gpt-4o-mini',
-        temperature: 0.2,
-        max_tokens: 500,
-        messages: [{ role: 'user', content: prompt }],
-      }),
-      new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), remaining()))
-    ]) as any;
-    const raw = completion.choices?.[0]?.message?.content || '{}';
-    audit = JSON.parse(raw);
+  "actions": ["..."],
+  "needsLawyer": true,
+  "lawyerSpecialty": "...",
+  "recommendedTemplateId": "...|null"
+}`;
+      const controller = new AbortController();
+      const to = setTimeout(() => controller.abort(), remaining());
+      const r = await fetch('https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`, 'Content-Type': 'application/json' },
+        signal: controller.signal,
+        body: JSON.stringify({
+          model: process.env.OPENAI_MODEL || 'gpt-4o-mini',
+          temperature: 0.2,
+          max_tokens: 1400,
+          response_format: { type: 'json_object' },
+          messages: [
+            { role: 'system', content: SYSTEM_PROMPT },
+            { role: 'user', content: `Réponses:\n${JSON.stringify(answers).slice(0,4000)}` }
+          ]
+        })
+      });
+      clearTimeout(to);
+      const data = await r.json();
+      const content = data?.choices?.[0]?.message?.content || '{}';
+      const parsed = parseJsonLoose(content);
+      audit = coalesceAuditDefaultsV2(parsed, answers);
+    } else {
+      // Legacy minimal prompt
+      const completion = await Promise.race([
+        openai.chat.completions.create({
+          model: process.env.OPENAI_MODEL || 'gpt-4o-mini',
+          temperature: 0.2,
+          max_tokens: 500,
+          messages: [{ role: 'user', content: `Analyse en JSON des réponses: ${JSON.stringify(answers).slice(0, 4000)}` }],
+        }),
+        new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), remaining()))
+      ]) as any;
+      const raw = completion.choices?.[0]?.message?.content || '{}';
+      const parsed = parseJsonLoose(raw);
+      audit = coalesceAuditDefaultsV2(parsed, answers);
+    }
   } catch {
-    audit = {
-      summary: String(answers.situation || '').slice(0, 240),
-      category: answers.category || 'Droit général',
-      urgency: Number(answers.urgency || 5),
-      complexity: 'Moyenne',
-      risks: [],
-      actions: ['Rassembler les documents', 'Lister les dates clés'],
-      needsLawyer: false,
-      lawyerSpecialty: null,
-      recommendedTemplateId: null,
-    };
-  }
-
-  // Coalesce defaults to guarantee non-empty fields
-  audit = audit || {};
-  const cat = audit.category || answers.category || 'Droit général';
-  const urg = Number(audit.urgency ?? answers.urgency ?? 5) || 5;
-  audit.summary = typeof audit.summary === 'string' && audit.summary.trim().length
-    ? audit.summary
-    : (answers.situation ? String(answers.situation).slice(0, 280) : `Affaire ${cat}`);
-  audit.category = cat;
-  audit.urgency = urg;
-  audit.complexity = ['Faible', 'Moyenne', 'Élevée'].includes(audit.complexity) ? audit.complexity : (urg >= 7 ? 'Élevée' : 'Moyenne');
-  audit.risks = Array.isArray(audit.risks) && audit.risks.length ? audit.risks : ['Risque de prescription', 'Insuffisance de preuves'];
-  audit.actions = Array.isArray(audit.actions) && audit.actions.length ? audit.actions : [
-    'Rassembler les documents (contrats, échanges, preuves)',
-    'Établir une chronologie des faits',
-    'Envisager une mise en demeure ou consulter un avocat'
-  ];
-  audit.needsLawyer = typeof audit.needsLawyer === 'boolean' ? audit.needsLawyer : (urg >= 7 || audit.complexity === 'Élevée');
-  audit.lawyerSpecialty = audit.lawyerSpecialty || (cat.toLowerCase().includes('travail') ? 'Travail' : cat.toLowerCase().includes('immobilier') ? 'Immobilier' : null);
-  if (!audit.recommendedTemplateId) {
-    const lc = cat.toLowerCase();
-    audit.recommendedTemplateId = lc.includes('travail') ? 'contestation-licenciement'
-      : lc.includes('immobilier') ? 'mise-en-demeure-bailleur'
-      : lc.includes('consommation') ? 'reclamation-consommateur'
-      : 'mise-en-demeure-generale';
+    audit = coalesceAuditDefaultsV2({}, answers);
   }
 
   return res.status(200).json({
