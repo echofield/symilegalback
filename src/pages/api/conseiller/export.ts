@@ -18,7 +18,9 @@ const sessions = (global as any).__SYMI_CHAT_SESSIONS__ || new Map<string, Sessi
 (global as any).__SYMI_CHAT_SESSIONS__ = sessions;
 
 const RequestSchema = z.object({
-  sessionId: z.string().min(1),
+  sessionId: z.string().min(1).optional(),
+  answers: z.record(z.unknown()).optional(),
+  analysis: z.record(z.unknown()).optional(),
 });
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -28,15 +30,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
   try {
     const body = RequestSchema.parse(req.body);
-    const { sessionId } = body;
+    const { sessionId, answers: fallbackAnswers, analysis: fallbackAnalysis } = body;
 
-    const sessionData = sessions.get(sessionId);
-    if (!sessionData) {
-      return res.status(404).json({
-        error: true,
-        message: 'Session not found',
-      });
-    }
+    const sessionData = sessionId ? sessions.get(sessionId) : null;
 
     // Generate PDF using jsPDF
     const doc = new jsPDF();
@@ -70,19 +66,21 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     yPosition += 10;
 
     // Description initiale
-    if (sessionData.context.initialDescription) {
+    const initialDesc = (sessionData as any)?.context?.initialDescription || (fallbackAnswers as any)?.situation || (fallbackAnalysis as any)?.summary;
+    if (initialDesc) {
       addText('DESCRIPTION DE LA SITUATION', 14, 'bold');
       yPosition += 3;
-      addText(sessionData.context.initialDescription, 11, 'normal');
+      addText(String(initialDesc), 11, 'normal');
       yPosition += 10;
     }
 
     // Informations collectées
     addText('INFORMATIONS COLLECTÉES', 14, 'bold');
     yPosition += 3;
-    Object.entries(sessionData.context).forEach(([key, value]) => {
-      if (key !== 'initialDescription' && value) {
-        addText(`• ${key}: ${value}`, 11, 'normal');
+    const infoEntries = (sessionData as any)?.context ? Object.entries((sessionData as any).context) : Object.entries((fallbackAnswers as any) || {});
+    infoEntries.forEach(([key, value]: any) => {
+      if (key !== 'initialDescription' && typeof value !== 'undefined' && value !== null && value !== '') {
+        addText(`• ${key}: ${String(value)}`, 11, 'normal');
         yPosition += 2;
       }
     });
@@ -91,13 +89,17 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     // Conversation (derniers 10 messages max)
     addText('EXTRAIT DE LA CONVERSATION', 14, 'bold');
     yPosition += 3;
-    const recentMessages = sessionData.messages.slice(-10);
-    recentMessages.forEach((msg) => {
-      const role = msg.role === 'user' ? 'VOUS' : 'SYMIONE';
-      addText(`[${role}]`, 10, 'bold', msg.role === 'user' ? [59, 130, 246] : [139, 92, 246]);
-      addText(msg.content, 10, 'normal');
-      yPosition += 3;
-    });
+    const recentMessages = (sessionData as any)?.messages?.slice(-10) || [];
+    if (recentMessages.length > 0) {
+      recentMessages.forEach((msg: any) => {
+        const role = msg.role === 'user' ? 'VOUS' : 'SYMIONE';
+        addText(`[${role}]`, 10, 'bold', msg.role === 'user' ? [59, 130, 246] : [139, 92, 246]);
+        addText(msg.content, 10, 'normal');
+        yPosition += 3;
+      });
+    } else {
+      addText('Conversation issue du mode questionnaire (18 questions).', 10, 'normal');
+    }
 
     // Footer
     yPosition = pageHeight - 20;

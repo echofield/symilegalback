@@ -1,4 +1,31 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import OpenAI from 'openai';
+
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
+  const { question } = req.body || {};
+  if (!question) return res.status(400).json({ error: 'Missing question' });
+
+  try {
+    const system = 'Tu es un assistant juridique français concis. 4 phrases max. Si la question nécessite des informations détaillées (dates, preuves, montants), suggère un passage au “mode conseiller (18 questions)”.';
+    const user = String(question).slice(0, 2000);
+    const completion = await openai.chat.completions.create({
+      model: process.env.OPENAI_MODEL || 'gpt-4o-mini',
+      temperature: 0.2,
+      max_tokens: 220,
+      messages: [{ role: 'system', content: system }, { role: 'user', content: user }],
+    });
+    const reply = completion.choices[0]?.message?.content || '';
+    const needsHandoff = /date|preuve|montant|détail|contexte|plus d'informations|18/i.test(reply);
+    return res.status(200).json({ success: true, reply, handoffSuggested: needsHandoff, entryQuestionId: 'situation' });
+  } catch (e: any) {
+    return res.status(200).json({ success: true, reply: "Je rencontre un problème technique momentanément. Réessayez dans un instant.", handoffSuggested: false });
+  }
+}
+
+import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   // Enable CORS
