@@ -22,8 +22,12 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   const { sessionId, questionId, answer } = req.body || {};
   if (!sessionId || !questionId) return res.status(400).json({ error: 'Missing sessionId or questionId' });
 
-  const s = sessions.get(sessionId);
-  if (!s) return res.status(404).json({ error: 'Session not found' });
+  let s = sessions.get(sessionId);
+  if (!s) {
+    // Auto-initialize session to avoid 404 on rapid answer before start
+    s = { answers: {}, order: QUESTIONS_18.map(q => q.id), createdAt: Date.now() };
+    sessions.set(sessionId, s);
+  }
 
   // Store answer
   s.answers[questionId] = answer;
