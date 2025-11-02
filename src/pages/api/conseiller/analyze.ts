@@ -274,6 +274,8 @@ Tu es un expert. Montre ton expertise.`;
   return analysis;
 }
 
+import lawyersData from '@/lib/data/lawyers.json';
+
 async function callPerplexityLawyers(city: string, specialty: string, signal?: AbortSignal) {
   try {
     const apiKey = process.env.PERPLEXITY_API_KEY;
@@ -282,9 +284,9 @@ async function callPerplexityLawyers(city: string, specialty: string, signal?: A
       return [];
     }
 
-    const query = `Trouve 3 avocats spécialisés en ${specialty} à ${city} France. 
-Pour chacun donne: nom complet, cabinet, adresse exacte, téléphone, email si disponible, spécialités, 
-années expérience, avis clients si disponibles. Format JSON: [{nom, cabinet, adresse, telephone, email, specialites, experience, avis}]`;
+    const query = `Trouve jusqu'à 3 avocats (France) dans la ville: "${city}" correspondant à la spécialité: "${specialty}".
+Réponds STRICTEMENT en JSON valide, sans texte additionnel, au format suivant:
+{"lawyers":[{"nom":"...","cabinet":"...","adresse":"...","telephone":"...","email":"...","specialites":["..."],"experience":"..."}]}`;
 
     const response = await fetch('https://api.perplexity.ai/chat/completions', {
       method: 'POST',
@@ -295,17 +297,11 @@ années expérience, avis clients si disponibles. Format JSON: [{nom, cabinet, a
       body: JSON.stringify({
         model: 'sonar',
         messages: [
-          {
-            role: 'system',
-            content: 'Tu es un assistant qui recherche des professionnels du droit en France. Réponds en JSON structuré.'
-          },
-          {
-            role: 'user',
-            content: query
-          }
+          { role: 'system', content: 'Tu réponds UNIQUEMENT en JSON valide. Pas de texte hors JSON.' },
+          { role: 'user', content: query }
         ],
-        temperature: 0.2,
-        max_tokens: 400,
+        temperature: 0.1,
+        max_tokens: 500,
       }),
       signal,
     });
@@ -316,35 +312,60 @@ années expérience, avis clients si disponibles. Format JSON: [{nom, cabinet, a
     }
 
     const data = await response.json();
-    const content = data.choices[0].message.content;
+    const content = data?.choices?.[0]?.message?.content || '';
 
-    // Try to parse JSON from response
-    try {
-      const jsonMatch = content.match(/```json\n([\s\S]*?)\n```/) || 
-                       content.match(/\[[\s\S]*?\]/);
-      
-      if (jsonMatch) {
-        const jsonStr = jsonMatch[1] || jsonMatch[0];
-        const lawyers = JSON.parse(jsonStr);
-        
-        // Validate and limit to 3
-        if (Array.isArray(lawyers)) {
-          return lawyers.slice(0, 3).map((lawyer: any) => ({
-            nom: lawyer.nom || 'Non disponible',
-            cabinet: lawyer.cabinet || 'Cabinet individuel',
-            adresse: lawyer.adresse || `${city}, France`,
-            telephone: lawyer.telephone || 'Non disponible',
-            email: lawyer.email || 'Non disponible',
-            specialites: Array.isArray(lawyer.specialites) ? lawyer.specialites : [specialty],
-            experience: lawyer.experience || 'Non précisée',
-            avis: lawyer.avis || 'Pas d\'avis disponibles',
-            source: 'Perplexity AI'
-          }));
-        }
-      }
-    } catch (parseError) {
-      console.error('[PERPLEXITY] Parse error:', parseError);
+    // Robust JSON extraction
+    const tryParse = (txt: string): any => {
+      try { return JSON.parse(txt); } catch { return null; }
+    };
+    const fence = content.match(/```json\n([\s\S]*?)\n```/);
+    let parsed: any = fence ? tryParse(fence[1]) : null;
+    if (!parsed) parsed = tryParse(content);
+    if (!parsed) {
+      const arrMatch = content.match(/\[[\s\S]*\]/);
+      if (arrMatch) parsed = tryParse(arrMatch[0]);
     }
+
+    let candidates: any[] = [];
+    if (parsed) {
+      const arr = Array.isArray(parsed) ? parsed : Array.isArray(parsed.lawyers) ? parsed.lawyers : [];
+      candidates = arr.filter(Boolean);
+    }
+
+    if (candidates.length) {
+      return candidates.slice(0, 3).map((lawyer: any) => ({
+        nom: lawyer.nom || lawyer.name || 'Non disponible',
+        cabinet: lawyer.cabinet || lawyer.firm || 'Cabinet individuel',
+        adresse: lawyer.adresse || lawyer.address || `${city}, France`,
+        telephone: lawyer.telephone || lawyer.phone || 'Non disponible',
+        email: lawyer.email || 'Non disponible',
+        specialites: Array.isArray(lawyer.specialites) ? lawyer.specialites : (Array.isArray(lawyer.specialties) ? lawyer.specialties : [specialty]),
+        experience: lawyer.experience || 'Non précisée',
+        avis: lawyer.avis || 'Pas d\'avis disponibles',
+        source: 'Perplexity AI'
+      }));
+    }
+
+    // Fallback to curated list when parsing fails
+    try {
+      const cityLc = city.toLowerCase();
+      const specLc = String(specialty).toLowerCase();
+      const local = (lawyersData as any[]).filter((l: any) =>
+        (l.address || '').toLowerCase().includes(cityLc) &&
+        (Array.isArray(l.specialties) ? l.specialties.some((s: string) => s.toLowerCase().includes(specLc)) : true)
+      ).slice(0, 3).map((l: any) => ({
+        nom: l.name,
+        cabinet: l.name,
+        adresse: l.address,
+        telephone: l.phone || 'Non disponible',
+        email: 'Non disponible',
+        specialites: l.specialties || [specialty],
+        experience: 'Non précisée',
+        avis: 'N/A',
+        source: 'Curated'
+      }));
+      return local;
+    } catch {}
 
     return [];
 
@@ -477,7 +498,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     // Search for lawyers if city provided
     let recommendedLawyers: any[] = [];
     if (city) {
-      const specialty = audit.lawyerSpecialty || mapCategoryToSpecialty(cat || 'Autre');
+      const specialty = audit.lawyerSpecialty || mapCategoryToSpecialty(audit.category || category || situationType || 'Autre');
       
       try {
         recommendedLawyers = await callPerplexityLawyers(city, specialty, controller.signal);
