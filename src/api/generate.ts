@@ -49,11 +49,13 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       }
     }
 
-    const { contract_id, user_inputs, lawyer_mode = false } = req.body;
-    logger.info(`Generating contract ${contract_id}`, { lawyer_mode });
+    const { contract_id, user_inputs, lawyer_mode = false, templateId, inputs } = req.body as any;
+    const tplId = String(contract_id || templateId);
+    const ui = (user_inputs || inputs || {}) as Record<string, any>;
+    logger.info(`Generating contract ${tplId}`, { lawyer_mode });
 
-    const template = await loadContractTemplate(contract_id);
-    const prompt = buildPrompt(template, user_inputs, lawyer_mode);
+    const template = await loadContractTemplate(tplId);
+    const prompt = buildPrompt(template, ui, lawyer_mode);
     const aiClient = getAIClient();
     let generatedContract = await aiClient.generate(prompt);
     logAIUsage(requestId, '/api/generate', Math.min(prompt.length / 4, 4000), process.env.AI_PROVIDER || 'local');
@@ -66,7 +68,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
     }
 
     const response = {
-      contract_id,
+      contract_id: tplId,
       generated_text: generatedContract,
       timestamp: new Date().toISOString(),
       lawyer_mode,

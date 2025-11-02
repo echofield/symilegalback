@@ -270,9 +270,15 @@ export const ExplainResponseSchema = z.object({
 
 // Generate schemas
 export const GenerateRequestSchema = z.object({
-  templateId: z.string().min(1, 'Template ID is required'),
+  // Support both new and legacy field names
+  templateId: z.string().min(1, 'Template ID is required').optional(),
   inputs: z.record(z.string(), z.any()).optional(),
-});
+  contract_id: z.string().min(1, 'Template ID is required').optional(),
+  user_inputs: z.record(z.string(), z.any()).optional(),
+  lawyer_mode: z.boolean().optional(),
+}).refine((body) => {
+  return Boolean(body.templateId || body.contract_id);
+}, { message: 'Missing templateId/contract_id' });
 
 export const GenerateResponseSchema = z.object({
   contract: z.string(),
