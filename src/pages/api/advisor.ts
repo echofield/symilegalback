@@ -1,3 +1,4 @@
+import type { NextApiRequest, NextApiResponse } from 'next';
 import OpenAI from 'openai';
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
@@ -9,8 +10,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const { question } = req.body || {};
-  if (!question) return res.status(400).json({ error: 'Missing question' });
+  const { question, message } = (req.body as any) || {};
+  const q = typeof question === 'string' && question.trim().length ? question : (typeof message === 'string' ? message : '');
+  if (!q) return res.status(400).json({ error: 'Missing question' });
 
   try {
     const completion = await openai.chat.completions.create({
@@ -19,7 +21,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       max_tokens: 220,
       messages: [
         { role: 'system', content: 'Tu es un assistant juridique français concis. 4 phrases max.' },
-        { role: 'user', content: String(question).slice(0, 2000) },
+        { role: 'user', content: String(q).slice(0, 2000) },
       ],
     });
     const reply = completion.choices[0]?.message?.content || '';
