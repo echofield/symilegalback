@@ -8,7 +8,9 @@ export const DEFAULT_ALLOWED_ORIGINS = [
   'https://symifrontlegalfinal.vercel.app',
   'https://symifrontlegal*.vercel.app',
   'https://symione.vercel.app',
-  'https://symione*.vercel.app'
+  'https://symione*.vercel.app',
+  'https://www.symione.com',
+  'https://symione.com'
 ];
 
 export const DEFAULT_ALLOWED_METHODS = [
