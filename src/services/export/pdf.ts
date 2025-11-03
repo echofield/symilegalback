@@ -52,19 +52,85 @@ export async function generatePdfBuffer(text: string, meta?: { header?: string; 
     doc.on('error', reject);
     doc.on('end', () => resolve(Buffer.concat(chunks)));
 
+    // Header meta (version/date)
     if (meta?.header) {
-      doc.fontSize(10).fillColor('#666').text(meta.header, { align: 'center' });
-      doc.moveDown();
+      doc.font('Helvetica').fontSize(9).fillColor('#666').text(meta.header, { align: 'center' });
+      doc.moveDown(0.5);
     }
 
-    doc.fillColor('#000').fontSize(18).text('Contrat', { align: 'center' });
+    // Parse the incoming plain text into logical blocks to style hierarchy
+    const plain = text.replace(/\r\n/g, '\n');
+    const lines = plain.split('\n');
+
+    // Detect a specific contract title on the first non-empty line
+    const firstNonEmptyIndex = lines.findIndex(l => l.trim().length > 0);
+    let customTitle: string | null = null;
+    if (firstNonEmptyIndex >= 0) {
+      const first = lines[firstNonEmptyIndex].trim();
+      if (/^(Contrat|Bail|Accord|Convention)/i.test(first)) {
+        customTitle = first;
+        lines[firstNonEmptyIndex] = ''; // consume it from body
+      }
+    }
+
+    // Optional governing law line right after
+    let subTitle: string | null = null;
+    const nextIdx = (firstNonEmptyIndex >= 0) ? lines.findIndex((l, i) => i > firstNonEmptyIndex && l.trim().length > 0) : -1;
+    if (nextIdx > -1) {
+      const maybeLaw = lines[nextIdx].trim();
+      if (/juridiction|gouverning|gouvernement|jurisdiction|law/i.test(maybeLaw) || /Governing law/i.test(maybeLaw)) {
+        subTitle = maybeLaw;
+        lines[nextIdx] = '';
+      }
+    }
+
+    // Title block
+    doc.fillColor('#000').font('Helvetica-Bold').fontSize(20).text(customTitle || 'Contrat', { align: 'center' });
+    if (subTitle) {
+      doc.moveDown(0.3);
+      doc.font('Helvetica').fontSize(10).fillColor('#444').text(subTitle, { align: 'center' });
+    }
     doc.moveDown();
 
-    doc.fontSize(12).fillColor('#111').text(text.replace(/\r\n/g, '\n'), { align: 'justify' });
+    // Content rendering with hierarchy
+    doc.font('Helvetica').fillColor('#111');
+    const numberedHeading = /^\s*(\d{1,2})\.\s+(.+)/;
+    const smallGap = () => doc.moveDown(0.5);
+    const normalGap = () => doc.moveDown(1);
 
+    for (const raw of lines) {
+      const line = raw || '';
+      const trimmed = line.trim();
+      if (!trimmed) { continue; }
+
+      const m = trimmed.match(numberedHeading);
+      if (m) {
+        // Section heading like "1. Parties"
+        normalGap();
+        doc.font('Helvetica-Bold').fontSize(13).fillColor('#000').text(`${m[1]}. ${m[2]}`);
+        smallGap();
+        doc.font('Helvetica').fontSize(12).fillColor('#111');
+        continue;
+      }
+
+      // Bullet points
+      if (/^[•\-]\s+/.test(trimmed)) {
+        const bulletText = trimmed.replace(/^[•\-]\s+/, '');
+        doc.circle(doc.x - 4, doc.y - 2, 1.2).fill('#000').fillColor('#111');
+        doc.fontSize(12).text(bulletText, doc.x + 4, doc.y - 5, { align: 'justify' });
+        smallGap();
+        continue;
+      }
+
+      // Normal paragraph
+      doc.fontSize(12).fillColor('#111').text(trimmed, { align: 'justify' });
+      smallGap();
+    }
+
+    // Footer meta (date)
     if (meta?.footer) {
-      doc.moveDown();
-      doc.fontSize(10).fillColor('#666').text(meta.footer, { align: 'center' });
+      normalGap();
+      doc.font('Helvetica').fontSize(9).fillColor('#666').text(meta.footer, { align: 'center' });
     }
 
     doc.end();
